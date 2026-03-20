@@ -8,6 +8,18 @@ const router = useRouter()
 const code = ref('')
 const inputRef = ref<HTMLInputElement | null>(null)
 
+// 最大尝试次数和当前计数
+const maxAttempts = 3
+const attemptCount = ref(0)
+const showMaxAttemptsPopup = ref(false)
+
+// 模拟验证码验证（实际应该调用 API）
+const validateCode = (inputCode: string): boolean => {
+  // TODO: 替换为真实 API 验证
+  const correctCode = '1234'
+  return inputCode === correctCode
+}
+
 onMounted(() => {
   nextTick(() => {
     inputRef.value?.focus()
@@ -16,9 +28,21 @@ onMounted(() => {
 
 watch(code, (newValue) => {
   if (newValue.length === 4) {
-    setTimeout(() => {
-      router.push('/new-password')
-    }, 500)
+    // 验证验证码
+    if (!validateCode(newValue)) {
+      attemptCount.value++
+      code.value = '' // 清空输入
+
+      if (attemptCount.value >= maxAttempts) {
+        // 达到最大尝试次数，显示弹窗
+        showMaxAttemptsPopup.value = true
+      }
+    } else {
+      // 验证码正确，跳转到新密码页面
+      setTimeout(() => {
+        router.push('/new-password')
+      }, 500)
+    }
   }
 })
 
@@ -28,10 +52,16 @@ const handleCancel = () => {
 
 const handleSendAgain = () => {
   console.log('Send code again')
+  attemptCount.value = 0 // 重置计数
   code.value = ''
   nextTick(() => {
     inputRef.value?.focus()
   })
+}
+
+const handleOkay = () => {
+  showMaxAttemptsPopup.value = false
+  router.push('/login')
 }
 </script>
 
@@ -185,6 +215,52 @@ const handleSendAgain = () => {
 
     <!-- Home Indicator -->
     <HomeIndicator />
+
+    <!-- Maximum Attempts Popup Overlay -->
+    <div
+      v-if="showMaxAttemptsPopup"
+      class="absolute inset-0 bg-[#0e0e0e] opacity-78 z-50"
+      data-name="cover-blue"
+    />
+
+    <!-- Maximum Attempts Popup -->
+    <div
+      v-if="showMaxAttemptsPopup"
+      class="absolute left-[14px] top-[295px] w-[347px] h-[263px] z-50"
+      data-name="Pop-up"
+    >
+      <!-- Popup Background -->
+      <div class="absolute left-0 right-0 top-[38px] h-[225px] bg-[#f8f8f8] rounded-[19px]" />
+
+      <!-- Warning Icon Circle -->
+      <div class="absolute left-1/2 -translate-x-1/2 top-[-72px] w-[80px] h-[80px]">
+        <div class="absolute inset-[-6.25%_-10%_-13.75%_-10%] rounded-full bg-[#ffb6c9] flex items-center justify-center">
+          <!-- Exclamation Icon -->
+          <div class="relative w-[24px] h-[24px]">
+            <img
+              src="https://www.figma.com/api/mcp/asset/cf9766c4-dba1-439a-9506-9618ca76549a"
+              alt="Warning"
+              class="w-full h-full object-contain"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Message Text -->
+      <p class="absolute left-[17%] right-[16.71%] top-[64px] font-raleway font-medium text-[18px] leading-[26px] text-[#202020] text-center tracking-[-0.18px]">
+        You reached out maximum amount of attempts. Please, try later.
+      </p>
+
+      <!-- Okay Button -->
+      <button
+        @click="handleOkay"
+        class="absolute left-[21%] right-[21%] top-[140px] h-[50px] bg-[#202020] rounded-[16px] flex items-center justify-center cursor-pointer border-none"
+      >
+        <span class="font-nunito font-light text-[22px] leading-[31px] text-[#f3f3f3]">
+          Okay
+        </span>
+      </button>
+    </div>
   </div>
 </template>
 

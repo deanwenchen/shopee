@@ -23,11 +23,18 @@ onMounted(() => {
 })
 
 // 监听密码输入，当密码长度达到 8 位时自动跳转
+// 如果密码是 "12345678"（正确密码），跳转到 HelloCard
+// 否则跳转到 WrongPassword
 watch(password, (newValue) => {
   if (newValue.length === 8) {
-    // 密码输入完成，跳转到错误密码页面
     setTimeout(() => {
-      router.push({ path: '/wrong-password', query: { password: password.value } })
+      if (newValue === '12345678') {
+        // 正确密码，跳转到欢迎页面
+        router.push('/hello-card')
+      } else {
+        // 错误密码，跳转到错误页面
+        router.push({ path: '/wrong-password', query: { password: password.value } })
+      }
     }, 500)
   }
 })

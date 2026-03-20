@@ -8,6 +8,7 @@ import Password from '@/views/Password.vue'
 import PasswordRecovery from '@/views/PasswordRecovery.vue'
 import PasswordRecoveryCode from '@/views/PasswordRecoveryCode.vue'
 import NewPassword from '@/views/NewPassword.vue'
+import HelloCard from '@/views/HelloCard.vue'
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: '/new-password',
     name: 'new-password',
     component: NewPassword
+  },
+  {
+    path: '/hello-card',
+    name: 'hello-card',
+    component: HelloCard
   }
 ]
 
