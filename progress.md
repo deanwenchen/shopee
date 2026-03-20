@@ -51,6 +51,7 @@
 - ✅ PasswordRecoveryCode 页面排版对齐 Figma（气泡背景、头像区域、4 个 dots 验证码指示、可点击输入区域）
 - ✅ NewPassword 页面排版对齐 Figma（气泡背景、头像区域、两个密码输入框带显示/隐藏切换）
 - ✅ 所有输入框颜色统一（CreateAccount、FormInput、PasswordInput、NewPassword 输入文字均为 #333333）
+- ✅ prd.md 与所有页面对齐验证（10 页面 +9 组件 +10 交互逻辑 100% 覆盖）
 
 ### 阶段 2：主应用界面 ⏳ 待实现
 
