@@ -12,19 +12,21 @@
 
 ### 阶段 1：基础认证流程 ✅ 完成
 
-#### 已完成页面 (10/10)
+#### 已完成页面 (8/8)
 | 页面 | 路由 | 状态 | 导航 |
 |------|------|------|------|
 | StartPage | `/` | ✅ | → CreateAccount, Login |
-| CreateAccount | `/create-account` | ✅ | → PasswordTyping |
+| CreateAccount | `/create-account` | ✅ | → Login |
 | LoginPage | `/login` | ✅ | → Password |
-| Password | `/password` | ✅ | → PasswordTyping |
-| PasswordTyping | `/password-typing` | ✅ | → WrongPassword/HelloCard |
-| WrongPassword | `/wrong-password` | ✅ | → Login, PasswordRecovery |
+| Password | `/password` | ✅ | → HelloCard/PasswordRecovery（多状态：4 位输入/8 位输入/错误） |
 | PasswordRecovery | `/password-recovery` | ✅ | → PasswordRecoveryCode |
 | PasswordRecoveryCode | `/password-recovery-code` | ✅ | → NewPassword/MaxAttempts |
 | NewPassword | `/new-password` | ✅ | → Login |
 | HelloCard | `/hello-card` | ✅ | → /shop (轮播引导) |
+
+**页面合并说明:**
+- ~~PasswordTyping~~ → 合并到 Password 页面（8 位密码输入状态）
+- ~~WrongPassword~~ → 合并到 Password 页面（错误状态，显示"Forgot your password?"链接）
 
 #### 已完成组件
 - ✅ StatusBar - 状态栏组件
@@ -52,6 +54,12 @@
 - ✅ NewPassword 页面排版对齐 Figma（气泡背景、头像区域、两个密码输入框带显示/隐藏切换）
 - ✅ 所有输入框颜色统一（CreateAccount、FormInput、PasswordInput、NewPassword 输入文字均为 #333333）
 - ✅ prd.md 与所有页面对齐验证（10 页面 +9 组件 +10 交互逻辑 100% 覆盖）
+- ✅ 修复 CreateAccount 跳转逻辑（注册成功后跳转到登录页，让用户重新登录）
+- ✅ 修复 WrongPassword 布局对齐 Figma node-id=0-12518
+- ✅ WrongPassword 添加 8 个动态密码点（蓝色输入状态，红色错误确认状态）
+- ✅ WrongPassword 支持退格功能（退格时红点恢复蓝色，可重新输入）
+- ✅ **合并 PasswordTyping 和 WrongPassword 到 Password 页面**（通过 inputMode 状态控制：4-digit → 8-digit → error）
+- ✅ **优化输入延迟**（移除 4 位→8 位切换的 50ms 延迟，8 位验证延迟从 500ms 降至 300ms）
 
 ### 阶段 2：主应用界面 ⏳ 待实现
 
