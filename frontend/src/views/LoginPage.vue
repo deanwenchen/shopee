@@ -8,12 +8,32 @@ import FormInput from '@/components/FormInput.vue'
 const router = useRouter()
 
 const email = ref('')
+const isValidEmail = ref(true)
+
+// 验证邮箱格式
+const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
 
 const handleNext = () => {
+  // 验证邮箱格式
+  if (!validateEmail(email.value)) {
+    isValidEmail.value = false
+    return
+  }
+  isValidEmail.value = true
+
   console.log('Login with email:', email.value)
-  // TODO: 调用登录 API
-  // 跳转到密码输入页面
-  router.push('/password')
+
+  // 验证是否为正确账号
+  if (email.value === 'deanwen@gmail.com') {
+    // 账号正确，跳转到密码输入页面
+    router.push('/password')
+  } else {
+    // 账号错误，跳转到错误密码页面
+    router.push('/wrong-password')
+  }
 }
 
 const handleCancel = () => {

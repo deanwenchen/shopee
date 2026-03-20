@@ -1,36 +1,9 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, nextTick } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
 
 const router = useRouter()
-const route = useRoute()
-const inputRef = ref<HTMLInputElement | null>(null)
-
-// 使用真实密码输入框（隐藏），唤起系统键盘
-const password = ref('')
-
-// 监听来自 PasswordTyping 页面的密码参数并聚焦输入框
-onMounted(() => {
-  if (route.query.password) {
-    password.value = route.query.password as string
-  }
-  // 聚焦隐藏输入框，唤起系统键盘
-  nextTick(() => {
-    inputRef.value?.focus()
-  })
-})
-
-// 监听密码输入
-watch(password, (newValue) => {
-  if (newValue.length === 8) {
-    // 密码输入完成，返回登录页
-    setTimeout(() => {
-      router.push('/login')
-    }, 500)
-  }
-})
 
 const handleForgotPassword = () => {
   router.push('/password-recovery')
@@ -89,142 +62,8 @@ const handleForgotPassword = () => {
 
     <!-- Instruction Text -->
     <p class="absolute left-1/2 -translate-x-1/2 top-[348px] font-nunito font-light text-[19px] leading-[35px] text-black text-center">
-      Type your password
+      Wrong password! Try again or reset password
     </p>
-
-    <!-- Hidden Password Input (唤起系统键盘) -->
-    <input
-      ref="inputRef"
-      v-model="password"
-      type="password"
-      maxlength="8"
-      class="absolute opacity-0 left-[78px] top-[390px] w-[261px] h-[17px]"
-      autofocus
-    />
-
-    <!-- Password Dots - All red for wrong password -->
-    <div class="absolute left-[78px] top-[390px]" data-name="Dots">
-      <!-- Dot 1 -->
-      <div class="absolute left-[0px] w-[17px] h-[17px]">
-        <img
-          v-if="password.length >= 1"
-          src="https://www.figma.com/api/mcp/asset/a0f14ec6-4222-4559-b4e6-cb32281e9188"
-          alt="Red dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
-          class="w-full h-full"
-        />
-      </div>
-      <!-- Dot 2 -->
-      <div class="absolute left-[29px] w-[17px] h-[17px]">
-        <img
-          v-if="password.length >= 2"
-          src="https://www.figma.com/api/mcp/asset/a0f14ec6-4222-4559-b4e6-cb32281e9188"
-          alt="Red dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
-          class="w-full h-full"
-        />
-      </div>
-      <!-- Dot 3 -->
-      <div class="absolute left-[58px] w-[17px] h-[17px]">
-        <img
-          v-if="password.length >= 3"
-          src="https://www.figma.com/api/mcp/asset/a0f14ec6-4222-4559-b4e6-cb32281e9188"
-          alt="Red dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
-          class="w-full h-full"
-        />
-      </div>
-      <!-- Dot 4 -->
-      <div class="absolute left-[87px] w-[17px] h-[17px]">
-        <img
-          v-if="password.length >= 4"
-          src="https://www.figma.com/api/mcp/asset/a0f14ec6-4222-4559-b4e6-cb32281e9188"
-          alt="Red dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
-          class="w-full h-full"
-        />
-      </div>
-      <!-- Dot 5 -->
-      <div class="absolute left-[116px] w-[17px] h-[17px]">
-        <img
-          v-if="password.length >= 5"
-          src="https://www.figma.com/api/mcp/asset/a0f14ec6-4222-4559-b4e6-cb32281e9188"
-          alt="Red dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
-          class="w-full h-full"
-        />
-      </div>
-      <!-- Dot 6 -->
-      <div class="absolute left-[145px] w-[17px] h-[17px]">
-        <img
-          v-if="password.length >= 6"
-          src="https://www.figma.com/api/mcp/asset/a0f14ec6-4222-4559-b4e6-cb32281e9188"
-          alt="Red dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
-          class="w-full h-full"
-        />
-      </div>
-      <!-- Dot 7 -->
-      <div class="absolute left-[174px] w-[17px] h-[17px]">
-        <img
-          v-if="password.length >= 7"
-          src="https://www.figma.com/api/mcp/asset/a0f14ec6-4222-4559-b4e6-cb32281e9188"
-          alt="Red dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
-          class="w-full h-full"
-        />
-      </div>
-      <!-- Dot 8 -->
-      <div class="absolute left-[203px] w-[17px] h-[17px]">
-        <img
-          v-if="password.length === 8"
-          src="https://www.figma.com/api/mcp/asset/a0f14ec6-4222-4559-b4e6-cb32281e9188"
-          alt="Red dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
-          class="w-full h-full"
-        />
-      </div>
-    </div>
 
     <!-- Forgot Password Link -->
     <p

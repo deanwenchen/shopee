@@ -5,13 +5,22 @@ import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
 
 const router = useRouter()
-const password = ref('') // 密码输入框绑定
+const password = ref('')
 
-// 密码输入时，立即跳转到 PasswordTyping 页面并传递密码值
+// 正确的密码
+const CORRECT_PASSWORD = '12345678'
+
+// 密码输入时，验证密码并跳转
 watch(password, (newValue) => {
   if (newValue.length >= 1) {
     setTimeout(() => {
-      router.push({ path: '/password-typing', query: { password: newValue } })
+      if (newValue === CORRECT_PASSWORD) {
+        // 密码正确，跳转到成功的密码输入页面
+        router.push('/password-typing')
+      } else {
+        // 密码错误，跳转到错误密码页面
+        router.push('/wrong-password')
+      }
     }, 50)
   }
 })
