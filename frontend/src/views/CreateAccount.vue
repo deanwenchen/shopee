@@ -57,8 +57,8 @@ const handleDone = () => {
 
   console.log('Create Account:', { email: email.value, password: password.value, phoneNumber: phoneNumber.value })
   // TODO: 调用注册 API
-  // 注册成功后跳转到密码输入页面
-  router.push('/password-typing')
+  // 注册成功后跳转到登录页面，让用户重新登录
+  router.push('/login')
 }
 
 const handleCancel = () => {
