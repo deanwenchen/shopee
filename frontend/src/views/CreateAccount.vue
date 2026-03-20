@@ -12,8 +12,49 @@ const email = ref('')
 const password = ref('')
 const phoneNumber = ref('')
 const showPassword = ref(false)
+const showError = ref(false)
+const errorMessage = ref('')
+
+// 验证邮箱格式
+const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+// 验证密码长度
+const validatePassword = (password: string): boolean => {
+  return password.length >= 8
+}
 
 const handleDone = () => {
+  // 清空之前的错误
+  showError.value = false
+  errorMessage.value = ''
+
+  // 验证邮箱
+  if (!email.value.trim()) {
+    showError.value = true
+    errorMessage.value = 'Please enter your email'
+    return
+  }
+  if (!validateEmail(email.value)) {
+    showError.value = true
+    errorMessage.value = 'Please enter a valid email address'
+    return
+  }
+
+  // 验证密码
+  if (!password.value) {
+    showError.value = true
+    errorMessage.value = 'Please enter a password'
+    return
+  }
+  if (!validatePassword(password.value)) {
+    showError.value = true
+    errorMessage.value = 'Password must be at least 8 characters'
+    return
+  }
+
   console.log('Create Account:', { email: email.value, password: password.value, phoneNumber: phoneNumber.value })
   // TODO: 调用注册 API
   // 注册成功后跳转到密码输入页面
@@ -105,6 +146,14 @@ const handleCancel = () => {
           class="flex-[1_0_0] font-['Poppins:Medium',sans-serif] leading-[1.4] border-none bg-transparent outline-none text-[#d2d2d2] text-[14px] w-full"
         />
       </div>
+    </div>
+
+    <!-- Error Message -->
+    <div
+      v-if="showError"
+      class="absolute left-[20px] top-[600px] font-nunito font-light text-[13px] leading-[20px] text-red-500"
+    >
+      {{ errorMessage }}
     </div>
 
     <!-- Done Button -->

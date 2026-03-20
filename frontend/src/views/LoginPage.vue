@@ -8,7 +8,8 @@ import FormInput from '@/components/FormInput.vue'
 const router = useRouter()
 
 const email = ref('')
-const isValidEmail = ref(true)
+const showError = ref(false)
+const errorMessage = ref('')
 
 // 验证邮箱格式
 const validateEmail = (email: string): boolean => {
@@ -17,22 +18,32 @@ const validateEmail = (email: string): boolean => {
 }
 
 const handleNext = () => {
-  // 验证邮箱格式
-  if (!validateEmail(email.value)) {
-    isValidEmail.value = false
+  // 清空之前的错误
+  showError.value = false
+  errorMessage.value = ''
+
+  // 验证邮箱是否为空
+  if (!email.value.trim()) {
+    showError.value = true
+    errorMessage.value = 'Please enter your email'
     return
   }
-  isValidEmail.value = true
 
-  console.log('Login with email:', email.value)
+  // 验证邮箱格式
+  if (!validateEmail(email.value)) {
+    showError.value = true
+    errorMessage.value = 'Please enter a valid email address'
+    return
+  }
 
   // 验证是否为正确账号
   if (email.value === 'deanwen@gmail.com') {
     // 账号正确，跳转到密码输入页面
     router.push('/password')
   } else {
-    // 账号错误，跳转到错误密码页面
-    router.push('/wrong-password')
+    // 账号错误，显示错误提示
+    showError.value = true
+    errorMessage.value = 'Account not found. Please check your email.'
   }
 }
 
@@ -112,6 +123,14 @@ const handleCancel = () => {
         placeholder="Email"
         type="email"
       />
+    </div>
+
+    <!-- Error Message -->
+    <div
+      v-if="showError"
+      class="absolute left-[21px] top-[605px] font-nunito font-light text-[13px] leading-[20px] text-red-500"
+    >
+      {{ errorMessage }}
     </div>
 
     <!-- Next Button -->
