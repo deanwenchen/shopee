@@ -12,7 +12,7 @@
 
 ### 阶段 1：基础认证流程 ✅ 完成
 
-#### 已完成页面 (6/6)
+#### 已完成页面 (9/9)
 | 页面 | 路由 | 状态 | 导航 |
 |------|------|------|------|
 | StartPage | `/` | ✅ | → CreateAccount, Login |
@@ -20,7 +20,10 @@
 | LoginPage | `/login` | ✅ | → Password |
 | Password | `/password` | ✅ | → PasswordTyping |
 | PasswordTyping | `/password-typing` | ✅ | → WrongPassword |
-| WrongPassword | `/wrong-password` | ✅ | → Login |
+| WrongPassword | `/wrong-password` | ✅ | → Login, PasswordRecovery |
+| PasswordRecovery | `/password-recovery` | ✅ | → PasswordRecoveryCode |
+| PasswordRecoveryCode | `/password-recovery-code` | ✅ | → NewPassword |
+| NewPassword | `/new-password` | ✅ | → Login |
 
 #### 已完成组件
 - ✅ StatusBar - 状态栏组件
@@ -37,6 +40,7 @@
 - ✅ 密码输入动态点显示
 - ✅ Query 参数传递
 - ✅ 系统键盘自动唤起
+- ✅ 密码重置流程（SMS/Email 选择 → 验证码输入 → 新密码设置）
 
 ### 阶段 2：主应用界面 ⏳ 待实现
 
