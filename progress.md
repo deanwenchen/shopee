@@ -2,6 +2,14 @@
 
 ## 总体进度：40%
 
+### 阶段 0：文档基建 ✅ 完成
+
+#### 已完成文档
+- ✅ prd.md - 产品需求文档（历史回填）
+- ✅ task_plan.md - 任务规划
+- ✅ findings.md - 技术分析
+- ✅ progress.md - 项目进度
+
 ### 阶段 1：基础认证流程 ✅ 完成
 
 #### 已完成页面 (6/6)
@@ -22,8 +30,6 @@
 - ✅ PrimaryButton - 主按钮
 - ✅ SecondaryAction - 次要操作按钮
 - ✅ NextButton - Next 按钮
-- ✅ Keyboard - 键盘组件（未使用）
-- ✅ KeyboardKey - 键盘按键组件（未使用）
 
 #### 已完成功能
 - ✅ 页面路由配置
