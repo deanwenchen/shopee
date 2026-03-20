@@ -46,6 +46,11 @@
 - ✅ 验证码错误次数限制（3 次最大尝试）
 - ✅ 登录成功引导轮播（4 页滑动 +  dots 指示）
 - ✅ localStorage 持久化（引导完成标记）
+- ✅ 输入框文字颜色区分（输入状态深色 #333333，placeholder 浅色 #d2d2d2）
+- ✅ PasswordRecovery 页面排版对齐 Figma（气泡背景、头像区域、SMS/Email 选择按钮带 check 图标）
+- ✅ PasswordRecoveryCode 页面排版对齐 Figma（气泡背景、头像区域、4 个 dots 验证码指示、可点击输入区域）
+- ✅ NewPassword 页面排版对齐 Figma（气泡背景、头像区域、两个密码输入框带显示/隐藏切换）
+- ✅ 所有输入框颜色统一（CreateAccount、FormInput、PasswordInput、NewPassword 输入文字均为 #333333）
 
 ### 阶段 2：主应用界面 ⏳ 待实现
 

@@ -97,14 +97,7 @@ const handleCancel = () => {
       </div>
     </div>
 
-    <!-- Heart Icon -->
-    <div class="absolute top-[535px] left-[215px] w-[24px] h-[24px]" data-name="heart">
-      <img
-        src="https://www.figma.com/api/mcp/asset/0e7c1044-1b0e-4025-ba9a-fd788bf676d4"
-        alt="Heart"
-        class="w-full h-full object-contain"
-      />
-    </div>
+
 
     <!-- Page Title -->
     <div class="absolute left-[20px] top-[438px]" data-node-id="0:12735">

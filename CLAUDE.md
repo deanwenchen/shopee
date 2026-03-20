@@ -1,65 +1,313 @@
-# CLAUDE.md
-# ============================================
-# 核心规则入口
-# ============================================
+# 🧠 Claude Operating System（COS）
 
-1. 启动与唤醒：
-   - Claude 启动或重启时，必须加载以下规则：
-     - AGENT_RULES.md
-     - FIGMA_RULES.md
-     - DESIGN_SYSTEM_RULES.md
-     - CODING_RULES.md
-   - 输出 [状态对齐] 报告。
+---
 
-2. 执行顺序：
-   - Brainstorming
-   - 用户确认方案
-   - Figma MCP 调用
-   - 代码生成与资源下载
-   - Artifact 同步
-   - 验证和提交
+# 🚀 1. 启动与上下文恢复（Boot & Context Recovery）
 
-3. Artifact 同步：
-   - 所有决策、任务拆解、分析和进度必须写入：
-     - task_plan.md
-     - findings.md
-     - progress.md
+Claude 在以下情况 **必须执行初始化流程**：
 
-- # 前端生成策略
+- 对话开始
+- 上下文丢失
+- 会话重启
 
-  - 所有 Figma 页面生成 Vue 3 组件（<script setup> + Composition API）
-  - 必须实现 Figma 设计稿 1:1 视觉还原（像素级还原 UI 结构、间距、字体、颜色）
+## 📥 强制加载文件
 
-  ## 🎯 Figma 还原规则（强约束）
+claude.md
+docs/pedagogy.md
+task_plan.md
+findings.md
+progress.md
 
-  - 严格按照 Figma Auto Layout 还原为 Flex / Grid（禁止随意改布局）
-  - 所有间距（padding / margin / gap）必须与 Figma 一致（优先使用 Token）
-  - 字体（font-size / weight / line-height）必须完全匹配设计稿
-  - 颜色必须使用设计 Token（禁止手写 hex 值）
-  - 圆角 / 阴影 / 边框必须还原（包括细节参数）
-  - 组件层级结构必须与 Figma 分组一致（避免扁平化乱写）
-  - 禁止“视觉差不多”的实现（必须结构一致）
+# 📌 文件更新策略（强制）
 
-  ## 🎨 样式规范
+Claude 必须遵循以下规则：
 
-  - 使用 Tailwind CSS / UnoCSS 映射 Figma Token
-  - 禁止硬编码样式（如 style="margin: 13px"）
-  - 优先使用原子类表达样式
+## task_plan.md（计划）
+- 仅在需求新增 / 修改时更新
+- 禁止在执行阶段频繁修改
 
-  ## 🧩 组件规范
+## findings.md（决策）
+- 仅记录关键技术决策
+- 禁止记录执行日志
 
-  - 自动识别并抽离公共组件（Button / Card / Input 等）
-  - 所有组件必须支持 Props（text / state / variant）
-  - 禁止页面中写死 UI（必须可复用）
+## progress.md（进度）
+- 每完成一个执行步骤必须更新
+- 必须记录：
+  - 已完成内容
+  - 当前状态
+  - 下一步行动
 
-  ## ⚙️ 工程规范
+❗禁止行为：
+- ❌ 三个文件同时无差别重写
+- ❌ 不更新 progress.md
+- ❌ 把 progress 写进 findings
+## 📥 强制加载规则
 
-  - 优先复用已有组件（src/components, src/design-system）
-  - 状态管理统一使用 Pinia
-  - 页面路由使用 Vue Router
-  - 复杂逻辑必须拆分到 composables
+AGENT_RULES.md
+FIGMA_RULES.md
+DESIGN_SYSTEM_RULES.md
+CODING_RULES.md
 
-  ## 🧠 交互还原
+---
 
-  - 必须还原 Figma 中的交互状态（hover / active / disabled）
-  - 动效（如有）需使用 CSS 或 Vue 动画实现
+# 🧠 2. 系统能力定义（System Core）
+
+你是一个具备 **规划 + 推理 + 执行 + 记录能力** 的工程代理系统：
+
+## 📁 Planning Layer（规划层）
+
+使用 planning-with-files：
+
+- task_plan.md → 任务拆解
+- findings.md → 分析与决策
+- progress.md → 执行记录
+
+👉 形成闭环：
+
+Plan → Findings → Code → Progress
+
+---
+
+## ⚙️ Execution Layer（执行层）
+
+使用 superpowers：
+
+- /brainstorming → 方案设计 / 架构分析
+- /execute-plan → 按计划执行
+
+---
+
+## 📊 输出要求（强制）
+
+每次响应必须包含：
+
+[状态对齐报告]
+
+- 当前任务：
+- 已完成进度：
+- 下一步行动：
+
+---
+
+# 🔄 3. 标准执行流程（强制顺序）
+
+所有任务必须严格按以下顺序执行：
+
+1. Brainstorming（方案设计）
+2. 用户确认方案
+3. 调用 Figma MCP（如涉及 UI）
+4. 代码生成 + 资源下载
+5. Artifact 落地（文件写入）
+6. 验证（运行 / UI 校验）
+7. 更新 progress.md
+
+❗禁止跳步骤执行
+
+---
+
+# 🧠 4. 思考与落盘机制（强制）
+
+以下内容 **必须写入文件**：
+
+- 决策过程
+- 技术分析
+- 任务拆解
+- 执行过程
+
+## 📄 写入目标文件
+
+task_plan.md
+findings.md
+progress.md
+prd.md
+
+---
+
+## 🧾 写入格式（强制）
+
+=== WRITE_FILE: <filename> ===
+<完整文件内容>
+=== END ===
+
+---
+
+# 🎨 5. 前端生成策略（Figma → Vue3 强约束）
+
+## ⚙️ 技术栈（固定）
+
+- Vue 3 + <script setup> + Composition API
+- Tailwind CSS / UnoCSS
+- Pinia
+- Vue Router
+
+---
+
+## 🎯 5.1 Figma 还原规则（最高优先级）
+
+### 📐 布局
+
+- 严格遵循 Auto Layout
+- 转换为 Flex / Grid
+- ❌ 禁止修改结构
+
+### 📏 间距
+
+- padding / margin / gap 必须一致
+- 必须使用 Design Token
+
+### 🔤 字体
+
+- font-size / weight / line-height 完全一致
+
+### 🎨 颜色
+
+- 必须使用 Design Token
+- ❌ 禁止手写 hex
+
+### 🟦 视觉细节
+
+- 圆角 / 阴影 / 边框完全一致
+
+### 🧱 结构
+
+- 组件层级必须与 Figma 分组一致
+- ❌ 禁止扁平化
+
+---
+
+## 🎨 5.2 样式规范
+
+- 使用 Tailwind / UnoCSS
+- ❌ 禁止 inline style
+- 样式必须可复用
+
+---
+
+## 🧩 5.3 组件规范
+
+必须自动抽离公共组件：
+
+- Button
+- Card
+- Input
+
+### 要求：
+
+- 支持 Props（text / state / variant）
+- 可复用
+- ❌ 禁止写死 UI
+
+---
+
+## ⚙️ 5.4 工程规范
+
+- 优先复用：
+  - src/components
+  - src/design-system
+- 状态管理：Pinia（强制）
+- 路由：Vue Router（强制）
+- 复杂逻辑：必须拆到 composables
+
+---
+
+## 🧠 5.5 交互还原
+
+必须实现：
+
+- hover
+- active
+- disabled
+
+### 动效：
+
+- CSS 或 Vue 动画
+
+---
+
+# ✅ 6. 核心原则（最高优先级）
+
+- ❌ 不允许“差不多实现”
+- ✅ 必须像素级还原
+- ✅ 结构必须一致
+- ✅ 所有行为可追溯（写入 md）
+- ✅ 所有组件必须可复用
+
+---
+
+# 📄 7. PRD 自动沉淀机制（强制）
+
+## 🎯 目标
+
+自动将需求与实现沉淀为 PRD 文档。
+
+---
+
+## 🧠 触发时机（任意满足即触发）
+
+- Brainstorming 完成
+- 代码生成完成
+- Figma 页面生成完成
+- 用户提出新需求 / 修改需求
+
+---
+
+## ✍️ 必须执行
+
+更新：
+
+prd.md
+
+---
+
+## 📄 PRD 内容结构（强制）
+
+每个功能必须包含：
+
+- 功能名称
+- 功能目标（Why）
+- 功能描述（What）
+- 业务规则（Logic）
+- UI说明（Figma / 页面结构）
+- 技术实现（接口 / 状态 / 数据）
+
+---
+
+## 🔄 版本管理
+
+每次更新必须包含：
+
+- 时间
+- 修改内容
+
+并维护：
+
+变更记录（Changelog）
+
+---
+
+## ⚠️ 强制约束
+
+- ❌ 不允许只写代码不更新 PRD
+- ❌ 不允许 PRD 与代码不一致
+- ❌ 不允许自动提交 Git
+- ❌ 写完代码禁止自动 commit
+- ✅ 必须人工提交
+- ✅ PRD 必须反映真实系统状态
+
+---
+
+# 🧩 8. 多 Agent 协作
+
+## Agent 分工
+
+- Planner → task_plan.md
+- Analyst → findings.md
+- Executor → Code + 文件落地
+- Recorder → progress.md + prd.md
+
+---
+
+## 执行原则
+
+- ❌ 不允许一个 Agent 跳角色
+- ✅ 必须按职责写入对应文件

@@ -13,6 +13,17 @@ const maxAttempts = 3
 const attemptCount = ref(0)
 const showMaxAttemptsPopup = ref(false)
 
+// Figma asset URLs
+const bubble01 = 'https://www.figma.com/api/mcp/asset/beb7992b-6faa-495a-9a24-b841028e6ba8'
+const bubble02 = 'https://www.figma.com/api/mcp/asset/a4213729-eca5-4f6b-bd7f-850c83c4cdd8'
+const ellipse = 'https://www.figma.com/api/mcp/asset/4af75c78-eb99-454f-9997-1812506027b3'
+const ellipse01 = 'https://www.figma.com/api/mcp/asset/b5dd8922-58ad-489a-b9e5-eab3dcb57173'
+const avatarFrame = 'https://www.figma.com/api/mcp/asset/2088bc90-4a4e-4fb1-8f18-75a8b7c7d56a'
+const avatarMain = 'https://www.figma.com/api/mcp/asset/dd8af254-a49d-4661-bb15-df552ad4f0e6'
+const dotFilled = 'https://www.figma.com/api/mcp/asset/e437bb4f-9ab6-42b1-b7ca-ebe1ed3ffa72'
+const dotEmpty = 'https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9'
+const warningIcon = 'https://www.figma.com/api/mcp/asset/cf9766c4-dba1-439a-9506-9618ca76549a'
+
 // 模拟验证码验证（实际应该调用 API）
 const validateCode = (inputCode: string): boolean => {
   // TODO: 替换为真实 API 验证
@@ -21,8 +32,11 @@ const validateCode = (inputCode: string): boolean => {
 }
 
 onMounted(() => {
+  // 页面加载时自动聚焦输入框
   nextTick(() => {
-    inputRef.value?.focus()
+    setTimeout(() => {
+      inputRef.value?.focus()
+    }, 100)
   })
 })
 
@@ -50,6 +64,15 @@ const handleCancel = () => {
   router.push('/login')
 }
 
+const handleInput = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  code.value = target.value
+}
+
+const handleDotAreaClick = () => {
+  inputRef.value?.focus()
+}
+
 const handleSendAgain = () => {
   console.log('Send code again')
   attemptCount.value = 0 // 重置计数
@@ -66,130 +89,128 @@ const handleOkay = () => {
 </script>
 
 <template>
-  <div class="bg-white relative w-[375px] h-[817px] mx-auto" data-name="08 Password Recovery — Code" data-node-id="0:12382">
+  <div class="bg-white relative w-[375px] h-[817px] mx-auto overflow-hidden" data-name="08 Password Recovery — Code" data-node-id="0:12382">
     <!-- Status Bar -->
     <StatusBar />
 
     <!-- Background Bubbles -->
-    <div class="absolute top-[-273px] left-[20px]" data-name="Bubbles">
+    <div class="absolute top-[-273.16px] left-[20.28px]" data-name="Bubbles" data-node-id="0:12383">
       <!-- Bubble 02 - rotated -110deg -->
-      <div class="absolute top-[32px] left-0 w-[544px] h-[502px] -rotate-[110deg]">
-        <img
-          src="https://www.figma.com/api/mcp/asset/c2dd1527-31ae-47f5-9051-91a5c687f22a"
-          alt="Bubble 02"
-          class="w-full h-full object-contain"
-        />
+      <div class="absolute top-[-240.83px] left-0 flex h-[502.4px] w-[543.71px] items-center justify-center">
+        <div class="-rotate-[110deg] flex-none h-[442.65px] w-[373.531px] relative">
+          <img
+            :src="bubble02"
+            alt="Bubble 02"
+            class="absolute block size-full max-w-none"
+          />
+        </div>
       </div>
       <!-- Bubble 01 - rotated 92deg -->
-      <div class="absolute top-0 left-[100px] w-[456px] h-[418px] rotate-[92deg]">
-        <img
-          src="https://www.figma.com/api/mcp/asset/9e822c92-18e2-479d-ac5d-b34d8f15cf4e"
-          alt="Bubble 01"
-          class="w-full h-full object-contain"
-        />
+      <div class="absolute top-0 left-[99.45px] flex h-[418.074px] w-[456.44px] items-center justify-center">
+        <div class="rotate-[92deg] flex-none h-[442.65px] w-[402.871px] relative">
+          <img
+            :src="bubble01"
+            alt="Bubble 01"
+            class="absolute block size-full max-w-none"
+          />
+        </div>
       </div>
     </div>
 
-    <!-- Avatar Circle -->
-    <div class="absolute top-[149px] left-[135px] w-[105px] h-[105px]" data-name="ellispse">
-      <div class="absolute inset-[-4.76%] rounded-full overflow-hidden bg-[#ffb6c9]">
+    <!-- Avatar Image Group -->
+    <div class="absolute top-[156px] left-[142px]" data-name="image" data-node-id="0:12398">
+      <!-- Background ellipse -->
+      <div class="absolute top-[0px] left-[0px] w-[105px] h-[105px]">
         <img
-          src="https://www.figma.com/api/mcp/asset/e362e4a2-f6a0-4fb4-b3b5-3bb27f04206b"
-          alt="Avatar frame"
-          class="w-full h-full object-cover"
+          :src="ellipse"
+          alt="Ellipse"
+          class="absolute block size-full max-w-none"
         />
       </div>
-      <!-- Avatar Image -->
-      <div class="absolute inset-[19.21%_37.87%_69.58%_37.87%] rounded-full overflow-hidden">
+      <!-- Avatar frame -->
+      <div class="absolute top-[20.29px] left-[39.88px] w-[25.24px] h-[11.13px]">
         <img
-          src="https://www.figma.com/api/mcp/asset/f5a68064-653c-4120-9951-15bb4429b646"
+          :src="avatarFrame"
+          alt="Avatar frame"
+          class="absolute block size-full max-w-none"
+        />
+      </div>
+      <!-- Main avatar -->
+      <div class="absolute top-[26.52px] left-[26.26px] w-[52.48px] h-[52.48px] mask-avatar">
+        <img
+          :src="avatarMain"
           alt="Avatar"
-          class="w-full h-full object-cover"
+          class="absolute inset-0 size-full max-w-none object-cover"
         />
       </div>
     </div>
 
     <!-- Page Title -->
-    <h1 class="absolute left-1/2 -translate-x-1/2 top-[266px] font-raleway font-bold text-[21px] leading-[30px] text-brand-black text-center tracking-[-0.21px]">
+    <h1 class="absolute left-[188.5px] top-[266px] -translate-x-1/2 font-raleway font-bold text-[21px] leading-[30px] text-[#202020] text-center tracking-[-0.21px] whitespace-nowrap" data-node-id="0:12394">
       Password Recovery
     </h1>
 
     <!-- Instruction Text -->
-    <p class="absolute left-1/2 -translate-x-1/2 top-[301px] font-nunito font-light text-[19px] leading-[27px] text-black text-center w-[290px]">
+    <p class="absolute left-[188px] top-[301px] -translate-x-1/2 font-nunito font-light text-[19px] leading-[27px] text-black text-center w-[290px] h-[57px]" data-node-id="0:12393">
       Enter 4-digits code we sent you on your phone number
     </p>
 
     <!-- Phone Number -->
-    <p class="absolute left-1/2 -translate-x-1/2 top-[371px] font-nunito font-bold text-[16px] leading-[25px] text-black text-center tracking-[1.6px]">
+    <p class="absolute left-[188.5px] top-[371px] -translate-x-1/2 font-nunito font-bold text-[16px] leading-[25px] text-black text-center tracking-[1.6px] whitespace-nowrap" data-node-id="0:12392">
       +98*******00
     </p>
 
-    <!-- Hidden Input -->
+    <!-- Hidden Input - Fully accessible -->
     <input
       ref="inputRef"
-      v-model="code"
+      :value="code"
       type="text"
       inputmode="numeric"
       maxlength="4"
-      class="absolute opacity-0 left-[136px] top-[424px] w-[136px] h-[17px]"
+      autocomplete="one-time-code"
+      class="absolute left-[136px] top-[424px] w-[201px] h-[50px] z-10"
+      style="opacity: 0.01; pointer-events: auto;"
       autofocus
+      @input="handleInput"
+    />
+
+    <!-- Click capture layer for dots area -->
+    <div
+      class="absolute left-[136px] top-[424px] w-[201px] h-[50px] z-20"
+      @click="handleDotAreaClick"
     />
 
     <!-- Code Dots -->
-    <div class="absolute left-[136px] top-[424px]" data-name="dots">
-      <div class="absolute left-[0px] w-[17px] h-[17px]">
+    <div
+      class="absolute left-[136px] top-[424px] flex gap-[29px] pointer-events-none"
+      data-name="dots"
+      data-node-id="0:12387"
+    >
+      <div class="w-[17px] h-[17px]" data-node-id="0:12388">
         <img
-          v-if="code.length >= 1"
-          src="https://www.figma.com/api/mcp/asset/e7e83f8b-5728-4e4c-89fd-187bf2dc4270"
-          alt="Filled dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
+          :src="code.length >= 1 ? dotFilled : dotEmpty"
+          alt="Dot 1"
           class="w-full h-full"
         />
       </div>
-      <div class="absolute left-[29px] w-[17px] h-[17px]">
+      <div class="w-[17px] h-[17px]" data-node-id="0:12389">
         <img
-          v-if="code.length >= 2"
-          src="https://www.figma.com/api/mcp/asset/e7e83f8b-5728-4e4c-89fd-187bf2dc4270"
-          alt="Filled dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
+          :src="code.length >= 2 ? dotFilled : dotEmpty"
+          alt="Dot 2"
           class="w-full h-full"
         />
       </div>
-      <div class="absolute left-[58px] w-[17px] h-[17px]">
+      <div class="w-[17px] h-[17px]" data-node-id="0:12390">
         <img
-          v-if="code.length >= 3"
-          src="https://www.figma.com/api/mcp/asset/e7e83f8b-5728-4e4c-89fd-187bf2dc4270"
-          alt="Filled dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
+          :src="code.length >= 3 ? dotFilled : dotEmpty"
+          alt="Dot 3"
           class="w-full h-full"
         />
       </div>
-      <div class="absolute left-[87px] w-[17px] h-[17px]">
+      <div class="w-[17px] h-[17px]" data-node-id="0:12391">
         <img
-          v-if="code.length === 4"
-          src="https://www.figma.com/api/mcp/asset/e7e83f8b-5728-4e4c-89fd-187bf2dc4270"
-          alt="Filled dot"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          src="https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9"
-          alt="Empty dot"
+          :src="code.length >= 4 ? dotFilled : dotEmpty"
+          alt="Dot 4"
           class="w-full h-full"
         />
       </div>
@@ -199,8 +220,9 @@ const handleOkay = () => {
     <button
       @click="handleSendAgain"
       class="absolute left-[87px] top-[640px] w-[201px] h-[50px] bg-[#ff5790] rounded-[16px] flex items-center justify-center cursor-pointer border-none"
+      data-name="Button" data-node-id="0:12446"
     >
-      <span class="font-nunito font-light text-[22px] leading-[31px] text-[#f3f3f3]">
+      <span class="font-nunito font-light text-[22px] leading-[31px] text-[#f3f3f3]" data-node-id="0:12448">
         Send Again
       </span>
     </button>
@@ -208,7 +230,8 @@ const handleOkay = () => {
     <!-- Cancel Link -->
     <button
       @click="handleCancel"
-      class="absolute left-1/2 -translate-x-1/2 top-[719px] font-nunito font-light text-[15px] leading-[26px] text-brand-black opacity-90 bg-transparent border-none cursor-pointer"
+      class="absolute left-[188.5px] top-[719px] -translate-x-1/2 font-nunito font-light text-[15px] leading-[26px] text-[#202020] opacity-90 bg-transparent border-none cursor-pointer whitespace-nowrap"
+      data-node-id="0:12386"
     >
       Cancel
     </button>
@@ -238,7 +261,7 @@ const handleOkay = () => {
           <!-- Exclamation Icon -->
           <div class="relative w-[24px] h-[24px]">
             <img
-              src="https://www.figma.com/api/mcp/asset/cf9766c4-dba1-439a-9506-9618ca76549a"
+              :src="warningIcon"
               alt="Warning"
               class="w-full h-full object-contain"
             />
@@ -265,4 +288,14 @@ const handleOkay = () => {
 </template>
 
 <style scoped>
+.mask-avatar {
+  mask-image: url('https://www.figma.com/api/mcp/asset/63769f61-3a5a-4dd7-99c7-15f122fb5217');
+  mask-size: 91px 91px;
+  mask-position: 0px 55.146px;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/63769f61-3a5a-4dd7-99c7-15f122fb5217');
+  -webkit-mask-size: 91px 91px;
+  -webkit-mask-position: 0px 55.146px;
+  -webkit-mask-repeat: no-repeat;
+}
 </style>

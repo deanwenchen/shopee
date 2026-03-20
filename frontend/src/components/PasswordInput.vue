@@ -26,7 +26,7 @@ const togglePassword = () => {
       :type="showPassword ? 'text' : 'password'"
       :value="modelValue"
       :placeholder="placeholder"
-      class="flex-[1_0_0] font-['Poppins:Medium',sans-serif] leading-[1.4] border-none bg-transparent outline-none text-[#d2d2d2] text-[14px] w-full"
+      class="flex-[1_0_0] font-['Poppins:Medium',sans-serif] leading-[1.4] border-none bg-transparent outline-none text-[14px] w-full text-[#333333] placeholder-[#d2d2d2]"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     />
     <button

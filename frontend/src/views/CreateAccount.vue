@@ -143,7 +143,7 @@ const handleCancel = () => {
           v-model="phoneNumber"
           type="tel"
           placeholder="Your number"
-          class="flex-[1_0_0] font-['Poppins:Medium',sans-serif] leading-[1.4] border-none bg-transparent outline-none text-[#d2d2d2] text-[14px] w-full"
+          class="flex-[1_0_0] font-['Poppins:Medium',sans-serif] leading-[1.4] border-none bg-transparent outline-none text-[#333333] text-[14px] w-full placeholder-[#d2d2d2]"
         />
       </div>
     </div>
