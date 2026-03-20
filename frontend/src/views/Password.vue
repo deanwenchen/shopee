@@ -7,20 +7,12 @@ import HomeIndicator from '@/components/HomeIndicator.vue'
 const router = useRouter()
 const password = ref('')
 
-// 正确的密码
-const CORRECT_PASSWORD = '12345678'
-
-// 密码输入时，验证密码并跳转
+// 密码输入时，直接跳转到 PasswordTyping，由 PasswordTyping 进行验证
 watch(password, (newValue) => {
   if (newValue.length >= 1) {
     setTimeout(() => {
-      if (newValue === CORRECT_PASSWORD) {
-        // 密码正确，跳转到成功的密码输入页面
-        router.push('/password-typing')
-      } else {
-        // 密码错误，跳转到错误密码页面
-        router.push('/wrong-password')
-      }
+      // 传递密码到 PasswordTyping 进行验证
+      router.push({ path: '/password-typing', query: { password: newValue } })
     }, 50)
   }
 })

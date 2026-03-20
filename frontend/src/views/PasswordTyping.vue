@@ -22,12 +22,20 @@ onMounted(() => {
   })
 })
 
-// 监听密码输入，当密码长度达到 8 位时自动跳转到 HelloCard
+// 正确的密码
+const CORRECT_PASSWORD = '12345678'
+
+// 监听密码输入，当密码长度达到 8 位时验证
 watch(password, (newValue) => {
   if (newValue.length === 8) {
-    // 密码输入完成，跳转到欢迎页面
     setTimeout(() => {
-      router.push('/hello-card')
+      if (newValue === CORRECT_PASSWORD) {
+        // 密码正确，跳转到欢迎页面
+        router.push('/hello-card')
+      } else {
+        // 密码错误，跳转到错误密码页面
+        router.push('/wrong-password')
+      }
     }, 500)
   }
 })
