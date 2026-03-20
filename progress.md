@@ -1,6 +1,6 @@
 # Shoppe 项目进度报告
 
-## 总体进度：40%
+## 总体进度：50%
 
 ### 阶段 0：文档基建 ✅ 完成
 
@@ -12,18 +12,19 @@
 
 ### 阶段 1：基础认证流程 ✅ 完成
 
-#### 已完成页面 (9/9)
+#### 已完成页面 (10/10)
 | 页面 | 路由 | 状态 | 导航 |
 |------|------|------|------|
 | StartPage | `/` | ✅ | → CreateAccount, Login |
 | CreateAccount | `/create-account` | ✅ | → PasswordTyping |
 | LoginPage | `/login` | ✅ | → Password |
 | Password | `/password` | ✅ | → PasswordTyping |
-| PasswordTyping | `/password-typing` | ✅ | → WrongPassword |
+| PasswordTyping | `/password-typing` | ✅ | → WrongPassword/HelloCard |
 | WrongPassword | `/wrong-password` | ✅ | → Login, PasswordRecovery |
 | PasswordRecovery | `/password-recovery` | ✅ | → PasswordRecoveryCode |
-| PasswordRecoveryCode | `/password-recovery-code` | ✅ | → NewPassword |
+| PasswordRecoveryCode | `/password-recovery-code` | ✅ | → NewPassword/MaxAttempts |
 | NewPassword | `/new-password` | ✅ | → Login |
+| HelloCard | `/hello-card` | ✅ | → /shop (轮播引导) |
 
 #### 已完成组件
 - ✅ StatusBar - 状态栏组件
@@ -33,6 +34,7 @@
 - ✅ PrimaryButton - 主按钮
 - ✅ SecondaryAction - 次要操作按钮
 - ✅ NextButton - Next 按钮
+- ✅ MaximumAttemptsPopup - 最大尝试次数弹窗
 
 #### 已完成功能
 - ✅ 页面路由配置
@@ -41,6 +43,9 @@
 - ✅ Query 参数传递
 - ✅ 系统键盘自动唤起
 - ✅ 密码重置流程（SMS/Email 选择 → 验证码输入 → 新密码设置）
+- ✅ 验证码错误次数限制（3 次最大尝试）
+- ✅ 登录成功引导轮播（4 页滑动 +  dots 指示）
+- ✅ localStorage 持久化（引导完成标记）
 
 ### 阶段 2：主应用界面 ⏳ 待实现
 
