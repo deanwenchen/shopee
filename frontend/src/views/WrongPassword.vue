@@ -33,8 +33,7 @@ watch(password, (newValue) => {
 })
 
 const handleForgotPassword = () => {
-  console.log('Forgot password clicked')
-  // TODO: 跳转到密码重置页面
+  router.push('/password-recovery')
 }
 </script>
 

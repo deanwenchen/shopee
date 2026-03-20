@@ -5,6 +5,9 @@ import CreateAccount from '@/views/CreateAccount.vue'
 import PasswordTyping from '@/views/PasswordTyping.vue'
 import WrongPassword from '@/views/WrongPassword.vue'
 import Password from '@/views/Password.vue'
+import PasswordRecovery from '@/views/PasswordRecovery.vue'
+import PasswordRecoveryCode from '@/views/PasswordRecoveryCode.vue'
+import NewPassword from '@/views/NewPassword.vue'
 
 const routes = [
   {
@@ -36,6 +39,21 @@ const routes = [
     path: '/password',
     name: 'password',
     component: Password
+  },
+  {
+    path: '/password-recovery',
+    name: 'password-recovery',
+    component: PasswordRecovery
+  },
+  {
+    path: '/password-recovery-code',
+    name: 'password-recovery-code',
+    component: PasswordRecoveryCode
+  },
+  {
+    path: '/new-password',
+    name: 'new-password',
+    component: NewPassword
   }
 ]
 
