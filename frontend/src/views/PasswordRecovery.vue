@@ -11,7 +11,9 @@ const recoveryMethod = ref<'sms' | 'email'>('sms')
 const bubble01 = 'https://www.figma.com/api/mcp/asset/b8e325ee-b084-4f0d-a732-352c807a4bbe'
 const bubble02 = 'https://www.figma.com/api/mcp/asset/49e82bd7-c14c-4f92-9292-1a8e642fcea3'
 const ellipse = 'https://www.figma.com/api/mcp/asset/63769f61-3a5a-4dd7-99c7-15f122fb5217'
-const avatarMain = 'https://www.figma.com/api/mcp/asset/024b0706-29ee-47c9-8802-0148440a4c6c'
+const avatarFrame = 'https://www.figma.com/api/mcp/asset/8170b441-8445-4132-aa6d-9be92cf35f8a'
+const avatarMask = 'https://www.figma.com/api/mcp/asset/1c7eb3a3-abb7-4de5-803f-72fcd24efb34'
+const avatarMain = 'https://www.figma.com/api/mcp/asset/82b28a0b-3852-45e3-a64d-542cea01ec12'
 const checkIcon = 'https://www.figma.com/api/mcp/asset/b6486150-28cc-4da9-ac00-29f25b9ba411'
 const checkEmptyIcon = 'https://www.figma.com/api/mcp/asset/e8ac7e5a-9a7f-4cb0-a18d-89906b83a0a7'
 
@@ -71,13 +73,13 @@ const selectMethod = (method: 'sms' | 'email') => {
       <!-- Avatar frame -->
       <div class="absolute top-[20.29px] left-[39.88px] w-[25.24px] h-[11.13px]">
         <img
-          src="@/assets/icons/artist.png"
+          :src="avatarFrame"
           alt="Avatar frame"
           class="absolute block size-full max-w-none"
         />
       </div>
-      <!-- Main avatar -->
-      <div class="absolute top-[26.52px] left-[26.26px] w-[52.48px] h-[52.48px] mask-avatar">
+      <!-- Main avatar with mask -->
+      <div class="absolute top-[26.52px] left-[26.26px] w-[52.48px] h-[52.48px] overflow-hidden" style="mask-image: url('https://www.figma.com/api/mcp/asset/1c7eb3a3-abb7-4de5-803f-72fcd24efb34'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/1c7eb3a3-abb7-4de5-803f-72fcd24efb34'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
         <img
           :src="avatarMain"
           alt="Avatar"
@@ -160,14 +162,4 @@ const selectMethod = (method: 'sms' | 'email') => {
 </template>
 
 <style scoped>
-.mask-avatar {
-  mask-image: url('https://www.figma.com/api/mcp/asset/63769f61-3a5a-4dd7-99c7-15f122fb5217');
-  mask-size: 91px 91px;
-  mask-position: 0px 55.146px;
-  mask-repeat: no-repeat;
-  -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/63769f61-3a5a-4dd7-99c7-15f122fb5217');
-  -webkit-mask-size: 91px 91px;
-  -webkit-mask-position: 0px 55.146px;
-  -webkit-mask-repeat: no-repeat;
-}
 </style>

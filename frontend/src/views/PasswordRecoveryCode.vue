@@ -19,7 +19,9 @@ const bubble01 = 'https://www.figma.com/api/mcp/asset/beb7992b-6faa-495a-9a24-b8
 const bubble02 = 'https://www.figma.com/api/mcp/asset/a4213729-eca5-4f6b-bd7f-850c83c4cdd8'
 const ellipse = 'https://www.figma.com/api/mcp/asset/4af75c78-eb99-454f-9997-1812506027b3'
 const ellipse01 = 'https://www.figma.com/api/mcp/asset/b5dd8922-58ad-489a-b9e5-eab3dcb57173'
-const avatarMain = 'https://www.figma.com/api/mcp/asset/dd8af254-a49d-4661-bb15-df552ad4f0e6'
+const avatarFrame = 'https://www.figma.com/api/mcp/asset/26e2de28-0d05-4304-95ea-aebc7d1db2a4'
+const avatarMask = 'https://www.figma.com/api/mcp/asset/3c2b2d9f-1bc4-40c3-9328-12f455ff3d7b'
+const avatarMain = 'https://www.figma.com/api/mcp/asset/612f737d-3cad-4948-8603-9a3f909b5588'
 const emptyDot = 'https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9' // 空心点
 const warningIcon = 'https://www.figma.com/api/mcp/asset/cf9766c4-dba1-439a-9506-9618ca76549a'
 
@@ -173,13 +175,13 @@ const handleOkay = () => {
       <!-- Avatar frame -->
       <div class="absolute top-[20.29px] left-[39.88px] w-[25.24px] h-[11.13px]">
         <img
-          src="@/assets/icons/artist.png"
+          :src="avatarFrame"
           alt="Avatar frame"
           class="absolute block size-full max-w-none"
         />
       </div>
-      <!-- Main avatar -->
-      <div class="absolute top-[26.52px] left-[26.26px] w-[52.48px] h-[52.48px] mask-avatar">
+      <!-- Main avatar with mask -->
+      <div class="absolute top-[26.52px] left-[26.26px] w-[52.48px] h-[52.48px] overflow-hidden" style="mask-image: url('https://www.figma.com/api/mcp/asset/3c2b2d9f-1bc4-40c3-9328-12f455ff3d7b'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/3c2b2d9f-1bc4-40c3-9328-12f455ff3d7b'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
         <img
           :src="avatarMain"
           alt="Avatar"
@@ -318,14 +320,4 @@ const handleOkay = () => {
 </template>
 
 <style scoped>
-.mask-avatar {
-  mask-image: url('https://www.figma.com/api/mcp/asset/63769f61-3a5a-4dd7-99c7-15f122fb5217');
-  mask-size: 91px 91px;
-  mask-position: 0px 55.146px;
-  mask-repeat: no-repeat;
-  -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/63769f61-3a5a-4dd7-99c7-15f122fb5217');
-  -webkit-mask-size: 91px 91px;
-  -webkit-mask-position: 0px 55.146px;
-  -webkit-mask-repeat: no-repeat;
-}
 </style>

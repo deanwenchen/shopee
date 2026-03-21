@@ -14,7 +14,9 @@ const showPassword2 = ref(false)
 const bubble01 = 'https://www.figma.com/api/mcp/asset/4a99ade5-6b24-4cc2-933d-d8f31b84065d'
 const bubble02 = 'https://www.figma.com/api/mcp/asset/af2e68eb-5dd2-4033-98d6-07c69a9baff9'
 const ellipse = 'https://www.figma.com/api/mcp/asset/107f6677-203f-4995-b90e-614e0b603eee'
-const avatarMain = 'https://www.figma.com/api/mcp/asset/a5052054-69de-49d5-8ed5-6d4bfabd85ad'
+const avatarFrame = 'https://www.figma.com/api/mcp/asset/88e56ae3-07d9-4625-8d8c-e0b000570a25'
+const avatarMask = 'https://www.figma.com/api/mcp/asset/356785d0-81a1-4ffd-a905-a269b157c0a3'
+const avatarMain = 'https://www.figma.com/api/mcp/asset/dd8de402-a9b9-42e1-b814-eaa9d6fd203f'
 
 const handleSave = () => {
   console.log('Save new password:', newPassword.value)
@@ -77,13 +79,13 @@ const togglePassword2 = () => {
       <!-- Avatar frame -->
       <div class="absolute top-[20.29px] left-[39.88px] w-[25.24px] h-[11.13px]">
         <img
-          src="@/assets/icons/artist.png"
+          :src="avatarFrame"
           alt="Avatar frame"
           class="absolute block size-full max-w-none"
         />
       </div>
-      <!-- Main avatar -->
-      <div class="absolute top-[26.52px] left-[26.26px] w-[52.48px] h-[52.48px] mask-avatar">
+      <!-- Main avatar with mask -->
+      <div class="absolute top-[26.52px] left-[26.26px] w-[52.48px] h-[52.48px] overflow-hidden" style="mask-image: url('https://www.figma.com/api/mcp/asset/356785d0-81a1-4ffd-a905-a269b157c0a3'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/356785d0-81a1-4ffd-a905-a269b157c0a3'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
         <img
           :src="avatarMain"
           alt="Avatar"
