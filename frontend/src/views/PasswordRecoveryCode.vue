@@ -19,12 +19,20 @@ const bubble01 = 'https://www.figma.com/api/mcp/asset/beb7992b-6faa-495a-9a24-b8
 const bubble02 = 'https://www.figma.com/api/mcp/asset/a4213729-eca5-4f6b-bd7f-850c83c4cdd8'
 const ellipse = 'https://www.figma.com/api/mcp/asset/4af75c78-eb99-454f-9997-1812506027b3'
 const ellipse01 = 'https://www.figma.com/api/mcp/asset/b5dd8922-58ad-489a-b9e5-eab3dcb57173'
-const avatarFrame = 'https://www.figma.com/api/mcp/asset/2088bc90-4a4e-4fb1-8f18-75a8b7c7d56a'
 const avatarMain = 'https://www.figma.com/api/mcp/asset/dd8af254-a49d-4661-bb15-df552ad4f0e6'
-const blueDotFilled = 'https://www.figma.com/api/mcp/asset/e437bb4f-9ab6-42b1-b7ca-ebe1ed3ffa72' // 蓝色实心点
-const redDotFilled = 'https://www.figma.com/api/mcp/asset/429e9f84-260e-4fd6-9f08-33803d4cd99e' // 红色实心点
 const emptyDot = 'https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9' // 空心点
 const warningIcon = 'https://www.figma.com/api/mcp/asset/cf9766c4-dba1-439a-9506-9618ca76549a'
+
+// SVG components for dots
+const BlueDotSvg = `<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 17C13.1944 17 17 13.1944 17 8.5C17 3.80558 13.1944 0 8.5 0C3.80558 0 0 3.80558 0 8.5C0 13.1944 3.80558 17 8.5 17Z" fill="#004BFE"/></svg>`
+const RedDotSvg = `<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 17C13.1944 17 17 13.1944 17 8.5C17 3.80558 13.1944 0 8.5 0C3.80558 0 0 3.80558 0 8.5C0 13.1944 3.80558 17 8.5 17Z" fill="#EC4E4E"/></svg>`
+
+// Create blob URLs for SVGs
+const blueDotBlob = URL.createObjectURL(new Blob([BlueDotSvg], { type: 'image/svg+xml' }))
+const redDotBlob = URL.createObjectURL(new Blob([RedDotSvg], { type: 'image/svg+xml' }))
+
+const blueDotFilled = blueDotBlob // 蓝色实心点
+const redDotFilled = redDotBlob // 红色实心点
 
 // 剩余尝试次数
 const remainingAttempts = computed(() => maxAttempts - attemptCount.value)
@@ -165,7 +173,7 @@ const handleOkay = () => {
       <!-- Avatar frame -->
       <div class="absolute top-[20.29px] left-[39.88px] w-[25.24px] h-[11.13px]">
         <img
-          :src="avatarFrame"
+          src="@/assets/icons/artist.png"
           alt="Avatar frame"
           class="absolute block size-full max-w-none"
         />

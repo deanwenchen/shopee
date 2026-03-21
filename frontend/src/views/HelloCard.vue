@@ -6,6 +6,10 @@ import HomeIndicator from '@/components/HomeIndicator.vue'
 
 const router = useRouter()
 
+// 本地图片引用
+const guideImage = new URL('@/assets/icons/guide-image.png', import.meta.url).href
+const guideImageReady = new URL('@/assets/icons/guide-image-ready.png', import.meta.url).href
+
 // 引导数据 - 根据 Figma 设计更新
 interface GuidePage {
   title: string
@@ -19,22 +23,22 @@ const guides: GuidePage[] = [
   {
     title: 'Hello',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non consectetur turpis. Morbi eu eleifend lacus.',
-    image: 'https://www.figma.com/api/mcp/asset/924c0836-c5db-4e75-9580-d2add31dd59b'
+    image: guideImage
   },
   {
     title: 'Explore',
     description: 'Discover amazing products from top brands. Find exactly what you need with our smart search.',
-    image: 'https://www.figma.com/api/mcp/asset/924c0836-c5db-4e75-9580-d2add31dd59b'
+    image: guideImage
   },
   {
     title: 'Choose',
     description: 'Add items to your wishlist and cart. Compare products and find the best deals.',
-    image: 'https://www.figma.com/api/mcp/asset/924c0836-c5db-4e75-9580-d2add31dd59b'
+    image: guideImage
   },
   {
     title: 'Ready?',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    image: 'https://www.figma.com/api/mcp/asset/99f8902a-1f58-498b-a67a-060fb39df086',
+    image: guideImageReady,
     hasButton: true,
     buttonText: "Let's Start"
   }

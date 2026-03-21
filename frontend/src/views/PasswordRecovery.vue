@@ -11,7 +11,6 @@ const recoveryMethod = ref<'sms' | 'email'>('sms')
 const bubble01 = 'https://www.figma.com/api/mcp/asset/b8e325ee-b084-4f0d-a732-352c807a4bbe'
 const bubble02 = 'https://www.figma.com/api/mcp/asset/49e82bd7-c14c-4f92-9292-1a8e642fcea3'
 const ellipse = 'https://www.figma.com/api/mcp/asset/63769f61-3a5a-4dd7-99c7-15f122fb5217'
-const avatarFrame = 'https://www.figma.com/api/mcp/asset/dd3b2e8e-fa92-44a0-8441-1603cafab2bd'
 const avatarMain = 'https://www.figma.com/api/mcp/asset/024b0706-29ee-47c9-8802-0148440a4c6c'
 const checkIcon = 'https://www.figma.com/api/mcp/asset/b6486150-28cc-4da9-ac00-29f25b9ba411'
 const checkEmptyIcon = 'https://www.figma.com/api/mcp/asset/e8ac7e5a-9a7f-4cb0-a18d-89906b83a0a7'
@@ -72,7 +71,7 @@ const selectMethod = (method: 'sms' | 'email') => {
       <!-- Avatar frame -->
       <div class="absolute top-[20.29px] left-[39.88px] w-[25.24px] h-[11.13px]">
         <img
-          :src="avatarFrame"
+          src="@/assets/icons/artist.png"
           alt="Avatar frame"
           class="absolute block size-full max-w-none"
         />

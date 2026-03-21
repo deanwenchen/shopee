@@ -11,9 +11,18 @@ const inputRef = ref<HTMLInputElement | null>(null)
 const password = ref('')
 
 // Figma asset URLs
-const redDot = 'https://www.figma.com/api/mcp/asset/429e9f84-260e-4fd6-9f08-33803d4cd99e'
-const blueDotFilled = 'https://www.figma.com/api/mcp/asset/b324fa17-8d12-4309-a9d3-da82a6394522'
 const emptyDot = 'https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9'
+
+// SVG components for dots
+const BlueDotSvg = `<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 17C13.1944 17 17 13.1944 17 8.5C17 3.80558 13.1944 0 8.5 0C3.80558 0 0 3.80558 0 8.5C0 13.1944 3.80558 17 8.5 17Z" fill="#004BFE"/></svg>`
+const RedDotSvg = `<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 17C13.1944 17 17 13.1944 17 8.5C17 3.80558 13.1944 0 8.5 0C3.80558 0 0 3.80558 0 8.5C0 13.1944 3.80558 17 8.5 17Z" fill="#EC4E4E"/></svg>`
+
+// Create blob URLs for SVGs
+const blueDotBlob = URL.createObjectURL(new Blob([BlueDotSvg], { type: 'image/svg+xml' }))
+const redDotBlob = URL.createObjectURL(new Blob([RedDotSvg], { type: 'image/svg+xml' }))
+
+const redDot = redDotBlob
+const blueDotFilled = blueDotBlob
 
 // 正确的密码
 const CORRECT_PASSWORD = '12345678'
@@ -26,22 +35,12 @@ const hasBackspaced = ref(false)
 
 // 监听密码输入
 watch(password, (newValue, oldValue) => {
-  console.log('Password watch:', {
-    newValue: `"${newValue}"`,
-    oldValue: `"${oldValue}"`,
-    inputMode: inputMode.value,
-    hasBackspaced: hasBackspaced.value
-  })
-
   // 4 位密码输入模式 - 只允许输入 1 个字符
   if (inputMode.value === '4-digit') {
     if (newValue.length >= 1) {
-      // 输入任意字符后立即切换到 8 位密码模式（无延迟）
       inputMode.value = '8-digit'
-      // 切换后重新聚焦输入框
       nextTick(() => {
         inputRef.value?.focus()
-        console.log('Switched to 8-digit mode, refocused input')
       })
     }
     return
@@ -50,56 +49,33 @@ watch(password, (newValue, oldValue) => {
   // 8 位密码输入模式
   if (inputMode.value === '8-digit') {
     if (newValue.length === 8) {
-      console.log('8 digits entered, starting validation...')
-      // 验证密码
       setTimeout(() => {
-        console.log('Validating password:', newValue)
         if (newValue === CORRECT_PASSWORD) {
-          console.log('Password correct! Redirecting to /hello-card')
-          // 密码正确，跳转到 HelloCard
           router.push('/hello-card')
         } else {
-          console.log('Password wrong, switching to error mode')
-          // 密码错误，切换到错误状态
           inputMode.value = 'error'
           hasBackspaced.value = false
         }
-      }, 300)
+      }, 100)
     }
     return
   }
 
   // 错误状态模式
   if (inputMode.value === 'error') {
-    // 如果刚从 8-digit 切换过来，跳过这次 watch 触发
     if (!oldValue) return
 
-    console.log('Error mode check:', {
-      oldValueLength: oldValue?.length,
-      newValueLength: newValue.length,
-      hasBackspaced: hasBackspaced.value
-    })
-
     // 检测退格操作 - 从 8 个字符减少
-    if (oldValue.length === 8 && newValue.length === 7) {
-      console.log('Backspace detected (8 -> 7), setting hasBackspaced = true')
+    if (oldValue.length === 8 && newValue.length < 8) {
       hasBackspaced.value = true
-    }
-    // 继续退格
-    else if (hasBackspaced.value && newValue.length < 8) {
-      console.log('Continued backspace, keeping hasBackspaced = true')
-      hasBackspaced.value = true
+      return
     }
 
     // 当输入达到 8 个字符时验证
     if (newValue.length === 8 && oldValue.length === 7) {
       if (newValue === CORRECT_PASSWORD) {
-        // 密码正确，跳转到 HelloCard
-        console.log('Correct password in error mode, redirecting to /hello-card')
         router.push('/hello-card')
       } else {
-        // 密码错误，确认错误状态（蓝点变红点）
-        console.log('Error confirmed, setting hasBackspaced = false')
         hasBackspaced.value = false
       }
     }
@@ -107,10 +83,8 @@ watch(password, (newValue, oldValue) => {
 })
 
 onMounted(() => {
-  // 聚焦隐藏输入框，唤起系统键盘
   nextTick(() => {
     inputRef.value?.focus()
-    console.log('Input focused on mount')
   })
 })
 
@@ -122,37 +96,27 @@ const handleInputClick = () => {
 // 动态 dots 图片 - computed 属性（用于 8 位密码和错误状态）
 const dotImages = computed(() => {
   const images = []
-  console.log('dotImages computed:', {
-    passwordLength: password.value.length,
-    inputMode: inputMode.value,
-    hasBackspaced: hasBackspaced.value
-  })
 
   for (let i = 0; i < 8; i++) {
     if (password.value.length >= i + 1) {
       // 已输入的格子
       if (inputMode.value === 'error' && !hasBackspaced.value) {
         // 错误确认状态：红色实心点
-        console.log(`Dot ${i}: red (error confirmed)`)
         images.push(redDot)
       } else {
         // 正在输入状态：蓝色实心点
-        console.log(`Dot ${i}: blue (typing state)`)
         images.push(blueDotFilled)
       }
     } else {
       // 未输入的格子
       if (inputMode.value === 'error' && hasBackspaced.value) {
         // 退格后：空心点
-        console.log(`Dot ${i}: empty (after backspace)`)
         images.push(emptyDot)
       } else if (inputMode.value === 'error') {
         // 错误初始状态：红点
-        console.log(`Dot ${i}: red (error initial)`)
         images.push(redDot)
       } else {
         // 8 位输入状态：空心点
-        console.log(`Dot ${i}: empty (8-digit input)`)
         images.push(emptyDot)
       }
     }
@@ -199,7 +163,7 @@ const handleForgotPassword = () => {
     <div class="absolute top-[149px] left-[135px] w-[105px] h-[105px]" data-name="ellipse">
       <div class="absolute inset-[-4.76%] rounded-full overflow-hidden bg-[#ffb6c9]">
         <img
-          src="https://www.figma.com/api/mcp/asset/4f9e289e-bb36-458c-bdd1-96efb8db3dd6"
+          src="@/assets/icons/artist.png"
           alt="Avatar frame"
           class="w-full h-full object-cover"
         />

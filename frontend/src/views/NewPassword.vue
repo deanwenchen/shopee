@@ -14,7 +14,6 @@ const showPassword2 = ref(false)
 const bubble01 = 'https://www.figma.com/api/mcp/asset/4a99ade5-6b24-4cc2-933d-d8f31b84065d'
 const bubble02 = 'https://www.figma.com/api/mcp/asset/af2e68eb-5dd2-4033-98d6-07c69a9baff9'
 const ellipse = 'https://www.figma.com/api/mcp/asset/107f6677-203f-4995-b90e-614e0b603eee'
-const avatarFrame = 'https://www.figma.com/api/mcp/asset/ac7e8575-7c14-48a8-9689-52ded7422f47'
 const avatarMain = 'https://www.figma.com/api/mcp/asset/a5052054-69de-49d5-8ed5-6d4bfabd85ad'
 
 const handleSave = () => {
@@ -78,7 +77,7 @@ const togglePassword2 = () => {
       <!-- Avatar frame -->
       <div class="absolute top-[20.29px] left-[39.88px] w-[25.24px] h-[11.13px]">
         <img
-          :src="avatarFrame"
+          src="@/assets/icons/artist.png"
           alt="Avatar frame"
           class="absolute block size-full max-w-none"
         />
