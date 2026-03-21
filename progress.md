@@ -65,6 +65,15 @@
 - ✅ **Maximum Attempts Popup 已实现**（PasswordRecoveryCode 页面包含最大尝试次数弹窗，3 次错误后显示）
 - ✅ **修复 HelloCard localStorage 检查**（开发期间注释掉，允许重复测试引导流程）
 - ✅ **添加密码验证调试日志**（便于追踪密码验证和跳转流程）
+- ✅ **下载 Figma 资源到本地**（40 个资源下载到 `src/assets/figma/`，39 个成功，1 个 404）
+- ✅ **替换所有页面的 avatar frame 图标**（Password、PasswordRecovery、PasswordRecoveryCode、NewPassword 页面统一使用本地 `@/assets/icons/artist.png`，移除对 Figma CDN 的依赖）
+- ✅ **替换 dot 图标为本地 SVG 文件**（蓝色选中点 `blueellispse.svg`，红色错误点 `redellispse.svg`，用于 Password 和 PasswordRecoveryCode 页面）
+- ✅ **修复 PasswordRecovery 页面头像区域**（对齐 Figma node-id=0-12467，更新 avatar frame、mask、main avatar 的 Figma 资源 URL）
+- ✅ **修复 PasswordRecoveryCode 页面头像区域**（对齐 Figma node-id=0-12398，更新 avatar frame、mask、main avatar 的 Figma 资源 URL）
+- ✅ **修复 NewPassword 页面头像区域**（对齐 Figma node-id=0-12323，更新 avatar frame、mask、main avatar 的 Figma 资源 URL）
+- ✅ **移除所有页面的 `.mask-avatar` CSS 类**（将 mask 样式内联到 avatar 容器，提高可维护性）
+- ✅ **修复 PasswordRecoveryCode 页面问题**（更新正确的 ellipse URL 解决头像背景黑色问题；将 dots 从 flex gap 改为 absolute positioning 解决验证码右偏问题；添加 z-10 确保图层顺序正确）
+- ✅ **修复 NewPassword 页面 z-index**（为 ellipse 和 avatar 容器添加 z-10，确保头像图层在气泡背景之上）
 
 ### 阶段 2：主应用界面 ⏳ 待实现
 

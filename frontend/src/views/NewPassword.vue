@@ -11,12 +11,13 @@ const showPassword1 = ref(false)
 const showPassword2 = ref(false)
 
 // Figma asset URLs
-const bubble01 = 'https://www.figma.com/api/mcp/asset/4a99ade5-6b24-4cc2-933d-d8f31b84065d'
-const bubble02 = 'https://www.figma.com/api/mcp/asset/af2e68eb-5dd2-4033-98d6-07c69a9baff9'
-const ellipse = 'https://www.figma.com/api/mcp/asset/107f6677-203f-4995-b90e-614e0b603eee'
-const avatarFrame = 'https://www.figma.com/api/mcp/asset/88e56ae3-07d9-4625-8d8c-e0b000570a25'
-const avatarMask = 'https://www.figma.com/api/mcp/asset/356785d0-81a1-4ffd-a905-a269b157c0a3'
-const avatarMain = 'https://www.figma.com/api/mcp/asset/dd8de402-a9b9-42e1-b814-eaa9d6fd203f'
+const bubble01 = 'https://www.figma.com/api/mcp/asset/f04821bb-dcc4-46ca-b2a1-5b59f443bf5f'
+const bubble02 = 'https://www.figma.com/api/mcp/asset/90d3c347-98d9-4f72-aec6-cf1f0a4ce3b6'
+const ellipse = 'https://www.figma.com/api/mcp/asset/58006e4b-da06-4d80-a4a0-b32cbb465954'
+const avatarEF6B = 'https://www.figma.com/api/mcp/asset/77e59ace-f77e-4a18-b27f-b1ae8617b340'
+const avatar8C7A = 'https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'
+const avatarMask = 'https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'
+const avatarArtist2 = 'https://www.figma.com/api/mcp/asset/159d3385-63e5-47de-b7ec-10f295efffbe'
 
 const handleSave = () => {
   console.log('Save new password:', newPassword.value)
@@ -66,30 +67,43 @@ const togglePassword2 = () => {
       </div>
     </div>
 
-    <!-- Avatar Image Group -->
-    <div class="absolute top-[156px] left-[142px]" data-name="image" data-node-id="0:12323">
-      <!-- Background ellipse -->
-      <div class="absolute top-[0px] left-[0px] w-[105px] h-[105px]">
+    <!-- Ellipse background -->
+    <div class="absolute left-[187.5px] top-[149px] -translate-x-1/2 w-[105px] h-[110px] z-10" data-name="ellispse" data-node-id="0:12322">
+      <div class="absolute inset-[-4.76%]">
         <img
           :src="ellipse"
           alt="Ellipse"
+          class="block size-full max-w-none"
+        />
+      </div>
+    </div>
+
+    <!-- Avatar Image Group -->
+    <div class="absolute left-[187.5px] top-[149px] -translate-x-1/2 w-[105px] h-[110px] z-10" data-name="image" data-node-id="0:12323">
+      <!-- EF6B71E4-B0D6-4280-BBFB-2DEB6070603F -->
+      <div class="absolute inset-[19.21%_37.87%_69.58%_37.87%]">
+        <img
+          :src="avatarEF6B"
+          alt="Avatar decoration"
           class="absolute block size-full max-w-none"
         />
       </div>
-      <!-- Avatar frame -->
-      <div class="absolute top-[20.29px] left-[39.88px] w-[25.24px] h-[11.13px]">
-        <img
-          :src="avatarFrame"
-          alt="Avatar frame"
-          class="absolute block size-full max-w-none"
-        />
+      <!-- 8C7A435A-3E32-4D89-BCEB-E976B0F70AF3 - masked avatar -->
+      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+          <img
+            :src="avatar8C7A"
+            alt="Avatar"
+            class="absolute left-0 top-0 size-full max-w-none"
+          />
+        </div>
       </div>
-      <!-- Main avatar with mask -->
-      <div class="absolute top-[26.52px] left-[26.26px] w-[52.48px] h-[52.48px] overflow-hidden" style="mask-image: url('https://www.figma.com/api/mcp/asset/356785d0-81a1-4ffd-a905-a269b157c0a3'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/356785d0-81a1-4ffd-a905-a269b157c0a3'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+      <!-- artist-2 1 -->
+      <div class="absolute inset-0" style="mask-image: url('https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
         <img
-          :src="avatarMain"
-          alt="Avatar"
-          class="absolute inset-0 size-full max-w-none object-cover"
+          :src="avatarArtist2"
+          alt="Avatar main"
+          class="absolute inset-0 size-full max-w-none object-cover pointer-events-none"
         />
       </div>
     </div>

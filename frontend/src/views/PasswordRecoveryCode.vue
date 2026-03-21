@@ -15,14 +15,14 @@ const showMaxAttemptsPopup = ref(false)
 const isErrorState = ref(false) // 错误状态标记
 
 // Figma asset URLs
-const bubble01 = 'https://www.figma.com/api/mcp/asset/beb7992b-6faa-495a-9a24-b841028e6ba8'
-const bubble02 = 'https://www.figma.com/api/mcp/asset/a4213729-eca5-4f6b-bd7f-850c83c4cdd8'
-const ellipse = 'https://www.figma.com/api/mcp/asset/4af75c78-eb99-454f-9997-1812506027b3'
-const ellipse01 = 'https://www.figma.com/api/mcp/asset/b5dd8922-58ad-489a-b9e5-eab3dcb57173'
-const avatarFrame = 'https://www.figma.com/api/mcp/asset/26e2de28-0d05-4304-95ea-aebc7d1db2a4'
-const avatarMask = 'https://www.figma.com/api/mcp/asset/3c2b2d9f-1bc4-40c3-9328-12f455ff3d7b'
-const avatarMain = 'https://www.figma.com/api/mcp/asset/612f737d-3cad-4948-8603-9a3f909b5588'
-const emptyDot = 'https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9' // 空心点
+const bubble01 = 'https://www.figma.com/api/mcp/asset/4f3439f4-62ab-4010-a149-fa9a7d441c99'
+const bubble02 = 'https://www.figma.com/api/mcp/asset/0a65a368-1b3f-46f0-ac21-a12833a0e3e7'
+const ellipse = 'https://www.figma.com/api/mcp/asset/b6068eeb-70af-498c-9980-3dffc3091251'
+const avatarBD2B = 'https://www.figma.com/api/mcp/asset/b4b25371-b629-4555-975e-26e544aaa638'
+const avatar6959 = 'https://www.figma.com/api/mcp/asset/332d8b03-bf20-4595-9f49-76a62e79acf3'
+const avatarMask = 'https://www.figma.com/api/mcp/asset/48bed544-77b8-49a0-a821-837efbcff322'
+const avatarArtist2 = 'https://www.figma.com/api/mcp/asset/c0f59a89-b825-4bcc-8849-8df1cc7f7e9d'
+const emptyDot = 'https://www.figma.com/api/mcp/asset/83ba2ab2-92b5-4d1e-9c94-e321540274a4' // 空心点
 const warningIcon = 'https://www.figma.com/api/mcp/asset/cf9766c4-dba1-439a-9506-9618ca76549a'
 
 // SVG components for dots
@@ -162,30 +162,43 @@ const handleOkay = () => {
       </div>
     </div>
 
-    <!-- Avatar Image Group -->
-    <div class="absolute top-[156px] left-[142px]" data-name="image" data-node-id="0:12398">
-      <!-- Background ellipse -->
-      <div class="absolute top-[0px] left-[0px] w-[105px] h-[105px]">
+    <!-- Ellipse background -->
+    <div class="absolute left-[187.5px] top-[149px] -translate-x-1/2 w-[105px] h-[110px] z-10" data-name="ellispse" data-node-id="0:12397">
+      <div class="absolute inset-[-4.76%]">
         <img
           :src="ellipse"
           alt="Ellipse"
+          class="block size-full max-w-none"
+        />
+      </div>
+    </div>
+
+    <!-- Avatar Image Group -->
+    <div class="absolute left-[187.5px] top-[149px] -translate-x-1/2 w-[105px] h-[110px] z-10" data-name="image" data-node-id="0:12398">
+      <!-- BD2B4EE3-3A6F-4C47-B114-F152B95B18D0 -->
+      <div class="absolute inset-[19.21%_37.87%_69.58%_37.87%]">
+        <img
+          :src="avatarBD2B"
+          alt="Avatar decoration"
           class="absolute block size-full max-w-none"
         />
       </div>
-      <!-- Avatar frame -->
-      <div class="absolute top-[20.29px] left-[39.88px] w-[25.24px] h-[11.13px]">
-        <img
-          :src="avatarFrame"
-          alt="Avatar frame"
-          class="absolute block size-full max-w-none"
-        />
+      <!-- 69598E49-7F05-4DDB-9911-66FFA208CAFD - masked avatar -->
+      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('https://www.figma.com/api/mcp/asset/48bed544-77b8-49a0-a821-837efbcff322'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/48bed544-77b8-49a0-a821-837efbcff322'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+          <img
+            :src="avatar6959"
+            alt="Avatar"
+            class="absolute left-0 top-0 size-full max-w-none"
+          />
+        </div>
       </div>
-      <!-- Main avatar with mask -->
-      <div class="absolute top-[26.52px] left-[26.26px] w-[52.48px] h-[52.48px] overflow-hidden" style="mask-image: url('https://www.figma.com/api/mcp/asset/3c2b2d9f-1bc4-40c3-9328-12f455ff3d7b'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/3c2b2d9f-1bc4-40c3-9328-12f455ff3d7b'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+      <!-- artist-2 1 -->
+      <div class="absolute inset-0" style="mask-image: url('https://www.figma.com/api/mcp/asset/48bed544-77b8-49a0-a821-837efbcff322'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/48bed544-77b8-49a0-a821-837efbcff322'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
         <img
-          :src="avatarMain"
-          alt="Avatar"
-          class="absolute inset-0 size-full max-w-none object-cover"
+          :src="avatarArtist2"
+          alt="Avatar main"
+          class="absolute inset-0 size-full max-w-none object-cover pointer-events-none"
         />
       </div>
     </div>
@@ -226,17 +239,18 @@ const handleOkay = () => {
     />
 
     <!-- Code Dots -->
-    <div
-      class="absolute left-[136px] top-[424px] flex gap-[29px] pointer-events-none"
-      data-name="dots"
-      data-node-id="0:12387"
-    >
-      <div v-for="(dot, index) in dotImages" :key="index" class="w-[17px] h-[17px]">
-        <img
-          :src="dot"
-          :alt="'Dot ' + (index + 1)"
-          class="w-full h-full"
-        />
+    <div class="absolute left-[136px] top-[424px]" data-name="dots" data-node-id="0:12387">
+      <div class="absolute left-0 size-[17px]" data-name="ellispse 01" data-node-id="0:12388">
+        <img :src="dotImages[0]" alt="Dot 1" class="block size-full" />
+      </div>
+      <div class="absolute left-[29px] size-[17px]" data-name="ellispse 01" data-node-id="0:12389">
+        <img :src="dotImages[1]" alt="Dot 2" class="block size-full" />
+      </div>
+      <div class="absolute left-[58px] size-[17px]" data-name="ellispse 01" data-node-id="0:12390">
+        <img :src="dotImages[2]" alt="Dot 3" class="block size-full" />
+      </div>
+      <div class="absolute left-[87px] size-[17px]" data-name="ellispse 01" data-node-id="0:12391">
+        <img :src="dotImages[3]" alt="Dot 4" class="block size-full" />
       </div>
     </div>
 

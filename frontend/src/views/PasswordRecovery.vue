@@ -8,14 +8,15 @@ const router = useRouter()
 const recoveryMethod = ref<'sms' | 'email'>('sms')
 
 // Figma asset URLs
-const bubble01 = 'https://www.figma.com/api/mcp/asset/b8e325ee-b084-4f0d-a732-352c807a4bbe'
-const bubble02 = 'https://www.figma.com/api/mcp/asset/49e82bd7-c14c-4f92-9292-1a8e642fcea3'
-const ellipse = 'https://www.figma.com/api/mcp/asset/63769f61-3a5a-4dd7-99c7-15f122fb5217'
-const avatarFrame = 'https://www.figma.com/api/mcp/asset/8170b441-8445-4132-aa6d-9be92cf35f8a'
-const avatarMask = 'https://www.figma.com/api/mcp/asset/1c7eb3a3-abb7-4de5-803f-72fcd24efb34'
-const avatarMain = 'https://www.figma.com/api/mcp/asset/82b28a0b-3852-45e3-a64d-542cea01ec12'
-const checkIcon = 'https://www.figma.com/api/mcp/asset/b6486150-28cc-4da9-ac00-29f25b9ba411'
-const checkEmptyIcon = 'https://www.figma.com/api/mcp/asset/e8ac7e5a-9a7f-4cb0-a18d-89906b83a0a7'
+const bubble01 = 'https://www.figma.com/api/mcp/asset/1afb7a0d-c11b-4a9a-8e61-5ead6fffec23'
+const bubble02 = 'https://www.figma.com/api/mcp/asset/d31e2712-7080-4907-9c35-e4baff6bdee5'
+const ellipse = 'https://www.figma.com/api/mcp/asset/05b73873-ad02-4a83-bbc3-947026b13eee'
+const avatar3A06 = 'https://www.figma.com/api/mcp/asset/aa0e35dd-f8fd-4072-b35f-834ff4a95a73'
+const avatarC0A416 = 'https://www.figma.com/api/mcp/asset/0c20e9cb-8161-4915-9fa3-6837f4bebe14'
+const avatarMask = 'https://www.figma.com/api/mcp/asset/6cd29425-f045-434b-9bba-edf0f4f699df'
+const avatarArtist2 = 'https://www.figma.com/api/mcp/asset/877a4afd-bfed-49c8-90dc-5b7809c99b2e'
+const checkIcon = 'https://www.figma.com/api/mcp/asset/8dfe51c7-d0b1-4bb8-b502-ed108389b3f5'
+const checkEmptyIcon = 'https://www.figma.com/api/mcp/asset/ad430095-ecd8-42b2-841c-8572415af049'
 
 const handleNext = () => {
   console.log('Recovery method selected:', recoveryMethod.value)
@@ -60,30 +61,43 @@ const selectMethod = (method: 'sms' | 'email') => {
       </div>
     </div>
 
-    <!-- Avatar Image Group -->
-    <div class="absolute top-[156px] left-[142px]" data-name="image" data-node-id="0:12467">
-      <!-- Background ellipse -->
-      <div class="absolute top-[0px] left-[0px] w-[105px] h-[105px]">
+    <!-- Ellipse background -->
+    <div class="absolute left-[187.5px] top-[149px] -translate-x-1/2 size-[106px]" data-name="ellispse" data-node-id="0:12466">
+      <div class="absolute inset-[-4.76%]">
         <img
           :src="ellipse"
           alt="Ellipse"
+          class="block size-full max-w-none"
+        />
+      </div>
+    </div>
+
+    <!-- Avatar Image Group -->
+    <div class="absolute left-[187.5px] top-[149px] -translate-x-1/2 size-[106px]" data-name="image" data-node-id="0:12467">
+      <!-- 3A06AFD8-BC44-46CC-8865-FDE3018427B6 -->
+      <div class="absolute inset-[19.21%_37.87%_69.58%_37.87%]">
+        <img
+          :src="avatar3A06"
+          alt="Avatar decoration"
           class="absolute block size-full max-w-none"
         />
       </div>
-      <!-- Avatar frame -->
-      <div class="absolute top-[20.29px] left-[39.88px] w-[25.24px] h-[11.13px]">
-        <img
-          :src="avatarFrame"
-          alt="Avatar frame"
-          class="absolute block size-full max-w-none"
-        />
+      <!-- C0A416F7-B1E5-4BD4-8929-2BEAA8633585 - masked avatar -->
+      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('https://www.figma.com/api/mcp/asset/6cd29425-f045-434b-9bba-edf0f4f699df'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/6cd29425-f045-434b-9bba-edf0f4f699df'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+          <img
+            :src="avatarC0A416"
+            alt="Avatar"
+            class="absolute left-0 top-0 size-full max-w-none"
+          />
+        </div>
       </div>
-      <!-- Main avatar with mask -->
-      <div class="absolute top-[26.52px] left-[26.26px] w-[52.48px] h-[52.48px] overflow-hidden" style="mask-image: url('https://www.figma.com/api/mcp/asset/1c7eb3a3-abb7-4de5-803f-72fcd24efb34'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/1c7eb3a3-abb7-4de5-803f-72fcd24efb34'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+      <!-- artist-2 1 -->
+      <div class="absolute inset-0" style="mask-image: url('https://www.figma.com/api/mcp/asset/6cd29425-f045-434b-9bba-edf0f4f699df'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/6cd29425-f045-434b-9bba-edf0f4f699df'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
         <img
-          :src="avatarMain"
-          alt="Avatar"
-          class="absolute inset-0 size-full max-w-none object-cover"
+          :src="avatarArtist2"
+          alt="Avatar main"
+          class="absolute inset-0 size-full max-w-none object-cover pointer-events-none"
         />
       </div>
     </div>
