@@ -26,15 +26,23 @@ const hasBackspaced = ref(false)
 
 // 监听密码输入
 watch(password, (newValue, oldValue) => {
+  console.log('Password watch:', {
+    newValue: `"${newValue}"`,
+    oldValue: `"${oldValue}"`,
+    inputMode: inputMode.value,
+    hasBackspaced: hasBackspaced.value
+  })
+
   // 4 位密码输入模式 - 只允许输入 1 个字符
   if (inputMode.value === '4-digit') {
     if (newValue.length >= 1) {
-      // 只保留第一个字符
-      if (newValue.length > 1) {
-        password.value = newValue.charAt(0)
-      }
       // 输入任意字符后立即切换到 8 位密码模式（无延迟）
       inputMode.value = '8-digit'
+      // 切换后重新聚焦输入框
+      nextTick(() => {
+        inputRef.value?.focus()
+        console.log('Switched to 8-digit mode, refocused input')
+      })
     }
     return
   }
@@ -51,6 +59,7 @@ watch(password, (newValue, oldValue) => {
           // 密码错误，切换到错误状态
           inputMode.value = 'error'
           hasBackspaced.value = false
+          console.log('Password wrong, switched to error mode')
         }
       }, 300)
     }
@@ -59,8 +68,12 @@ watch(password, (newValue, oldValue) => {
 
   // 错误状态模式
   if (inputMode.value === 'error') {
+    console.log('Error mode check:', { oldValueLength: oldValue?.length, newValueLength: newValue.length })
+
+    // 使用 oldValue 检测退格操作
     // 当从 8 个字符回退到少于 8 个字符时，重置为输入状态（红点变蓝点）
     if (oldValue?.length === 8 && newValue.length < 8) {
+      console.log('Backspace detected in error mode (8 -> ' + newValue.length + '), setting hasBackspaced = true')
       hasBackspaced.value = true
     }
     // 当输入达到 8 个字符时验证
@@ -70,6 +83,7 @@ watch(password, (newValue, oldValue) => {
         router.push('/hello-card')
       } else {
         // 密码错误，确认错误状态（蓝点变红点）
+        console.log('Error confirmed, setting hasBackspaced = false')
         hasBackspaced.value = false
       }
     }
@@ -80,33 +94,49 @@ onMounted(() => {
   // 聚焦隐藏输入框，唤起系统键盘
   nextTick(() => {
     inputRef.value?.focus()
+    console.log('Input focused on mount')
   })
 })
+
+// 处理输入框点击，确保聚焦
+const handleInputClick = () => {
+  inputRef.value?.focus()
+}
 
 // 动态 dots 图片 - computed 属性（用于 8 位密码和错误状态）
 const dotImages = computed(() => {
   const images = []
+  console.log('dotImages computed:', {
+    passwordLength: password.value.length,
+    inputMode: inputMode.value,
+    hasBackspaced: hasBackspaced.value
+  })
 
   for (let i = 0; i < 8; i++) {
     if (password.value.length >= i + 1) {
       // 已输入的格子
       if (inputMode.value === 'error' && !hasBackspaced.value) {
         // 错误确认状态：红色实心点
+        console.log(`Dot ${i}: red (error confirmed)`)
         images.push(redDot)
       } else {
         // 正在输入状态：蓝色实心点
+        console.log(`Dot ${i}: blue (typing state)`)
         images.push(blueDotFilled)
       }
     } else {
       // 未输入的格子
       if (inputMode.value === 'error' && hasBackspaced.value) {
         // 退格后：空心点
+        console.log(`Dot ${i}: empty (after backspace)`)
         images.push(emptyDot)
       } else if (inputMode.value === 'error') {
         // 错误初始状态：红点
+        console.log(`Dot ${i}: red (error initial)`)
         images.push(redDot)
       } else {
         // 8 位输入状态：空心点
+        console.log(`Dot ${i}: empty (8-digit input)`)
         images.push(emptyDot)
       }
     }
@@ -124,7 +154,7 @@ const handleForgotPassword = () => {
 </script>
 
 <template>
-  <div class="bg-white relative w-[375px] h-[817px] mx-auto" data-name="04 Password" data-node-id="0:12649">
+  <div class="bg-white relative w-[375px] h-[817px] mx-auto overflow-hidden" data-name="04 Password" data-node-id="0:12649">
     <!-- Status Bar -->
     <StatusBar />
 
@@ -169,7 +199,7 @@ const handleForgotPassword = () => {
     </div>
 
     <!-- Greeting Text -->
-    <h1 class="absolute left-1/2 -translate-x-1/2 top-[282px] font-raleway font-bold text-[28px] leading-[36px] text-brand-black text-center tracking-[-0.28px]">
+    <h1 class="absolute left-1/2 -translate-x-1/2 top-[282px] font-raleway font-bold text-[28px] leading-[36px] text-brand-black text-center tracking-[-0.28px] whitespace-nowrap">
       Hello, Romina!!
     </h1>
 
@@ -186,10 +216,11 @@ const handleForgotPassword = () => {
       maxlength="8"
       class="absolute opacity-0 left-[78px] top-[390px] w-[261px] h-[17px]"
       autofocus
+      @click="handleInputClick"
     />
 
     <!-- 4 位密码输入框（初始状态） -->
-    <div v-if="inputMode === '4-digit'" class="absolute left-[81px] top-[406px] flex gap-[5.056px]" data-name="Password Inputs">
+    <div @click="handleInputClick" v-if="inputMode === '4-digit'" class="absolute left-[81px] top-[406px] flex gap-[5.056px] cursor-text" data-name="Password Inputs">
       <div class="w-[49.3px] h-[50.564px] rounded-[10.113px] bg-[#f8f8f8]" />
       <div class="w-[49.3px] h-[50.564px] rounded-[10.113px] bg-[#f8f8f8]" />
       <div class="w-[49.3px] h-[50.564px] rounded-[10.113px] bg-[#f8f8f8]" />
@@ -197,7 +228,7 @@ const handleForgotPassword = () => {
     </div>
 
     <!-- 8 位密码点（8 位输入状态和错误状态） -->
-    <div v-else class="absolute left-[78px] top-[390px] flex gap-[12px]" data-name="Dots">
+    <div @click="handleInputClick" v-else class="absolute left-[78px] top-[390px] flex gap-[12px] cursor-text" data-name="Dots">
       <div v-for="(dot, index) in dotImages" :key="index" class="w-[17px] h-[17px]">
         <img :src="dot" :alt="'Dot ' + (index + 1)" class="w-full h-full" />
       </div>
