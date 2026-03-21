@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, nextTick } from 'vue'
+import { ref, watch, onMounted, nextTick, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
@@ -12,6 +12,7 @@ const inputRef = ref<HTMLInputElement | null>(null)
 const maxAttempts = 3
 const attemptCount = ref(0)
 const showMaxAttemptsPopup = ref(false)
+const isErrorState = ref(false) // 错误状态标记
 
 // Figma asset URLs
 const bubble01 = 'https://www.figma.com/api/mcp/asset/beb7992b-6faa-495a-9a24-b841028e6ba8'
@@ -20,9 +21,36 @@ const ellipse = 'https://www.figma.com/api/mcp/asset/4af75c78-eb99-454f-9997-181
 const ellipse01 = 'https://www.figma.com/api/mcp/asset/b5dd8922-58ad-489a-b9e5-eab3dcb57173'
 const avatarFrame = 'https://www.figma.com/api/mcp/asset/2088bc90-4a4e-4fb1-8f18-75a8b7c7d56a'
 const avatarMain = 'https://www.figma.com/api/mcp/asset/dd8af254-a49d-4661-bb15-df552ad4f0e6'
-const dotFilled = 'https://www.figma.com/api/mcp/asset/e437bb4f-9ab6-42b1-b7ca-ebe1ed3ffa72'
-const dotEmpty = 'https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9'
+const blueDotFilled = 'https://www.figma.com/api/mcp/asset/e437bb4f-9ab6-42b1-b7ca-ebe1ed3ffa72' // 蓝色实心点
+const redDotFilled = 'https://www.figma.com/api/mcp/asset/429e9f84-260e-4fd6-9f08-33803d4cd99e' // 红色实心点
+const emptyDot = 'https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9' // 空心点
 const warningIcon = 'https://www.figma.com/api/mcp/asset/cf9766c4-dba1-439a-9506-9618ca76549a'
+
+// 剩余尝试次数
+const remainingAttempts = computed(() => maxAttempts - attemptCount.value)
+
+// 动态 dots 图片
+const dotImages = computed(() => {
+  const images = []
+  for (let i = 0; i < 4; i++) {
+    if (code.value.length >= i + 1) {
+      // 已输入的格子
+      if (isErrorState.value) {
+        images.push(redDotFilled) // 错误状态：红点
+      } else {
+        images.push(blueDotFilled) // 正常输入：蓝点
+      }
+    } else {
+      // 未输入的格子
+      if (isErrorState.value) {
+        images.push(redDotFilled) // 错误状态：红点
+      } else {
+        images.push(emptyDot) // 未输入：空心点
+      }
+    }
+  }
+  return images
+})
 
 // 模拟验证码验证（实际应该调用 API）
 const validateCode = (inputCode: string): boolean => {
@@ -46,10 +74,16 @@ watch(code, (newValue) => {
     if (!validateCode(newValue)) {
       attemptCount.value++
       code.value = '' // 清空输入
+      isErrorState.value = true // 设置错误状态
 
       if (attemptCount.value >= maxAttempts) {
         // 达到最大尝试次数，显示弹窗
         showMaxAttemptsPopup.value = true
+      } else {
+        // 重置错误状态，允许重新输入
+        setTimeout(() => {
+          isErrorState.value = false
+        }, 500)
       }
     } else {
       // 验证码正确，跳转到新密码页面
@@ -76,6 +110,7 @@ const handleDotAreaClick = () => {
 const handleSendAgain = () => {
   console.log('Send code again')
   attemptCount.value = 0 // 重置计数
+  isErrorState.value = false // 重置错误状态
   code.value = ''
   nextTick(() => {
     inputRef.value?.focus()
@@ -186,35 +221,22 @@ const handleOkay = () => {
       data-name="dots"
       data-node-id="0:12387"
     >
-      <div class="w-[17px] h-[17px]" data-node-id="0:12388">
+      <div v-for="(dot, index) in dotImages" :key="index" class="w-[17px] h-[17px]">
         <img
-          :src="code.length >= 1 ? dotFilled : dotEmpty"
-          alt="Dot 1"
-          class="w-full h-full"
-        />
-      </div>
-      <div class="w-[17px] h-[17px]" data-node-id="0:12389">
-        <img
-          :src="code.length >= 2 ? dotFilled : dotEmpty"
-          alt="Dot 2"
-          class="w-full h-full"
-        />
-      </div>
-      <div class="w-[17px] h-[17px]" data-node-id="0:12390">
-        <img
-          :src="code.length >= 3 ? dotFilled : dotEmpty"
-          alt="Dot 3"
-          class="w-full h-full"
-        />
-      </div>
-      <div class="w-[17px] h-[17px]" data-node-id="0:12391">
-        <img
-          :src="code.length >= 4 ? dotFilled : dotEmpty"
-          alt="Dot 4"
+          :src="dot"
+          :alt="'Dot ' + (index + 1)"
           class="w-full h-full"
         />
       </div>
     </div>
+
+    <!-- Remaining Attempts Text -->
+    <p
+      v-if="attemptCount > 0 && attemptCount < maxAttempts"
+      class="absolute left-[188.5px] top-[460px] -translate-x-1/2 font-nunito font-light text-[14px] leading-[22px] text-[#ff5790] text-center"
+    >
+      {{ remainingAttempts }} attempts remaining
+    </p>
 
     <!-- Send Again Button -->
     <button

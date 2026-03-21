@@ -60,6 +60,11 @@
 - ✅ WrongPassword 支持退格功能（退格时红点恢复蓝色，可重新输入）
 - ✅ **合并 PasswordTyping 和 WrongPassword 到 Password 页面**（通过 inputMode 状态控制：4-digit → 8-digit → error）
 - ✅ **优化输入延迟**（移除 4 位→8 位切换的 50ms 延迟，8 位验证延迟从 500ms 降至 300ms）
+- ✅ **修复密码输入 bug**（添加点击输入区域聚焦功能，使用 previousPassword 追踪退格操作，添加 click handler 确保输入框聚焦）
+- ✅ **更新 HelloCard 对齐 Figma 设计**（更新气泡背景图片、Dots 指示器样式、Let's Start 按钮为蓝色#004cff）
+- ✅ **Maximum Attempts Popup 已实现**（PasswordRecoveryCode 页面包含最大尝试次数弹窗，3 次错误后显示）
+- ✅ **修复 HelloCard localStorage 检查**（开发期间注释掉，允许重复测试引导流程）
+- ✅ **添加密码验证调试日志**（便于追踪密码验证和跳转流程）
 
 ### 阶段 2：主应用界面 ⏳ 待实现
 

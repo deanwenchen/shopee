@@ -50,16 +50,19 @@ watch(password, (newValue, oldValue) => {
   // 8 位密码输入模式
   if (inputMode.value === '8-digit') {
     if (newValue.length === 8) {
+      console.log('8 digits entered, starting validation...')
       // 验证密码
       setTimeout(() => {
+        console.log('Validating password:', newValue)
         if (newValue === CORRECT_PASSWORD) {
+          console.log('Password correct! Redirecting to /hello-card')
           // 密码正确，跳转到 HelloCard
           router.push('/hello-card')
         } else {
+          console.log('Password wrong, switching to error mode')
           // 密码错误，切换到错误状态
           inputMode.value = 'error'
           hasBackspaced.value = false
-          console.log('Password wrong, switched to error mode')
         }
       }, 300)
     }
@@ -68,18 +71,31 @@ watch(password, (newValue, oldValue) => {
 
   // 错误状态模式
   if (inputMode.value === 'error') {
-    console.log('Error mode check:', { oldValueLength: oldValue?.length, newValueLength: newValue.length })
+    // 如果刚从 8-digit 切换过来，跳过这次 watch 触发
+    if (!oldValue) return
 
-    // 使用 oldValue 检测退格操作
-    // 当从 8 个字符回退到少于 8 个字符时，重置为输入状态（红点变蓝点）
-    if (oldValue?.length === 8 && newValue.length < 8) {
-      console.log('Backspace detected in error mode (8 -> ' + newValue.length + '), setting hasBackspaced = true')
+    console.log('Error mode check:', {
+      oldValueLength: oldValue?.length,
+      newValueLength: newValue.length,
+      hasBackspaced: hasBackspaced.value
+    })
+
+    // 检测退格操作 - 从 8 个字符减少
+    if (oldValue.length === 8 && newValue.length === 7) {
+      console.log('Backspace detected (8 -> 7), setting hasBackspaced = true')
       hasBackspaced.value = true
     }
+    // 继续退格
+    else if (hasBackspaced.value && newValue.length < 8) {
+      console.log('Continued backspace, keeping hasBackspaced = true')
+      hasBackspaced.value = true
+    }
+
     // 当输入达到 8 个字符时验证
-    if (newValue.length === 8 && oldValue?.length === 7) {
+    if (newValue.length === 8 && oldValue.length === 7) {
       if (newValue === CORRECT_PASSWORD) {
         // 密码正确，跳转到 HelloCard
+        console.log('Correct password in error mode, redirecting to /hello-card')
         router.push('/hello-card')
       } else {
         // 密码错误，确认错误状态（蓝点变红点）
