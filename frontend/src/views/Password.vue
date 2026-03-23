@@ -4,6 +4,11 @@ import { useRouter } from 'vue-router'
 import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
 
+// 导入本地图片
+import emptyDotImg from '@/assets/figma/25bd7827-642a-4eb0-8971-e28624a121b9.svg'
+import blueDotImg from '@/assets/figma/blue-dot.svg'
+import redDotImg from '@/assets/figma/red-dot.svg'
+
 const router = useRouter()
 const inputRef = ref<HTMLInputElement | null>(null)
 
@@ -11,18 +16,9 @@ const inputRef = ref<HTMLInputElement | null>(null)
 const password = ref('')
 
 // Figma asset URLs
-const emptyDot = 'https://www.figma.com/api/mcp/asset/25bd7827-642a-4eb0-8971-e28624a121b9'
-
-// SVG components for dots
-const BlueDotSvg = `<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 17C13.1944 17 17 13.1944 17 8.5C17 3.80558 13.1944 0 8.5 0C3.80558 0 0 3.80558 0 8.5C0 13.1944 3.80558 17 8.5 17Z" fill="#004BFE"/></svg>`
-const RedDotSvg = `<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 17C13.1944 17 17 13.1944 17 8.5C17 3.80558 13.1944 0 8.5 0C3.80558 0 0 3.80558 0 8.5C0 13.1944 3.80558 17 8.5 17Z" fill="#EC4E4E"/></svg>`
-
-// Create blob URLs for SVGs
-const blueDotBlob = URL.createObjectURL(new Blob([BlueDotSvg], { type: 'image/svg+xml' }))
-const redDotBlob = URL.createObjectURL(new Blob([RedDotSvg], { type: 'image/svg+xml' }))
-
-const redDot = redDotBlob
-const blueDotFilled = blueDotBlob
+const emptyDot = emptyDotImg
+const blueDotFilled = blueDotImg
+const redDot = redDotImg
 
 // 正确的密码
 const CORRECT_PASSWORD = '12345678'
@@ -155,7 +151,7 @@ const handleForgotPassword = () => {
       <!-- Bubble 02 - 浅蓝色大气泡（旋转 158 度） -->
       <div class="absolute top-[0px] left-[22px] w-[512px] h-[550px] rotate-[158deg]">
         <img
-          src="https://www.figma.com/api/mcp/asset/090d6144-e1da-4b62-8d46-af67a8b62405"
+          src="../assets/figma/090d6144-e1da-4b62-8d46-af67a8b62405.svg"
           alt="Bubble 02"
           class="w-full h-full object-contain"
         />
@@ -164,7 +160,7 @@ const handleForgotPassword = () => {
       <!-- Bubble 01 - 深蓝色大气泡 -->
       <div class="absolute top-[0px] left-[0px] w-[403px] h-[443px]">
         <img
-          src="https://www.figma.com/api/mcp/asset/9acc6ed4-83e1-4c99-b930-5279f1abf2b7"
+          src="../assets/figma/9acc6ed4-83e1-4c99-b930-5279f1abf2b7.svg"
           alt="Bubble 01"
           class="w-full h-full object-contain"
         />
@@ -183,7 +179,7 @@ const handleForgotPassword = () => {
       <!-- Avatar Image -->
       <div class="absolute inset-[19.21%_37.87%_69.58%_37.87%] rounded-full overflow-hidden">
         <img
-          src="https://www.figma.com/api/mcp/asset/55897da1-4abd-446d-9448-8ea2bb86b45d"
+          src="../assets/figma/55897da1-4abd-446d-9448-8ea2bb86b45d.svg"
           alt="Avatar"
           class="w-full h-full object-cover"
         />

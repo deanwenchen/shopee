@@ -63,7 +63,7 @@ const handleCancel = () => {
       <!-- Bubble 02 - 浅蓝色大气泡（旋转 158 度）- 在底层，先渲染 -->
       <div class="absolute top-[0px] left-[22px] w-[512px] h-[550px] rotate-[158deg]" data-name="bubble 02">
         <img
-          src="https://www.figma.com/api/mcp/asset/56fc5330-5d3d-4979-a050-37d85c359820"
+          src="../assets/figma/56fc5330-5d3d-4979-a050-37d85c359820.svg"
           alt="Bubble 02"
           class="w-full h-full object-contain"
         />
@@ -72,7 +72,7 @@ const handleCancel = () => {
       <!-- Bubble 01 - 深蓝色大气泡 - 在浅蓝色上面，后渲染 -->
       <div class="absolute top-[0px] left-[0px] w-[403px] h-[443px]" data-name="bubble 01">
         <img
-          src="https://www.figma.com/api/mcp/asset/a007d904-91e7-4dab-92c2-975266a4496a"
+          src="../assets/figma/a007d904-91e7-4dab-92c2-975266a4496a.svg"
           alt="Bubble 01"
           class="w-full h-full object-contain"
         />
@@ -81,7 +81,7 @@ const handleCancel = () => {
       <!-- Bubble 03 - 右侧小气泡（旋转 -156 度） -->
       <div class="absolute top-[411px] left-[440px] w-[187px] h-[194px] -rotate-[156deg]" data-name="bubblle 03">
         <img
-          src="https://www.figma.com/api/mcp/asset/4047a2b8-7488-4f38-a0d0-fd665eeb8276"
+          src="../assets/figma/4047a2b8-7488-4f38-a0d0-fd665eeb8276.svg"
           alt="Bubble 03"
           class="w-full h-full object-contain"
         />
@@ -90,7 +90,7 @@ const handleCancel = () => {
       <!-- Bubble 04 - 底部大气泡（旋转 108 度） -->
       <div class="absolute top-[621px] left-[245px] w-[536px] h-[492px] rotate-[108deg]" data-name="bubble 04">
         <img
-          src="https://www.figma.com/api/mcp/asset/a8768779-5a96-411c-83de-55b550d454d1"
+          src="../assets/figma/a8768779-5a96-411c-83de-55b550d454d1.svg"
           alt="Bubble 04"
           class="w-full h-full object-contain"
         />
@@ -105,7 +105,7 @@ const handleCancel = () => {
         Login
       </h1>
       <p class="font-nunito font-light text-[19px] leading-[35px] text-brand-black mt-[10px]">
-        Good to see you back! <img src="https://www.figma.com/api/mcp/asset/0e7c1044-1b0e-4025-ba9a-fd788bf676d4" alt="" class="inline w-[20px] h-[20px] align-middle" />
+        Good to see you back! <img src="../assets/figma/0e7c1044-1b0e-4025-ba9a-fd788bf676d4.svg" alt="" class="inline w-[20px] h-[20px] align-middle" />
       </p>
     </div>
 

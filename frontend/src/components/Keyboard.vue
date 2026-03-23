@@ -71,7 +71,7 @@ const handleKeyGo = () => {
       <!-- 第四行功能键 -->
       <!-- Shift -->
       <button class="absolute left-[3px] top-[126px] w-[42px] h-[42px] bg-[#fcfcfe] rounded-[4.6px] shadow-[0px_1px_0px_0px_#898a8d] flex items-center justify-center">
-        <img src="https://www.figma.com/api/mcp/asset/0b568db6-0265-4ef6-a68b-d3c7fe45f5cb" alt="Shift" class="w-[18.88px] h-[16.456px]" />
+        <img src="../assets/figma/0b568db6-0265-4ef6-a68b-d3c7fe45f5cb.svg" alt="Shift" class="w-[18.88px] h-[16.456px]" />
       </button>
 
       <!-- 123 -->
@@ -91,17 +91,17 @@ const handleKeyGo = () => {
 
       <!-- Delete -->
       <button @click="handleKeyDelete" class="absolute right-[3px] top-[84px] w-[42px] h-[42px] bg-[#adb3bc] rounded-[4.6px] shadow-[0px_1px_0px_0px_#898a8d] flex items-center justify-center">
-        <img src="https://www.figma.com/api/mcp/asset/cf7c3eb6-6a31-48e6-853f-926dcca5be80" alt="Delete" class="w-[18.88px] h-[16.456px]" />
+        <img src="../assets/figma/cf7c3eb6-6a31-48e6-853f-926dcca5be80.svg" alt="Delete" class="w-[18.88px] h-[16.456px]" />
       </button>
 
       <!-- Emoji -->
       <button class="absolute left-[20px] bottom-[24px] w-[30px] h-[30px] bg-transparent flex items-center justify-center">
-        <img src="https://www.figma.com/api/mcp/asset/ee8cd16d-d3a1-49df-a1fd-9985348316d1" alt="Emoji" class="w-[24px] h-[24px]" />
+        <img src="../assets/figma/ee8cd16d-d3a1-49df-a1fd-9985348316d1.svg" alt="Emoji" class="w-[24px] h-[24px]" />
       </button>
 
       <!-- Dictation -->
       <button class="absolute right-[20px] bottom-[24px] w-[30px] h-[30px] bg-transparent flex items-center justify-center">
-        <img src="https://www.figma.com/api/mcp/asset/9a16895e-a05a-448c-a7be-51ce5b26abff" alt="Dictation" class="w-[24px] h-[24px]" />
+        <img src="../assets/figma/9a16895e-a05a-448c-a7be-51ce5b26abff.svg" alt="Dictation" class="w-[24px] h-[24px]" />
       </button>
     </div>
 

@@ -4,6 +4,12 @@ import { useRouter } from 'vue-router'
 import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
 
+// 导入本地图片
+import emptyDotImg from '@/assets/figma/83ba2ab2-92b5-4d1e-9c94-e321540274a4.svg'
+import warningIconImg from '@/assets/figma/cf9766c4-dba1-439a-9506-9618ca76549a.svg'
+import blueDotImg from '@/assets/figma/blue-dot.svg'
+import redDotImg from '@/assets/figma/red-dot.svg'
+
 const router = useRouter()
 const code = ref('')
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -15,26 +21,17 @@ const showMaxAttemptsPopup = ref(false)
 const isErrorState = ref(false) // 错误状态标记
 
 // Figma asset URLs
-const bubble01 = 'https://www.figma.com/api/mcp/asset/4f3439f4-62ab-4010-a149-fa9a7d441c99'
-const bubble02 = 'https://www.figma.com/api/mcp/asset/0a65a368-1b3f-46f0-ac21-a12833a0e3e7'
-const ellipse = 'https://www.figma.com/api/mcp/asset/b6068eeb-70af-498c-9980-3dffc3091251'
-const avatarBD2B = 'https://www.figma.com/api/mcp/asset/b4b25371-b629-4555-975e-26e544aaa638'
-const avatar6959 = 'https://www.figma.com/api/mcp/asset/332d8b03-bf20-4595-9f49-76a62e79acf3'
-const avatarMask = 'https://www.figma.com/api/mcp/asset/48bed544-77b8-49a0-a821-837efbcff322'
-const avatarArtist2 = 'https://www.figma.com/api/mcp/asset/c0f59a89-b825-4bcc-8849-8df1cc7f7e9d'
-const emptyDot = 'https://www.figma.com/api/mcp/asset/83ba2ab2-92b5-4d1e-9c94-e321540274a4' // 空心点
-const warningIcon = 'https://www.figma.com/api/mcp/asset/cf9766c4-dba1-439a-9506-9618ca76549a'
-
-// SVG components for dots
-const BlueDotSvg = `<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 17C13.1944 17 17 13.1944 17 8.5C17 3.80558 13.1944 0 8.5 0C3.80558 0 0 3.80558 0 8.5C0 13.1944 3.80558 17 8.5 17Z" fill="#004BFE"/></svg>`
-const RedDotSvg = `<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 17C13.1944 17 17 13.1944 17 8.5C17 3.80558 13.1944 0 8.5 0C3.80558 0 0 3.80558 0 8.5C0 13.1944 3.80558 17 8.5 17Z" fill="#EC4E4E"/></svg>`
-
-// Create blob URLs for SVGs
-const blueDotBlob = URL.createObjectURL(new Blob([BlueDotSvg], { type: 'image/svg+xml' }))
-const redDotBlob = URL.createObjectURL(new Blob([RedDotSvg], { type: 'image/svg+xml' }))
-
-const blueDotFilled = blueDotBlob // 蓝色实心点
-const redDotFilled = redDotBlob // 红色实心点
+const bubble01 = '../assets/figma/4f3439f4-62ab-4010-a149-fa9a7d441c99.svg'
+const bubble02 = '../assets/figma/0a65a368-1b3f-46f0-ac21-a12833a0e3e7.svg'
+const ellipse = '../assets/figma/b6068eeb-70af-498c-9980-3dffc3091251.svg'
+const avatarBD2B = '../assets/figma/b4b25371-b629-4555-975e-26e544aaa638.svg'
+const avatar6959 = '../assets/figma/332d8b03-bf20-4595-9f49-76a62e79acf3.png'
+const avatarMask = '../assets/figma/48bed544-77b8-49a0-a821-837efbcff322.svg'
+const avatarArtist2 = '../assets/figma/c0f59a89-b825-4bcc-8849-8df1cc7f7e9d.jpg'
+const emptyDot = emptyDotImg
+const warningIcon = warningIconImg
+const blueDotFilled = blueDotImg
+const redDotFilled = redDotImg
 
 // 剩余尝试次数
 const remainingAttempts = computed(() => maxAttempts - attemptCount.value)
@@ -184,7 +181,7 @@ const handleOkay = () => {
         />
       </div>
       <!-- 69598E49-7F05-4DDB-9911-66FFA208CAFD - masked avatar -->
-      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('https://www.figma.com/api/mcp/asset/48bed544-77b8-49a0-a821-837efbcff322'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/48bed544-77b8-49a0-a821-837efbcff322'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('../assets/figma/48bed544-77b8-49a0-a821-837efbcff322.svg'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/48bed544-77b8-49a0-a821-837efbcff322.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             :src="avatar6959"
@@ -194,7 +191,7 @@ const handleOkay = () => {
         </div>
       </div>
       <!-- artist-2 1 -->
-      <div class="absolute inset-0" style="mask-image: url('https://www.figma.com/api/mcp/asset/48bed544-77b8-49a0-a821-837efbcff322'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/48bed544-77b8-49a0-a821-837efbcff322'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-0" style="mask-image: url('../assets/figma/48bed544-77b8-49a0-a821-837efbcff322.svg'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/48bed544-77b8-49a0-a821-837efbcff322.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
         <img
           :src="avatarArtist2"
           alt="Avatar main"

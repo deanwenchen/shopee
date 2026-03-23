@@ -11,13 +11,13 @@ const showPassword1 = ref(false)
 const showPassword2 = ref(false)
 
 // Figma asset URLs
-const bubble01 = 'https://www.figma.com/api/mcp/asset/f04821bb-dcc4-46ca-b2a1-5b59f443bf5f'
-const bubble02 = 'https://www.figma.com/api/mcp/asset/90d3c347-98d9-4f72-aec6-cf1f0a4ce3b6'
-const ellipse = 'https://www.figma.com/api/mcp/asset/58006e4b-da06-4d80-a4a0-b32cbb465954'
-const avatarEF6B = 'https://www.figma.com/api/mcp/asset/77e59ace-f77e-4a18-b27f-b1ae8617b340'
-const avatar8C7A = 'https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'
-const avatarMask = 'https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'
-const avatarArtist2 = 'https://www.figma.com/api/mcp/asset/159d3385-63e5-47de-b7ec-10f295efffbe'
+const bubble01 = '../assets/figma/f04821bb-dcc4-46ca-b2a1-5b59f443bf5f.svg'
+const bubble02 = '../assets/figma/90d3c347-98d9-4f72-aec6-cf1f0a4ce3b6.svg'
+const ellipse = '../assets/figma/58006e4b-da06-4d80-a4a0-b32cbb465954.svg'
+const avatarEF6B = '../assets/figma/77e59ace-f77e-4a18-b27f-b1ae8617b340.svg'
+const avatar8C7A = '../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'
+const avatarMask = '../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'
+const avatarArtist2 = '../assets/figma/159d3385-63e5-47de-b7ec-10f295efffbe.jpg'
 
 const handleSave = () => {
   console.log('Save new password:', newPassword.value)
@@ -89,7 +89,7 @@ const togglePassword2 = () => {
         />
       </div>
       <!-- 8C7A435A-3E32-4D89-BCEB-E976B0F70AF3 - masked avatar -->
-      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             :src="avatar8C7A"
@@ -99,7 +99,7 @@ const togglePassword2 = () => {
         </div>
       </div>
       <!-- artist-2 1 -->
-      <div class="absolute inset-0" style="mask-image: url('https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/a86862a8-6a33-4c94-9b81-952d3960ae81'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-0" style="mask-image: url('../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
         <img
           :src="avatarArtist2"
           alt="Avatar main"
@@ -130,13 +130,13 @@ const togglePassword2 = () => {
       <button @click="togglePassword1" class="ml-2">
         <img
           v-if="showPassword1"
-          src="https://www.figma.com/api/mcp/asset/313428fc-ea69-4094-b8ea-56a00278eb22"
+          src="../assets/figma/313428fc-ea69-4094-b8ea-56a00278eb22.svg"
           alt="Show password"
           class="w-[16px] h-[16px]"
         />
         <img
           v-else
-          src="https://www.figma.com/api/mcp/asset/313428fc-ea69-4094-b8ea-56a00278eb22"
+          src="../assets/figma/313428fc-ea69-4094-b8ea-56a00278eb22.svg"
           alt="Hide password"
           class="w-[16px] h-[16px]"
         />
@@ -155,13 +155,13 @@ const togglePassword2 = () => {
       <button @click="togglePassword2" class="ml-2">
         <img
           v-if="showPassword2"
-          src="https://www.figma.com/api/mcp/asset/313428fc-ea69-4094-b8ea-56a00278eb22"
+          src="../assets/figma/313428fc-ea69-4094-b8ea-56a00278eb22.svg"
           alt="Show password"
           class="w-[16px] h-[16px]"
         />
         <img
           v-else
-          src="https://www.figma.com/api/mcp/asset/313428fc-ea69-4094-b8ea-56a00278eb22"
+          src="../assets/figma/313428fc-ea69-4094-b8ea-56a00278eb22.svg"
           alt="Hide password"
           class="w-[16px] h-[16px]"
         />
@@ -195,11 +195,11 @@ const togglePassword2 = () => {
 
 <style scoped>
 .mask-avatar {
-  mask-image: url('https://www.figma.com/api/mcp/asset/63769f61-3a5a-4dd7-99c7-15f122fb5217');
+  mask-image: url('../assets/figma/63769f61-3a5a-4dd7-99c7-15f122fb5217.svg');
   mask-size: 91px 91px;
   mask-position: 0px 55.146px;
   mask-repeat: no-repeat;
-  -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/63769f61-3a5a-4dd7-99c7-15f122fb5217');
+  -webkit-mask-image: url('../assets/figma/63769f61-3a5a-4dd7-99c7-15f122fb5217.svg');
   -webkit-mask-size: 91px 91px;
   -webkit-mask-position: 0px 55.146px;
   -webkit-mask-repeat: no-repeat;

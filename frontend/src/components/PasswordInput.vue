@@ -35,8 +35,8 @@ const togglePassword = () => {
     >
       <img
         :src="showPassword
-          ? 'https://www.figma.com/api/mcp/asset/313428fc-ea69-4094-b8ea-56a00278eb22'
-          : 'https://www.figma.com/api/mcp/asset/313428fc-ea69-4094-b8ea-56a00278eb22'"
+          ? '../assets/figma/313428fc-ea69-4094-b8ea-56a00278eb22.svg'
+          : '../assets/figma/313428fc-ea69-4094-b8ea-56a00278eb22.svg'"
         alt="Toggle password"
         class="w-[16px] h-[16px]"
       />

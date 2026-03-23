@@ -8,15 +8,15 @@ const router = useRouter()
 const recoveryMethod = ref<'sms' | 'email'>('sms')
 
 // Figma asset URLs
-const bubble01 = 'https://www.figma.com/api/mcp/asset/1afb7a0d-c11b-4a9a-8e61-5ead6fffec23'
-const bubble02 = 'https://www.figma.com/api/mcp/asset/d31e2712-7080-4907-9c35-e4baff6bdee5'
-const ellipse = 'https://www.figma.com/api/mcp/asset/05b73873-ad02-4a83-bbc3-947026b13eee'
-const avatar3A06 = 'https://www.figma.com/api/mcp/asset/aa0e35dd-f8fd-4072-b35f-834ff4a95a73'
-const avatarC0A416 = 'https://www.figma.com/api/mcp/asset/0c20e9cb-8161-4915-9fa3-6837f4bebe14'
-const avatarMask = 'https://www.figma.com/api/mcp/asset/6cd29425-f045-434b-9bba-edf0f4f699df'
-const avatarArtist2 = 'https://www.figma.com/api/mcp/asset/877a4afd-bfed-49c8-90dc-5b7809c99b2e'
-const checkIcon = 'https://www.figma.com/api/mcp/asset/8dfe51c7-d0b1-4bb8-b502-ed108389b3f5'
-const checkEmptyIcon = 'https://www.figma.com/api/mcp/asset/ad430095-ecd8-42b2-841c-8572415af049'
+const bubble01 = '../assets/figma/1afb7a0d-c11b-4a9a-8e61-5ead6fffec23.svg'
+const bubble02 = '../assets/figma/d31e2712-7080-4907-9c35-e4baff6bdee5.svg'
+const ellipse = '../assets/figma/05b73873-ad02-4a83-bbc3-947026b13eee.svg'
+const avatar3A06 = '../assets/figma/aa0e35dd-f8fd-4072-b35f-834ff4a95a73.svg'
+const avatarC0A416 = '../assets/figma/0c20e9cb-8161-4915-9fa3-6837f4bebe14.png'
+const avatarMask = '../assets/figma/6cd29425-f045-434b-9bba-edf0f4f699df.svg'
+const avatarArtist2 = '../assets/figma/877a4afd-bfed-49c8-90dc-5b7809c99b2e.jpg'
+const checkIcon = '../assets/figma/8dfe51c7-d0b1-4bb8-b502-ed108389b3f5.svg'
+const checkEmptyIcon = '../assets/figma/ad430095-ecd8-42b2-841c-8572415af049.svg'
 
 const handleNext = () => {
   console.log('Recovery method selected:', recoveryMethod.value)
@@ -83,7 +83,7 @@ const selectMethod = (method: 'sms' | 'email') => {
         />
       </div>
       <!-- C0A416F7-B1E5-4BD4-8929-2BEAA8633585 - masked avatar -->
-      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('https://www.figma.com/api/mcp/asset/6cd29425-f045-434b-9bba-edf0f4f699df'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/6cd29425-f045-434b-9bba-edf0f4f699df'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('../assets/figma/6cd29425-f045-434b-9bba-edf0f4f699df.svg'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/6cd29425-f045-434b-9bba-edf0f4f699df.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             :src="avatarC0A416"
@@ -93,7 +93,7 @@ const selectMethod = (method: 'sms' | 'email') => {
         </div>
       </div>
       <!-- artist-2 1 -->
-      <div class="absolute inset-0" style="mask-image: url('https://www.figma.com/api/mcp/asset/6cd29425-f045-434b-9bba-edf0f4f699df'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/6cd29425-f045-434b-9bba-edf0f4f699df'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-0" style="mask-image: url('../assets/figma/6cd29425-f045-434b-9bba-edf0f4f699df.svg'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/6cd29425-f045-434b-9bba-edf0f4f699df.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
         <img
           :src="avatarArtist2"
           alt="Avatar main"

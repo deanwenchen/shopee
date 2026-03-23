@@ -6,9 +6,11 @@ import HomeIndicator from '@/components/HomeIndicator.vue'
 
 const router = useRouter()
 
-// 本地图片引用
-const guideImage = new URL('@/assets/icons/guide-image.png', import.meta.url).href
-const guideImageReady = new URL('@/assets/icons/guide-image-ready.png', import.meta.url).href
+// 导入本地图片
+import dotFilled from '@/assets/figma/f71bedda-e6dc-4e2e-b7cc-b5a3d8d7a968.svg'
+import dotEmpty from '@/assets/figma/594e48ee-e099-46ec-a7a9-1faacfc838ab.svg'
+import guideImage from '@/assets/icons/guide-image.png'
+import guideImageReady from '@/assets/icons/guide-image-ready.png'
 
 // 引导数据 - 根据 Figma 设计更新
 interface GuidePage {
@@ -120,7 +122,7 @@ const handleLetsStart = () => {
       <!-- Bubble 02 - rotated 108deg -->
       <div class="absolute left-[66px] top-[463px] w-[537px] h-[495px] rotate-[108deg]">
         <img
-          src="https://www.figma.com/api/mcp/asset/f18f3704-8a74-4131-9676-001a3c95bb7f"
+          src="../assets/figma/f18f3704-8a74-4131-9676-001a3c95bb7f.svg"
           alt="Bubble 02"
           class="w-full h-full object-contain"
         />
@@ -128,7 +130,7 @@ const handleLetsStart = () => {
       <!-- Bubble 01 -->
       <div class="absolute left-0 top-0 w-[403px] h-[443px]">
         <img
-          src="https://www.figma.com/api/mcp/asset/13d94a9f-7c9e-4eb3-9e97-a51f4dc1e843"
+          src="../assets/figma/13d94a9f-7c9e-4eb3-9e97-a51f4dc1e843.svg"
           alt="Bubble 01"
           class="w-full h-full object-contain"
         />
@@ -166,7 +168,7 @@ const handleLetsStart = () => {
         class="w-[20px] h-[20px] cursor-pointer relative"
       >
         <img
-          :src="currentPage === index ? 'https://www.figma.com/api/mcp/asset/f71bedda-e6dc-4e2e-b7cc-b5a3d8d7a968' : 'https://www.figma.com/api/mcp/asset/594e48ee-e099-46ec-a7a9-1faacfc838ab'"
+          :src="currentPage === index ? dotFilled : dotEmpty"
           :alt="'dot ' + (index + 1)"
           class="w-full h-full"
         />

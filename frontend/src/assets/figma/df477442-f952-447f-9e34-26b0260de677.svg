@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 34 27.8182" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="camera icon" clip-path="url(#clip0_0_13111)">
+<path id="Path 340" d="M34 24.7273C34 26.4343 32.6162 27.8182 30.9091 27.8182H3.09091C1.38385 27.8182 0 26.4343 0 24.7273V7.72727C0 6.02021 1.38385 4.63636 3.09091 4.63636H9.27273L12.3636 0H21.6364L24.7273 4.63636H30.9091C32.6162 4.63636 34 6.02021 34 7.72727V24.7273Z" stroke="var(--stroke-0, #004CFF)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path 341" d="M24.0217 15.2869C24.0217 19.1649 20.8779 22.3087 16.9999 22.3087C13.1218 22.3087 9.978 19.1649 9.978 15.2869C9.978 11.4088 13.1218 8.265 16.9999 8.265C20.8779 8.265 24.0217 11.4088 24.0217 15.2869Z" stroke="var(--stroke-0, #004CFF)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_0_13111">
+<rect width="34" height="27.8182" fill="white"/>
+</clipPath>
+</defs>
+</svg>

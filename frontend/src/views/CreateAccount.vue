@@ -75,7 +75,7 @@ const handleCancel = () => {
     <!-- Background Bubbles -->
     <div class="absolute top-[-206px] left-[-132px] w-[659px] h-[513px]" data-name="Bubbles">
       <img
-        src="https://www.figma.com/api/mcp/asset/70ae7a39-be04-4867-96d7-bf710ace7dcb"
+        src="../assets/figma/70ae7a39-be04-4867-96d7-bf710ace7dcb.svg"
         alt="Bubbles background"
         class="w-full h-full object-contain"
       />
@@ -92,13 +92,13 @@ const handleCancel = () => {
     <div class="absolute left-[30px] top-[284px] w-[90px] h-[90px]" data-name="Upload Photo">
       <div class="relative w-full h-full">
         <img
-          src="https://www.figma.com/api/mcp/asset/5cf44006-dae9-4be9-ac93-3937d16a9be3"
+          src="../assets/figma/5cf44006-dae9-4be9-ac93-3937d16a9be3.png"
           alt="Upload placeholder"
           class="w-full h-full object-cover rounded-full border-2 border-dashed border-brand-blue"
         />
         <div class="absolute right-[28px] top-[31px] w-[34px] h-[28px]" data-name="camera icon">
           <img
-            src="https://www.figma.com/api/mcp/asset/df477442-f952-447f-9e34-26b0260de677"
+            src="../assets/figma/df477442-f952-447f-9e34-26b0260de677.svg"
             alt="Camera"
             class="w-full h-full"
           />
@@ -127,13 +127,13 @@ const handleCancel = () => {
         <div class="flex items-center gap-[8px]">
           <div class="w-[24px] h-[18px] rounded-[4px] overflow-hidden relative">
             <img
-              src="https://www.figma.com/api/mcp/asset/d85b2ef1-423c-43fb-9a18-791e4f7189a5"
+              src="../assets/figma/d85b2ef1-423c-43fb-9a18-791e4f7189a5.png"
               alt="England flag"
               class="w-full h-full object-cover"
             />
           </div>
           <img
-            src="https://www.figma.com/api/mcp/asset/ecb20b03-74c8-439a-a583-1c3142b33d8e"
+            src="../assets/figma/ecb20b03-74c8-439a-a583-1c3142b33d8e.svg"
             alt="Country dropdown"
             class="w-[16px] h-[16px]"
           />
