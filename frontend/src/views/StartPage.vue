@@ -20,7 +20,7 @@ const handleLogin = () => {
 </script>
 
 <template>
-  <div class="bg-white relative w-[375px] h-[817px] mx-auto" data-name="01 Start" data-node-id="0:12855">
+  <div class="bg-white relative w-[375px] h-[817px] mx-auto overflow-hidden" data-name="01 Start" data-node-id="0:12855">
     <!-- Status Bar -->
     <StatusBar />
 

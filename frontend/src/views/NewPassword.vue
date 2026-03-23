@@ -44,7 +44,7 @@ const togglePassword2 = () => {
     <StatusBar />
 
     <!-- Background Bubbles -->
-    <div class="absolute top-[-273.16px] left-[20.28px]" data-name="Bubbles" data-node-id="0:12316">
+    <div class="absolute top-[-273.16px] left-[20.28px] w-[354.72px] h-[780px] overflow-hidden pointer-events-none" data-name="Bubbles" data-node-id="0:12316">
       <!-- Bubble 02 - rotated -110deg -->
       <div class="absolute top-[-240.83px] left-0 flex h-[502.4px] w-[543.71px] items-center justify-center">
         <div class="-rotate-[110deg] flex-none h-[442.65px] w-[373.531px] relative">

@@ -116,7 +116,7 @@ const handleLetsStart = () => {
     <StatusBar />
 
     <!-- Background Bubbles - Order matters for z-index -->
-    <div class="absolute left-[-147px] top-[-123px]" data-name="Bubbles">
+    <div class="absolute left-[-147px] top-[-123px] w-[522px] h-[780px] overflow-hidden pointer-events-none" data-name="Bubbles">
       <!-- Bubble 02 - rotated 108deg -->
       <div class="absolute left-[66px] top-[463px] w-[537px] h-[495px] rotate-[108deg]">
         <img

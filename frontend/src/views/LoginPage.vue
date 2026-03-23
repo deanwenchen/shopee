@@ -54,12 +54,12 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <div class="bg-white relative w-[375px] h-[817px] mx-auto" data-name="03 Login" data-node-id="0:12718">
+  <div class="bg-white relative w-[375px] h-[817px] mx-auto overflow-hidden" data-name="03 Login" data-node-id="0:12718">
     <!-- Status Bar -->
     <StatusBar />
 
     <!-- Background Bubbles Container -->
-    <div class="absolute top-[-172px] left-[-158px]" data-name="Bubbles">
+    <div class="absolute top-[-172px] left-[-158px] w-[533px] h-[800px] overflow-hidden pointer-events-none" data-name="Bubbles">
       <!-- Bubble 02 - 浅蓝色大气泡（旋转 158 度）- 在底层，先渲染 -->
       <div class="absolute top-[0px] left-[22px] w-[512px] h-[550px] rotate-[158deg]" data-name="bubble 02">
         <img

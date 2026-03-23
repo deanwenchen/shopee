@@ -68,7 +68,7 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <div class="bg-white relative w-[375px] h-[817px] mx-auto" data-name="02 Create Account" data-node-id="0:12779">
+  <div class="bg-white relative w-[375px] h-[817px] mx-auto overflow-hidden" data-name="02 Create Account" data-node-id="0:12779">
     <!-- Status Bar -->
     <StatusBar />
 
