@@ -77,6 +77,13 @@
 - ✅ **修复 Password 页面退格功能**（添加 @keydown 事件监听退格键，简化错误状态下的退格检测逻辑，确保退格后红点变蓝点可重新输入）
 - ✅ **优化 Password 页面退格动画延迟**（使用 @beforeinput 事件在输入前触发，移除 watch 中不必要的延迟，退格时 dots 立即从红色变为蓝色空心点）
 - ✅ **修复所有页面水平滚动问题**（为 StartPage、LoginPage、CreateAccount 添加 overflow-hidden；为气泡容器添加固定宽高和 overflow-hidden + pointer-events-none，防止旋转气泡撑开容器）
+- ✅ **下载所有 Figma 资源到本地**（44 个资源下载到 `src/assets/figma/`,全部成功）
+- ✅ **替换所有 Vue 文件中的 Figma CDN URL 为本地路径**（67 个 URL 替换完成，涉及 9 个文件：CreateAccount.vue、HelloCard.vue、LoginPage.vue、NewPassword.vue、Password.vue、PasswordRecovery.vue、PasswordRecoveryCode.vue、PasswordInput.vue、Keyboard.vue）
+- ⚠️ **Keyboard.vue 引用的 4 个资源未在下载列表中**（URL 已替换为本地路径，但文件不存在：0b568db6、cf7c3eb6、ee8cd16d、9a16895e - 可能需要从 Figma 重新导出）
+- ✅ **修复资源文件扩展名问题**（40 个文件从 .png 重命名为正确的 .svg 或 .jpg 格式，59 个 Vue 文件引用已更新）
+- ✅ **创建缺失的 Keyboard 图标占位符**（4 个 SVG 图标：Shift、Delete、Emoji、Dictation）
+- ✅ **修复蓝点和红点显示问题**（创建 blue-dot.svg 和 red-dot.svg 本地文件；Password.vue 和 PasswordRecoveryCode.vue 都改为使用 Vite `import` 语法导入 SVG 文件，替换字符串路径引用）
+- ✅ **修复 HelloCard 圆点显示问题**（将 HelloCard.vue 中的 dots 指示器从字符串路径改为 Vite `import` 语法导入）
 
 ### 阶段 2：主应用界面 ⏳ 待实现
 
