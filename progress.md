@@ -74,6 +74,8 @@
 - ✅ **移除所有页面的 `.mask-avatar` CSS 类**（将 mask 样式内联到 avatar 容器，提高可维护性）
 - ✅ **修复 PasswordRecoveryCode 页面问题**（更新正确的 ellipse URL 解决头像背景黑色问题；将 dots 从 flex gap 改为 absolute positioning 解决验证码右偏问题；添加 z-10 确保图层顺序正确）
 - ✅ **修复 NewPassword 页面 z-index**（为 ellipse 和 avatar 容器添加 z-10，确保头像图层在气泡背景之上）
+- ✅ **修复 Password 页面退格功能**（添加 @keydown 事件监听退格键，简化错误状态下的退格检测逻辑，确保退格后红点变蓝点可重新输入）
+- ✅ **优化 Password 页面退格动画延迟**（使用 @beforeinput 事件在输入前触发，移除 watch 中不必要的延迟，退格时 dots 立即从红色变为蓝色空心点）
 
 ### 阶段 2：主应用界面 ⏳ 待实现
 

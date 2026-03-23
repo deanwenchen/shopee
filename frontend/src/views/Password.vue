@@ -33,7 +33,7 @@ const inputMode = ref<'4-digit' | '8-digit' | 'error'>('4-digit')
 // 是否已经退格过（用于错误状态后重新输入）
 const hasBackspaced = ref(false)
 
-// 监听密码输入
+// 监听密码输入和退格操作
 watch(password, (newValue, oldValue) => {
   // 4 位密码输入模式 - 只允许输入 1 个字符
   if (inputMode.value === '4-digit') {
@@ -49,24 +49,21 @@ watch(password, (newValue, oldValue) => {
   // 8 位密码输入模式
   if (inputMode.value === '8-digit') {
     if (newValue.length === 8) {
-      setTimeout(() => {
-        if (newValue === CORRECT_PASSWORD) {
-          router.push('/hello-card')
-        } else {
-          inputMode.value = 'error'
-          hasBackspaced.value = false
-        }
-      }, 100)
+      // 移除 setTimeout 延迟，立即验证
+      if (newValue === CORRECT_PASSWORD) {
+        router.push('/hello-card')
+      } else {
+        inputMode.value = 'error'
+        hasBackspaced.value = false
+      }
     }
     return
   }
 
   // 错误状态模式
   if (inputMode.value === 'error') {
-    if (!oldValue) return
-
     // 检测退格操作 - 从 8 个字符减少
-    if (oldValue.length === 8 && newValue.length < 8) {
+    if (oldValue && oldValue.length === 8 && newValue.length < 8) {
       hasBackspaced.value = true
       return
     }
@@ -76,6 +73,7 @@ watch(password, (newValue, oldValue) => {
       if (newValue === CORRECT_PASSWORD) {
         router.push('/hello-card')
       } else {
+        // 密码错误，重置 hasBackspaced，保持错误状态
         hasBackspaced.value = false
       }
     }
@@ -91,6 +89,20 @@ onMounted(() => {
 // 处理输入框点击，确保聚焦
 const handleInputClick = () => {
   inputRef.value?.focus()
+}
+
+// 处理键盘退格
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Backspace' && inputMode.value === 'error') {
+    hasBackspaced.value = true
+  }
+}
+
+// 使用 beforeinput 事件，在输入前触发，响应更快
+const handleBeforeInput = (event: InputEvent) => {
+  if (event.inputType === 'deleteContentBackward' && inputMode.value === 'error') {
+    hasBackspaced.value = true
+  }
 }
 
 // 动态 dots 图片 - computed 属性（用于 8 位密码和错误状态）
@@ -197,6 +209,8 @@ const handleForgotPassword = () => {
       class="absolute opacity-0 left-[78px] top-[390px] w-[261px] h-[17px]"
       autofocus
       @click="handleInputClick"
+      @keydown="handleKeydown"
+      @beforeinput="handleBeforeInput"
     />
 
     <!-- 4 位密码输入框（初始状态） -->
