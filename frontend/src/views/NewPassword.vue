@@ -1,28 +1,74 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const newPassword = ref('')
 const repeatPassword = ref('')
 const showPassword1 = ref(false)
 const showPassword2 = ref(false)
+const showError = ref(false)
+const errorMessage = ref('')
+const isLoading = ref(false)
 
 // Figma asset URLs
 const bubble01 = '../assets/figma/f04821bb-dcc4-46ca-b2a1-5b59f443bf5f.svg'
-const bubble02 = '../assets/figma/90d3c347-98d9-4f72-aec6-cf1f0a4ce3b6.svg'
+const bubble02 = '../assets/figma/90d3c347-98d9-4f72-aec6-2deB6070603F.svg'
 const ellipse = '../assets/figma/58006e4b-da06-4d80-a4a0-b32cbb465954.svg'
 const avatarEF6B = '../assets/figma/77e59ace-f77e-4a18-b27f-b1ae8617b340.svg'
 const avatar8C7A = '../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'
 const avatarMask = '../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'
 const avatarArtist2 = '../assets/figma/159d3385-63e5-47de-b7ec-10f295efffbe.jpg'
 
-const handleSave = () => {
-  console.log('Save new password:', newPassword.value)
-  // TODO: Call API to save new password
-  router.push('/login')
+const handleSave = async () => {
+  showError.value = false
+  errorMessage.value = ''
+
+  // Validate passwords
+  if (!newPassword.value) {
+    showError.value = true
+    errorMessage.value = 'Please enter a new password'
+    return
+  }
+
+  if (newPassword.value.length < 8) {
+    showError.value = true
+    errorMessage.value = 'Password must be at least 8 characters'
+    return
+  }
+
+  if (newPassword.value !== repeatPassword.value) {
+    showError.value = true
+    errorMessage.value = 'Passwords do not match'
+    return
+  }
+
+  // Get reset token from sessionStorage
+  const resetToken = sessionStorage.getItem('resetToken') || ''
+
+  if (!resetToken) {
+    showError.value = true
+    errorMessage.value = 'Invalid reset token. Please start the recovery process again.'
+    return
+  }
+
+  isLoading.value = true
+  const result = await authStore.resetPassword(resetToken, newPassword.value)
+  isLoading.value = false
+
+  if (result.success) {
+    // Password reset successful
+    alert('Password reset successfully! Please login with your new password.')
+    sessionStorage.removeItem('resetToken')
+    router.push('/login')
+  } else {
+    showError.value = true
+    errorMessage.value = result.message || 'Failed to reset password'
+  }
 }
 
 const handleCancel = () => {

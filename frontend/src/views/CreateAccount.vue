@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import StatusBar from '@/components/StatusBar.vue'
 import NextButton from '@/components/NextButton.vue'
 import FormInput from '@/components/FormInput.vue'
 import PasswordInput from '@/components/PasswordInput.vue'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const email = ref('')
 const password = ref('')
@@ -14,6 +16,7 @@ const phoneNumber = ref('')
 const showPassword = ref(false)
 const showError = ref(false)
 const errorMessage = ref('')
+const isLoading = ref(false)
 
 // 验证邮箱格式
 const validateEmail = (email: string): boolean => {
@@ -26,7 +29,7 @@ const validatePassword = (password: string): boolean => {
   return password.length >= 8
 }
 
-const handleDone = () => {
+const handleDone = async () => {
   // 清空之前的错误
   showError.value = false
   errorMessage.value = ''
@@ -55,10 +58,20 @@ const handleDone = () => {
     return
   }
 
-  console.log('Create Account:', { email: email.value, password: password.value, phoneNumber: phoneNumber.value })
-  // TODO: 调用注册 API
-  // 注册成功后跳转到登录页面，让用户重新登录
-  router.push('/login')
+  // 调用注册 API
+  isLoading.value = true
+  const result = await authStore.register(email.value, password.value, phoneNumber.value || undefined)
+  isLoading.value = false
+
+  if (result.success) {
+    // 注册成功，显示成功消息并跳转到登录页面
+    alert('Account created successfully! Please login.')
+    router.push('/login')
+  } else {
+    // 注册失败，显示错误消息
+    showError.value = true
+    errorMessage.value = result.message || 'Registration failed'
+  }
 }
 
 const handleCancel = () => {

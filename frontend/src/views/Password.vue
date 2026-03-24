@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, nextTick, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
 
@@ -10,18 +11,17 @@ import blueDotImg from '@/assets/figma/blue-dot.svg'
 import redDotImg from '@/assets/figma/red-dot.svg'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const inputRef = ref<HTMLInputElement | null>(null)
 
 // 密码输入状态
 const password = ref('')
+const isLoggingIn = ref(false)
 
 // Figma asset URLs
 const emptyDot = emptyDotImg
 const blueDotFilled = blueDotImg
 const redDot = redDotImg
-
-// 正确的密码
-const CORRECT_PASSWORD = '12345678'
 
 // 状态控制
 // inputMode: '4-digit' | '8-digit' | 'error'
@@ -29,8 +29,16 @@ const inputMode = ref<'4-digit' | '8-digit' | 'error'>('4-digit')
 // 是否已经退格过（用于错误状态后重新输入）
 const hasBackspaced = ref(false)
 
+// 获取邮箱（从 login page 传过来）
+const loginEmail = sessionStorage.getItem('loginEmail') || ''
+
+// 如果没有 loginEmail，说明是直接访问 /password，跳转回登录页
+if (!loginEmail) {
+  router.push('/login')
+}
+
 // 监听密码输入和退格操作
-watch(password, (newValue, oldValue) => {
+watch(password, async (newValue, oldValue) => {
   // 4 位密码输入模式 - 只允许输入 1 个字符
   if (inputMode.value === '4-digit') {
     if (newValue.length >= 1) {
@@ -45,12 +53,20 @@ watch(password, (newValue, oldValue) => {
   // 8 位密码输入模式
   if (inputMode.value === '8-digit') {
     if (newValue.length === 8) {
-      // 移除 setTimeout 延迟，立即验证
-      if (newValue === CORRECT_PASSWORD) {
-        router.push('/hello-card')
-      } else {
-        inputMode.value = 'error'
-        hasBackspaced.value = false
+      // 调用 API 登录
+      if (!isLoggingIn.value) {
+        isLoggingIn.value = true
+        const result = await authStore.login(loginEmail, newValue)
+        isLoggingIn.value = false
+
+        if (result.success) {
+          // 登录成功，跳转到首页
+          router.push('/hello-card')
+        } else {
+          // 密码错误，显示错误状态
+          inputMode.value = 'error'
+          hasBackspaced.value = false
+        }
       }
     }
     return
@@ -65,8 +81,12 @@ watch(password, (newValue, oldValue) => {
     }
 
     // 当输入达到 8 个字符时验证
-    if (newValue.length === 8 && oldValue.length === 7) {
-      if (newValue === CORRECT_PASSWORD) {
+    if (newValue.length === 8 && oldValue.length === 7 && !isLoggingIn.value) {
+      isLoggingIn.value = true
+      const result = await authStore.login(loginEmail, newValue)
+      isLoggingIn.value = false
+
+      if (result.success) {
         router.push('/hello-card')
       } else {
         // 密码错误，重置 hasBackspaced，保持错误状态
@@ -133,6 +153,8 @@ const dotImages = computed(() => {
 })
 
 const handleNotYou = () => {
+  // 清除 sessionStorage 中的 email
+  sessionStorage.removeItem('loginEmail')
   router.push('/login')
 }
 

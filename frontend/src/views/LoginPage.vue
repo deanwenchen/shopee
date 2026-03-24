@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import StatusBar from '@/components/StatusBar.vue'
 import NextButton from '@/components/NextButton.vue'
 import FormInput from '@/components/FormInput.vue'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const email = ref('')
 const showError = ref(false)
 const errorMessage = ref('')
+const isLoading = ref(false)
 
 // 验证邮箱格式
 const validateEmail = (email: string): boolean => {
@@ -17,7 +20,7 @@ const validateEmail = (email: string): boolean => {
   return emailRegex.test(email)
 }
 
-const handleNext = () => {
+const handleNext = async () => {
   // 清空之前的错误
   showError.value = false
   errorMessage.value = ''
@@ -36,14 +39,20 @@ const handleNext = () => {
     return
   }
 
-  // 验证是否为正确账号
-  if (email.value === 'deanwen@gmail.com') {
-    // 账号正确，跳转到密码输入页面
+  // Call API to verify email
+  isLoading.value = true
+  const result = await authStore.loginStep1(email.value)
+  isLoading.value = false
+
+  if (result.success) {
+    // Email verified, store email in sessionStorage for next step
+    sessionStorage.setItem('loginEmail', email.value)
+    // Navigate to password input page
     router.push('/password')
   } else {
-    // 账号错误，显示错误提示
+    // Email not found, show error
     showError.value = true
-    errorMessage.value = 'Account not found. Please check your email.'
+    errorMessage.value = result.message || 'Account not found. Please check your email.'
   }
 }
 

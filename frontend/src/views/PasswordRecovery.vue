@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const recoveryMethod = ref<'sms' | 'email'>('sms')
+const isLoading = ref(false)
+const showError = ref(false)
+const errorMessage = ref('')
 
 // Figma asset URLs
 const bubble01 = '../assets/figma/1afb7a0d-c11b-4a9a-8e61-5ead6fffec23.svg'
@@ -18,9 +23,32 @@ const avatarArtist2 = '../assets/figma/877a4afd-bfed-49c8-90dc-5b7809c99b2e.jpg'
 const checkIcon = '../assets/figma/8dfe51c7-d0b1-4bb8-b502-ed108389b3f5.svg'
 const checkEmptyIcon = '../assets/figma/ad430095-ecd8-42b2-841c-8572415af049.svg'
 
-const handleNext = () => {
-  console.log('Recovery method selected:', recoveryMethod.value)
-  router.push('/password-recovery-code')
+const handleNext = async () => {
+  isLoading.value = true
+  showError.value = false
+
+  // Get email from sessionStorage (set from login page or user needs to enter it)
+  const email = sessionStorage.getItem('recoveryEmail')
+
+  if (!email) {
+    // If no email in sessionStorage, prompt user or go back to login
+    showError.value = true
+    errorMessage.value = 'Please enter your email first'
+    isLoading.value = false
+    return
+  }
+
+  const result = await authStore.passwordRecovery(email, recoveryMethod)
+  isLoading.value = false
+
+  if (result.success && result.codeId) {
+    // Store codeId for next step
+    sessionStorage.setItem('recoveryCodeId', result.codeId)
+    router.push('/password-recovery-code')
+  } else {
+    showError.value = true
+    errorMessage.value = result.message || 'Failed to send verification code'
+  }
 }
 
 const handleCancel = () => {
