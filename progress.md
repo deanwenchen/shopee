@@ -25,6 +25,32 @@
 
 ## 最近变更 (2026-03-25)
 
+### ShopPage Categories 图片更新 (2026-03-25)
+- ✅ 从 Figma 重新下载所有 Categories 分类图片（26 张图片）
+  - Clothing: 4 张图片
+  - Bags: 4 张图片
+  - Shoes: 4 张图片（原 SVG 改为 PNG）
+  - Lingerie: 4 张图片（原 SVG 改为 PNG）
+  - Watch: 4 张图片（新增 2 张）
+  - Hoodies: 4 张图片（新增 2 张）
+- ✅ 删除旧的 SVG 文件
+- ✅ 更新 ShopPage.vue 中 categories 数据，使用正确的图片路径
+- ✅ 每个分类现在都有 4 张图片，与 Figma 设计一致
+
+### ShopPage Most Popular 和 Just For You 图片更新 (2026-03-25)
+- ✅ 从 Figma 重新下载 Most Popular 商品图片（4 张图片）
+  - popular-new.png (New 标签商品)
+  - popular-sale.png (Sale 标签商品)
+  - popular-hot-1.png (Hot 标签商品)
+  - popular-hot-2.png (Hot 标签商品)
+- ✅ 从 Figma 重新下载 Just For You 商品图片（4 张图片）
+  - jfy-1.png
+  - jfy-2.png
+  - jfy-3.png
+  - jfy-4.png
+- ✅ 更新 ShopPage.vue 中 mostPopularItems 和 justForYouItems 数据，使用正确的图片路径
+- ✅ 与 Figma 设计一致（node-id: 2-7020, 2-7021）
+
 ### Task 14: ✅ 已完成 - 集成测试和验证 (2026-03-25)
 - ✅ 创建 `tests/admin-api-tests.http` - REST Client 格式的 API 测试脚本
   - 认证模块测试（6 个测试用例）
