@@ -6,6 +6,7 @@ using AdminAPI.Data;
 using AdminAPI.Features.Auth.Services;
 using AdminAPI.Features.Admins.Services;
 using AdminAPI.Features.Roles.Services;
+using AdminAPI.Features.Permissions.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IPermissionService, PermissionService>();
 
 // Configure MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -71,7 +73,12 @@ builder.Services.AddAuthorizationBuilder()
     .AddPolicy("role:create", policy => policy.RequireClaim("permission", "role:create"))
     .AddPolicy("role:update", policy => policy.RequireClaim("permission", "role:update"))
     .AddPolicy("role:delete", policy => policy.RequireClaim("permission", "role:delete"))
-    .AddPolicy("role:assign", policy => policy.RequireClaim("permission", "role:assign"));
+    .AddPolicy("role:assign", policy => policy.RequireClaim("permission", "role:assign"))
+    .AddPolicy("permission:list", policy => policy.RequireClaim("permission", "permission:list"))
+    .AddPolicy("permission:detail", policy => policy.RequireClaim("permission", "permission:detail"))
+    .AddPolicy("permission:create", policy => policy.RequireClaim("permission", "permission:create"))
+    .AddPolicy("permission:update", policy => policy.RequireClaim("permission", "permission:update"))
+    .AddPolicy("permission:delete", policy => policy.RequireClaim("permission", "permission:delete"));
 
 var app = builder.Build();
 
