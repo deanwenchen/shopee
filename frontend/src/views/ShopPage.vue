@@ -23,15 +23,16 @@ const categories = ref([
 ])
 
 // Top Products 分类 - 使用纯字符串路径 (根据 Figma 0-11214)
+// 5 个商品从左到右：Bags, Watches, Hoodies, Shoes, Lingerie
 const topProducts = ref([
-  { id: 1, name: 'Bags', image: `${ASSET_BASE}top-bags-f5a01c3a-c280-4728-90b8-72e46f328dd2.png` },
-  { id: 2, name: 'Watches', image: `${ASSET_BASE}top-watches.png` },
-  { id: 3, name: 'Hoodies', image: `${ASSET_BASE}top-hoodies.png` },
-  { id: 4, name: 'Shoes', image: `${ASSET_BASE}top-shoes-b7a87888-4b54-44b9-bf5f-8ee50f567d71.png` },
-  { id: 5, name: 'Lingerie', image: `${ASSET_BASE}top-lingerie.png` },
+  { id: 1, name: 'Bags', image: `${ASSET_BASE}top-products-fourth.png` },
+  { id: 2, name: 'Watches', image: `${ASSET_BASE}top-products-tertiary.png` },
+  { id: 3, name: 'Hoodies', image: `${ASSET_BASE}top-products-secondary.png` },
+  { id: 4, name: 'Shoes', image: `${ASSET_BASE}top-products-fifth.png` },
+  { id: 5, name: 'Lingerie', image: `${ASSET_BASE}top-products-sixth.png` },
 ])
 
-const topEllipse = `${ASSET_BASE}top-ellipse-6d89f81c-63bf-4ba3-b5d5-0da6b3cf82ec.svg`
+const topEllipse = `${ASSET_BASE}top-ellipse.svg`
 
 // 新品数据 - 使用纯字符串路径
 const newItems = ref([
