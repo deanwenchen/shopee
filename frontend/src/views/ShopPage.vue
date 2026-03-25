@@ -12,12 +12,12 @@ const ASSET_BASE = '/assets/figma/'
 
 // 分类数据 - 使用纯字符串路径
 const categories = ref([
-  { id: 1, name: 'Clothing', count: 109, images: ['cat-clothing-1-96cf92b5-c69e-48bb-81c1-c83ad99c8c18.png', 'cat-clothing-2-f6e5aee9-2026-4394-ba82-ab93b9d723dd.png', 'cat-clothing-3-011e1977-4c62-48a2-8ef2-c7e43442f853.png', 'cat-clothing-main-ce038217-1f52-4d90-bad3-2d5edf241b0f.png'] },
-  { id: 2, name: 'Bags', count: 87, images: ['cat-bags-1-a7854364-3078-4010-b68e-f1fdbd62330e.png', 'cat-bags-2-a5e03096-1d07-4a1e-a166-512002e822d1.png', 'cat-bags-3-40f023a9-0d77-433a-ad1d-7cd3a492db9b.png', 'cat-bags-main-36d58c74-ef3f-4b88-bf6f-4ec2d7338f8d.png'] },
-  { id: 3, name: 'Shoes', count: 530, images: ['cat-shoes-1-5a316d6c-e842-43ae-b2ce-d784accaecdf.png', 'cat-shoes-2-a970f138-cd90-45fa-a4d4-ae53aca68bef.png', 'cat-shoes-3-79cb2c2a-50b1-440c-8a16-c45a5078bac2.png', 'cat-shoes-main-112b4e16-b3e1-467f-8cb5-896c6caec1f2.png'] },
-  { id: 4, name: 'Lingerie', count: 218, images: ['cat-lingerie-1-455c2073-1472-40f1-a525-b85d48260f2f.png', 'cat-lingerie-2-56091f70-b393-42ba-be73-8f95116f8dd6.png', 'cat-lingerie-3-964ccd5b-e6c7-42c1-85be-afe23f00ac7f.png', 'cat-lingerie-main-4317dd92-cd92-4bae-a23e-50a9c326bf20.png'] },
-  { id: 5, name: 'Watch', count: 218, images: ['cat-watch-1-2666766a-d070-4d36-a679-5061b3821aa7.png', 'cat-watch-2-8965e343-d79e-4f4c-8d90-879b6ac5bab2.png', 'cat-watch-3-c50fab46-7ce0-4b92-a568-8ca3f52fcee8.png', 'cat-watch-4-d38cbbcf-a61f-4154-bddd-92c3e24d2d6f.png'] },
-  { id: 6, name: 'Hoodies', count: 218, images: ['cat-hoodies-1-54354b96-6d4f-49f4-a1f4-c4fcd2301d4f.png', 'cat-hoodies-2-cdf4c990-f177-480b-ae8b-10d1b682b8c5.png', 'cat-hoodies-3-a742647e-d067-4cc6-baec-733353c1369e.png', 'cat-hoodies-4-dd786305-2079-4a67-87fa-48cd06f62392.png'] },
+  { id: 1, name: 'Clothing', count: 109, images: ['cat-clothing-1.png', 'cat-clothing-2.png', 'cat-clothing-3.png', 'cat-clothing-main.png'] },
+  { id: 2, name: 'Bags', count: 87, images: ['cat-bags-1.png', 'cat-bags-2.png', 'cat-bags-3.png', 'cat-bags-main.png'] },
+  { id: 3, name: 'Shoes', count: 530, images: ['cat-shoes-1.png', 'cat-shoes-2.png', 'cat-shoes-3.png', 'cat-shoes-main.png'] },
+  { id: 4, name: 'Lingerie', count: 218, images: ['cat-lingerie-1.png', 'cat-lingerie-2.png', 'cat-lingerie-3.png', 'cat-lingerie-main.png'] },
+  { id: 5, name: 'Watch', count: 218, images: ['cat-watch-1.png', 'cat-watch-2.png', 'cat-watch-3.png', 'cat-watch-4.png'] },
+  { id: 6, name: 'Hoodies', count: 218, images: ['cat-hoodies-1.png', 'cat-hoodies-2.png', 'cat-hoodies-3.png', 'cat-hoodies-4.png'] },
   { id: 7, name: 'Dresses', count: 156, images: ['cat-dresses-1.png', 'cat-dresses-2.png'] },
   { id: 8, name: 'T-Shirts', count: 243, images: ['top-tshirts.png'] },
 ])
@@ -36,9 +36,9 @@ const topEllipse = `${ASSET_BASE}top-ellipse.svg`
 
 // 新品数据 - 使用纯字符串路径
 const newItems = ref([
-  { id: 1, name: 'Lorem ipsum dolor sit amet consectetur.', price: 17.00, image: `${ASSET_BASE}new-item-1-fc0a3ba8-947e-4769-b79f-092a1bc56e7a.png` },
-  { id: 2, name: 'Lorem ipsum dolor sit amet consectetur.', price: 32.00, image: `${ASSET_BASE}new-item-2-491502f9-3b65-4cd4-8d91-e3009169a02a.png` },
-  { id: 3, name: 'Lorem ipsum dolor sit amet consectetur.', price: 21.00, image: `${ASSET_BASE}new-item-3-c1757bd8-2924-463b-a055-0a3ebd5760fa.png` },
+  { id: 1, name: 'Lorem ipsum dolor sit amet consectetur.', price: 17.00, image: `${ASSET_BASE}new-item-1.png` },
+  { id: 2, name: 'Lorem ipsum dolor sit amet consectetur.', price: 32.00, image: `${ASSET_BASE}new-item-2.png` },
+  { id: 3, name: 'Lorem ipsum dolor sit amet consectetur.', price: 21.00, image: `${ASSET_BASE}new-item-3.png` },
 ])
 
 // Flash Sale 数据 - 使用纯字符串路径
@@ -51,17 +51,17 @@ const flashSaleItems = ref([
   { id: 6, name: 'Product 6', price: 17.00, originalPrice: 21.25, image: `${ASSET_BASE}flash-6.png`, discount: '-20%' },
 ])
 
-// Most Popular 数据 - 使用纯字符串路径
+// Most Popular 数据 - 使用纯字符串路径 (根据 Figma 2-7020)
 const mostPopularItems = ref([
-  { id: 1, name: 'New', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-new-dc4c2652-f335-4dba-9d73-1c94cae3e9a0.png`, tag: 'New' },
-  { id: 2, name: 'Sale', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-sale-2f8072f3-7f8f-4b5e-afae-25da5a0cf65f.png`, tag: 'Sale' },
-  { id: 3, name: 'Hot', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-hot-1-eb10ffe8-a4a3-4f69-9f65-5c5b09782d51.png`, tag: 'Hot' },
-  { id: 4, name: 'Hot', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-hot-2-7c13f8a6-3a29-4bec-9721-b766cbbd5c34.png`, tag: 'Hot' },
+  { id: 1, name: 'New', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-new.png`, tag: 'New' },
+  { id: 2, name: 'Sale', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-sale.png`, tag: 'Sale' },
+  { id: 3, name: 'Hot', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-hot-1.png`, tag: 'Hot' },
+  { id: 4, name: 'Hot', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-hot-2.png`, tag: 'Hot' },
 ])
 
-// Just For You 数据 - 使用纯字符串路径
+// Just For You 数据 - 使用纯字符串路径 (根据 Figma 2-7021)
 const justForYouItems = ref([
-  { id: 1, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: `${ASSET_BASE}jfy-1.svg` },
+  { id: 1, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: `${ASSET_BASE}jfy-1.png` },
   { id: 2, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: `${ASSET_BASE}jfy-2.png` },
   { id: 3, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: `${ASSET_BASE}jfy-3.png` },
   { id: 4, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: `${ASSET_BASE}jfy-4.png` },
@@ -90,7 +90,7 @@ const banners = ref([
     subtitle: 'Spring Collection',
     description: 'Shop Now\n2026',
     gradient: 'from-[#4ecdc4] to-[#44a08d]',
-    image: `${ASSET_BASE}cat-clothing-1-96cf92b5-c69e-48bb-81c1-c83ad99c8c18.png`
+    image: `${ASSET_BASE}cat-clothing-1.png`
   },
   {
     id: 3,
@@ -98,7 +98,7 @@ const banners = ref([
     subtitle: 'Limited Time',
     description: '70% OFF\nToday',
     gradient: 'from-[#ff9a9e] to-[#fecfef]',
-    image: `${ASSET_BASE}cat-shoes-1-5a316d6c-e842-43ae-b2ce-d784accaecdf.png`
+    image: `${ASSET_BASE}cat-shoes-1.svg`
   },
   {
     id: 4,
@@ -106,7 +106,7 @@ const banners = ref([
     subtitle: 'Best Sellers',
     description: 'Don\'t Miss\nOut',
     gradient: 'from-[#a18cd1] to-[#fbc2eb]',
-    image: `${ASSET_BASE}cat-watch-1-2666766a-d070-4d36-a679-5061b3821aa7.png`
+    image: `${ASSET_BASE}cat-watch-1.png`
   }
 ])
 
