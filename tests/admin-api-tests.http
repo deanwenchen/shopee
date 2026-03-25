@@ -1,0 +1,306 @@
+### Shoppe Admin Backend API Integration Tests
+### Base URL: http://localhost:9001/api
+### Description: Comprehensive API tests for admin backend system
+
+@baseUrl = http://localhost:9001/api
+@authToken = {{loginResponse.body.token}}
+
+# ========================================================================
+# AUTHENTICATION MODULE
+# ========================================================================
+
+### 1.1 Login with valid credentials
+# @name loginValid
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "Admin@123"
+}
+
+###
+
+### 1.2 Login with invalid credentials (wrong password)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "WrongPassword123"
+}
+
+###
+
+### 1.3 Login with invalid credentials (non-existent user)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "nonexistent",
+  "password": "Admin@123"
+}
+
+###
+
+### 1.4 Refresh token
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{loginResponse.body.refreshToken}}"
+}
+
+###
+
+### 1.5 Logout
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{authToken}}
+
+###
+
+# ========================================================================
+# ADMIN MANAGEMENT MODULE
+# ========================================================================
+
+### 2.1 Get admin list (with pagination)
+GET {{baseUrl}}/admin?page=1&pageSize=10
+Authorization: Bearer {{authToken}}
+
+###
+
+### 2.2 Get admin by ID
+GET {{baseUrl}}/admin/1
+Authorization: Bearer {{authToken}}
+
+###
+
+### 2.3 Get admin by non-existent ID
+GET {{baseUrl}}/admin/999
+Authorization: Bearer {{authToken}}
+
+###
+
+### 2.4 Create new admin
+# @name createAdmin
+POST {{baseUrl}}/admin
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "username": "testadmin",
+  "password": "Test@123456",
+  "email": "testadmin@shoppe.com",
+  "phone": "13800138000",
+  "roleIds": [1]
+}
+
+###
+
+### 2.5 Update admin
+PUT {{baseUrl}}/admin/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "email": "admin_updated@shoppe.com",
+  "phone": "13900139000",
+  "roleIds": [1]
+}
+
+###
+
+### 2.6 Update admin status (disable)
+PUT {{baseUrl}}/admin/1/status
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "status": 0
+}
+
+###
+
+### 2.7 Update admin status (enable)
+PUT {{baseUrl}}/admin/1/status
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "status": 1
+}
+
+###
+
+### 2.8 Reset admin password
+POST {{baseUrl}}/admin/1/reset-password
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "newPassword": "NewAdmin@123"
+}
+
+###
+
+### 2.9 Delete admin (test account)
+DELETE {{baseUrl}}/admin/2
+Authorization: Bearer {{authToken}}
+
+###
+
+# ========================================================================
+# ROLE MANAGEMENT MODULE
+# ========================================================================
+
+### 3.1 Get role list
+GET {{baseUrl}}/role?page=1&pageSize=10
+Authorization: Bearer {{authToken}}
+
+###
+
+### 3.2 Get role by ID
+GET {{baseUrl}}/role/1
+Authorization: Bearer {{authToken}}
+
+###
+
+### 3.3 Get role by non-existent ID
+GET {{baseUrl}}/role/999
+Authorization: Bearer {{authToken}}
+
+###
+
+### 3.4 Create new role
+# @name createRole
+POST {{baseUrl}}/role
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "TestRole",
+  "description": "Test role for integration testing",
+  "permissionIds": [1, 2, 3]
+}
+
+###
+
+### 3.5 Update role
+PUT {{baseUrl}}/role/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "SuperAdmin",
+  "description": "Updated Super Admin role",
+  "permissionIds": [1, 2, 3, 4, 5]
+}
+
+###
+
+### 3.6 Assign permissions to role
+PUT {{baseUrl}}/role/1/permissions
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+[1, 2, 3, 4, 5, 6, 7, 8]
+
+###
+
+### 3.7 Delete role (test role)
+DELETE {{baseUrl}}/role/2
+Authorization: Bearer {{authToken}}
+
+###
+
+# ========================================================================
+# PERMISSION MANAGEMENT MODULE
+# ========================================================================
+
+### 4.1 Get permission tree
+GET {{baseUrl}}/permission/tree
+Authorization: Bearer {{authToken}}
+
+###
+
+### 4.2 Get permission list (with pagination)
+GET {{baseUrl}}/permission?page=1&pageSize=20
+Authorization: Bearer {{authToken}}
+
+###
+
+### 4.3 Get permission by ID
+GET {{baseUrl}}/permission/1
+Authorization: Bearer {{authToken}}
+
+###
+
+### 4.4 Get permission by non-existent ID
+GET {{baseUrl}}/permission/999
+Authorization: Bearer {{authToken}}
+
+###
+
+### 4.5 Create new permission (Directory type)
+POST {{baseUrl}}/permission
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Test Directory",
+  "code": "test:directory",
+  "type": 1,
+  "parentId": null,
+  "path": null,
+  "icon": null,
+  "apiPath": null,
+  "sort": 999
+}
+
+###
+
+### 4.6 Update permission
+PUT {{baseUrl}}/permission/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Updated Directory",
+  "code": "test:directory:updated",
+  "sort": 100
+}
+
+###
+
+### 4.7 Delete permission
+DELETE {{baseUrl}}/permission/56
+Authorization: Bearer {{authToken}}
+
+###
+
+# ========================================================================
+# AUTHENTICATION & AUTHORIZATION TESTS
+# ========================================================================
+
+### 5.1 Access admin list without token (should fail)
+GET {{baseUrl}}/admin?page=1&pageSize=10
+
+###
+
+### 5.2 Access admin list with invalid token (should fail)
+GET {{baseUrl}}/admin?page=1&pageSize=10
+Authorization: Bearer invalid_token_12345
+
+###
+
+### 5.3 Access role list without token (should fail)
+GET {{baseUrl}}/role?page=1&pageSize=10
+
+###
+
+### 5.4 Access permission list without token (should fail)
+GET {{baseUrl}}/permission?page=1&pageSize=10
+
+###
+
+### END OF TEST SUITE ###
