@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using AdminAPI.Models;
 
 namespace AdminAPI.Data;
 
@@ -13,18 +14,28 @@ public class AdminDbContext : DbContext
     {
     }
 
-    // TODO: Add DbSet properties for each entity table here
-    // Example: public DbSet<User> Users { get; set; }
+    public DbSet<AdminUser> AdminUsers { get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<Permission> Permissions { get; set; }
+    public DbSet<AdminRole> AdminRoles { get; set; }
+    public DbSet<RolePermission> RolePermissions { get; set; }
+    public DbSet<OperationLog> OperationLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        // TODO: Configure entity relationships and constraints here
-        // Example: modelBuilder.Entity<User>(entity =>
-        // {
-        //     entity.HasKey(e => e.Id);
-        //     entity.HasIndex(e => e.Username).IsUnique();
-        // });
+        // AdminRole composite key
+        modelBuilder.Entity<AdminRole>()
+            .HasKey(ar => new { ar.AdminId, ar.RoleId });
+
+        // RolePermission composite key
+        modelBuilder.Entity<RolePermission>()
+            .HasKey(rp => new { rp.RoleId, rp.PermissionId });
+
+        // AdminUser index
+        modelBuilder.Entity<AdminUser>()
+            .HasIndex(au => au.Username)
+            .IsUnique();
     }
 }
