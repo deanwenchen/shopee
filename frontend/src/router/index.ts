@@ -102,7 +102,8 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // Guest routes - redirect to shop if already authenticated
-  if (to.meta.guest && authStore.isAuthenticated) {
+  // Exception: /password is part of the login flow, allow it even if authenticated
+  if (to.meta.guest && authStore.isAuthenticated && to.path !== '/password') {
     next({ name: 'shop' })
     return
   }

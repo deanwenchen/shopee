@@ -8,7 +8,6 @@ const authApi = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Send cookies with requests
 });
 
 // Request interceptor to add auth token
@@ -29,6 +28,11 @@ authApi.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    // Don't retry login requests - they don't have tokens
+    if (originalRequest.url.includes('/login') || originalRequest.url.includes('/register')) {
+      return Promise.reject(error);
+    }
+
     // If error is 401 and we haven't retried yet
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -36,8 +40,7 @@ authApi.interceptors.response.use(
       try {
         const response = await axios.post(
           `${API_BASE_URL}/refresh`,
-          {},
-          { withCredentials: true }
+          {}
         );
 
         if (response.data.success) {

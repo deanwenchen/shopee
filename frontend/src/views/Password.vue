@@ -26,8 +26,8 @@ const redDot = redDotImg
 // 状态控制
 // inputMode: '4-digit' | '8-digit' | 'error'
 const inputMode = ref<'4-digit' | '8-digit' | 'error'>('4-digit')
-// 是否已经退格过（用于错误状态后重新输入）
-const hasBackspaced = ref(false)
+// 错误状态标志 - 专门用于控制红点显示
+const showErrorDots = ref(false)
 
 // 获取邮箱（从 login page 传过来）
 const loginEmail = sessionStorage.getItem('loginEmail') || ''
@@ -63,18 +63,14 @@ watch(password, async (newValue, oldValue) => {
           // 登录成功，跳转到首页
           router.push('/hello-card')
         } else {
-          // 密码错误，显示错误状态
+          // 密码错误，显示错误状态（红点）
           inputMode.value = 'error'
-          // 延迟 300ms 后清空密码并自动转入 8 位输入模式（显示 8 个空心点）
+          showErrorDots.value = true  // 显示红点
+          // 1 秒后清空密码（空心点），等待用户重新输入
           setTimeout(() => {
             password.value = ''
-            inputMode.value = '8-digit'
-            hasBackspaced.value = false
-            // 确保输入框聚焦，用户可以直接输入
-            nextTick(() => {
-              inputRef.value?.focus()
-            })
-          }, 300)
+            showErrorDots.value = false  // 清空后显示空心点
+          }, 1000)
         }
       }
     }
@@ -85,7 +81,11 @@ watch(password, async (newValue, oldValue) => {
   if (inputMode.value === 'error') {
     // 检测退格操作 - 从 8 个字符减少
     if (oldValue && oldValue.length === 8 && newValue.length < 8) {
-      hasBackspaced.value = true
+      return
+    }
+
+    // 密码被清空时（timeout 导致），已经显示空心点
+    if (oldValue && oldValue.length > 0 && newValue.length === 0) {
       return
     }
 
@@ -98,16 +98,14 @@ watch(password, async (newValue, oldValue) => {
       if (result.success) {
         router.push('/hello-card')
       } else {
-        // 密码错误，再次显示错误状态后清空密码
+        // 密码错误，显示错误状态（红点）
         inputMode.value = 'error'
+        showErrorDots.value = true  // 显示红点
+        // 1 秒后清空密码（空心点），等待用户重新输入
         setTimeout(() => {
           password.value = ''
-          inputMode.value = '8-digit'
-          hasBackspaced.value = false
-          nextTick(() => {
-            inputRef.value?.focus()
-          })
-        }, 300)
+          showErrorDots.value = false  // 清空后显示空心点
+        }, 1000)
       }
     }
   }
@@ -124,20 +122,6 @@ const handleInputClick = () => {
   inputRef.value?.focus()
 }
 
-// 处理键盘退格
-const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Backspace' && inputMode.value === 'error') {
-    hasBackspaced.value = true
-  }
-}
-
-// 使用 beforeinput 事件，在输入前触发，响应更快
-const handleBeforeInput = (event: InputEvent) => {
-  if (event.inputType === 'deleteContentBackward' && inputMode.value === 'error') {
-    hasBackspaced.value = true
-  }
-}
-
 // 动态 dots 图片 - computed 属性（用于 8 位密码和错误状态）
 const dotImages = computed(() => {
   const images = []
@@ -145,7 +129,7 @@ const dotImages = computed(() => {
   for (let i = 0; i < 8; i++) {
     if (password.value.length >= i + 1) {
       // 已输入的格子
-      if (inputMode.value === 'error' && !hasBackspaced.value) {
+      if (showErrorDots.value) {
         // 错误确认状态：红色实心点
         images.push(redDot)
       } else {
@@ -154,10 +138,7 @@ const dotImages = computed(() => {
       }
     } else {
       // 未输入的格子
-      if (inputMode.value === 'error' && hasBackspaced.value) {
-        // 退格后：空心点
-        images.push(emptyDot)
-      } else if (inputMode.value === 'error') {
+      if (showErrorDots.value) {
         // 错误初始状态：红点
         images.push(redDot)
       } else {
@@ -244,8 +225,6 @@ const handleForgotPassword = () => {
       class="absolute opacity-0 left-[78px] top-[390px] w-[261px] h-[17px]"
       autofocus
       @click="handleInputClick"
-      @keydown="handleKeydown"
-      @beforeinput="handleBeforeInput"
     />
 
     <!-- 4 位密码输入框（初始状态） -->
