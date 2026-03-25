@@ -13,15 +13,15 @@ const showError = ref(false)
 const errorMessage = ref('')
 
 // Figma asset URLs
-const bubble01 = '../assets/figma/1afb7a0d-c11b-4a9a-8e61-5ead6fffec23.svg'
-const bubble02 = '../assets/figma/d31e2712-7080-4907-9c35-e4baff6bdee5.svg'
-const ellipse = '../assets/figma/05b73873-ad02-4a83-bbc3-947026b13eee.svg'
-const avatar3A06 = '../assets/figma/aa0e35dd-f8fd-4072-b35f-834ff4a95a73.svg'
-const avatarC0A416 = '../assets/figma/0c20e9cb-8161-4915-9fa3-6837f4bebe14.png'
-const avatarMask = '../assets/figma/6cd29425-f045-434b-9bba-edf0f4f699df.svg'
-const avatarArtist2 = '../assets/figma/877a4afd-bfed-49c8-90dc-5b7809c99b2e.jpg'
-const checkIcon = '../assets/figma/8dfe51c7-d0b1-4bb8-b502-ed108389b3f5.svg'
-const checkEmptyIcon = '../assets/figma/ad430095-ecd8-42b2-841c-8572415af049.svg'
+const bubble01 = '../assets/figma/recovery-bubble-01-1afb7a0d-c11b-4a9a-8e61-5ead6fffec23.svg'
+const bubble02 = '../assets/figma/recovery-bubble-02-d31e2712-7080-4907-9c35-e4baff6bdee5.svg'
+const ellipse = '../assets/figma/recovery-ellipse-05b73873-ad02-4a83-bbc3-947026b13eee.svg'
+const avatar3A06 = '../assets/figma/recovery-avatar-deco-aa0e35dd-f8fd-4072-b35f-834ff4a95a73.svg'
+const avatarC0A416 = '../assets/figma/recovery-avatar-photo-0c20e9cb-8161-4915-9fa3-6837f4bebe14.png'
+const avatarMask = '../assets/figma/recovery-avatar-mask-6cd29425-f045-434b-9bba-edf0f4f699df.svg'
+const avatarArtist2 = '../assets/figma/recovery-avatar-main-877a4afd-bfed-49c8-90dc-5b7809c99b2e.jpg'
+const checkIcon = '../assets/figma/recovery-check-icon-8dfe51c7-d0b1-4bb8-b502-ed108389b3f5.svg'
+const checkEmptyIcon = '../assets/figma/recovery-check-empty-ad430095-ecd8-42b2-841c-8572415af049.svg'
 
 const handleNext = async () => {
   isLoading.value = true

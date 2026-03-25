@@ -5,8 +5,8 @@ import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
 
 // 导入本地图片
-import emptyDotImg from '@/assets/figma/83ba2ab2-92b5-4d1e-9c94-e321540274a4.svg'
-import warningIconImg from '@/assets/figma/cf9766c4-dba1-439a-9506-9618ca76549a.svg'
+import emptyDotImg from '@/assets/figma/code-dot-empty-83ba2ab2-92b5-4d1e-9c94-e321540274a4.svg'
+import warningIconImg from '@/assets/figma/code-warning-icon-cf9766c4-dba1-439a-9506-9618ca76549a.svg'
 import blueDotImg from '@/assets/figma/blue-dot.svg'
 import redDotImg from '@/assets/figma/red-dot.svg'
 
@@ -21,13 +21,13 @@ const showMaxAttemptsPopup = ref(false)
 const isErrorState = ref(false) // 错误状态标记
 
 // Figma asset URLs
-const bubble01 = '../assets/figma/4f3439f4-62ab-4010-a149-fa9a7d441c99.svg'
-const bubble02 = '../assets/figma/0a65a368-1b3f-46f0-ac21-a12833a0e3e7.svg'
-const ellipse = '../assets/figma/b6068eeb-70af-498c-9980-3dffc3091251.svg'
-const avatarBD2B = '../assets/figma/b4b25371-b629-4555-975e-26e544aaa638.svg'
-const avatar6959 = '../assets/figma/332d8b03-bf20-4595-9f49-76a62e79acf3.png'
-const avatarMask = '../assets/figma/48bed544-77b8-49a0-a821-837efbcff322.svg'
-const avatarArtist2 = '../assets/figma/c0f59a89-b825-4bcc-8849-8df1cc7f7e9d.jpg'
+const bubble01 = '../assets/figma/code-bubble-01-4f3439f4-62ab-4010-a149-fa9a7d441c99.svg'
+const bubble02 = '../assets/figma/code-bubble-02-0a65a368-1b3f-46f0-ac21-a12833a0e3e7.svg'
+const ellipse = '../assets/figma/code-ellipse-b6068eeb-70af-498c-9980-3dffc3091251.svg'
+const avatarBD2B = '../assets/figma/code-avatar-deco-b4b25371-b629-4555-975e-26e544aaa638.svg'
+const avatar6959 = '../assets/figma/code-avatar-photo-332d8b03-bf20-4595-9f49-76a62e79acf3.png'
+const avatarMask = '../assets/figma/code-avatar-mask-48bed544-77b8-49a0-a821-837efbcff322.svg'
+const avatarArtist2 = '../assets/figma/code-avatar-main-c0f59a89-b825-4bcc-8849-8df1cc7f7e9d.jpg'
 const emptyDot = emptyDotImg
 const warningIcon = warningIconImg
 const blueDotFilled = blueDotImg

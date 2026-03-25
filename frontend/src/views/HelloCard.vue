@@ -7,8 +7,8 @@ import HomeIndicator from '@/components/HomeIndicator.vue'
 const router = useRouter()
 
 // 导入本地图片
-import dotFilled from '@/assets/figma/f71bedda-e6dc-4e2e-b7cc-b5a3d8d7a968.svg'
-import dotEmpty from '@/assets/figma/594e48ee-e099-46ec-a7a9-1faacfc838ab.svg'
+import dotFilled from '@/assets/figma/hello-dot-filled-f71bedda-e6dc-4e2e-b7cc-b5a3d8d7a968.svg'
+import dotEmpty from '@/assets/figma/hello-dot-empty-594e48ee-e099-46ec-a7a9-1faacfc838ab.svg'
 import guideImage from '@/assets/icons/guide-image.png'
 import guideImageReady from '@/assets/icons/guide-image-ready.png'
 
@@ -122,7 +122,7 @@ const handleLetsStart = () => {
       <!-- Bubble 02 - rotated 108deg -->
       <div class="absolute left-[66px] top-[463px] w-[537px] h-[495px] rotate-[108deg]">
         <img
-          src="../assets/figma/f18f3704-8a74-4131-9676-001a3c95bb7f.svg"
+          src="../assets/figma/hello-bubble-02-f18f3704-8a74-4131-9676-001a3c95bb7f.svg"
           alt="Bubble 02"
           class="w-full h-full object-contain"
         />
@@ -130,7 +130,7 @@ const handleLetsStart = () => {
       <!-- Bubble 01 -->
       <div class="absolute left-0 top-0 w-[403px] h-[443px]">
         <img
-          src="../assets/figma/13d94a9f-7c9e-4eb3-9e97-a51f4dc1e843.svg"
+          src="../assets/figma/hello-bubble-01-13d94a9f-7c9e-4eb3-9e97-a51f4dc1e843.svg"
           alt="Bubble 01"
           class="w-full h-full object-contain"
         />

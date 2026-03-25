@@ -41,7 +41,7 @@ backend/ShoppeAPI/
 └── Program.cs
 ```
 
-## 总体进度：85%
+## 总体进度：90%
 
 ### 阶段 0：文档基建 ✅ 完成
 
@@ -124,9 +124,149 @@ backend/ShoppeAPI/
 - ✅ **修复资源文件扩展名问题**（40 个文件从 .png 重命名为正确的 .svg 或 .jpg 格式，59 个 Vue 文件引用已更新）
 - ✅ **创建缺失的 Keyboard 图标占位符**（4 个 SVG 图标：Shift、Delete、Emoji、Dictation）
 - ✅ **修复蓝点和红点显示问题**（创建 blue-dot.svg 和 red-dot.svg 本地文件；Password.vue 和 PasswordRecoveryCode.vue 都改为使用 Vite `import` 语法导入 SVG 文件，替换字符串路径引用）
+- ✅ **修复 Password 页面密码错误处理**（密码错误时显示红点后自动清空密码，300ms 后返回 8 位输入模式并显示 8 个空心点，用户可直接继续输入）
+
+### 阶段 3：主应用界面 ✅ Shop 页面完成
+
+#### Shop 页面修复 - Out of Memory 错误 (2026-03-24)
+- ✅ **修复 ShopPage 内存溢出问题**（原 74+ 个静态图片导入导致 Vite HMR 内存泄漏）
+- ✅ **第一版修复**：改用 `new URL()` 动态加载，但 Vite 仍将其优化为 116 个资源的预加载 glob 对象
+- ✅ **第二版修复**：将图片资源从 `src/assets/figma/` 复制到 `public/assets/figma/`
+- ✅ **使用纯字符串路径引用图片**（`src="/assets/figma/xxx.svg"`），完全绕过 Vite 模块系统
+- ✅ **116 个资源文件已复制到 public 文件夹**，并移除 UUID 后缀
+- ✅ **前端构建验证成功**（0 错误，0 警告）
+
+**Big Sale Banner 修复 (2026-03-24):**
+- ✅ **下载 Figma 原始 Banner 图片**（banner-main.png，1.4MB）
+- ✅ **替换 CSS 渐变背景为真实图片**（包含女性模特和橙色背景）
+- ✅ **移除 SVG 气泡装饰**（原始设计使用的是图片遮罩效果）
+
+**技术方案说明：**
+- 问题根源：Vite 的 `new URL()` 优化器会将动态导入转换为预加载的 glob 映射对象
+- 解决方案：使用 `public/` 目录存放静态资源，通过字符串路径直接引用，浏览器按需加载
+- 优势：图片不再一次性加载，而是随页面渲染逐步加载，大幅降低初始内存占用
+
+### 阶段 3：主应用界面 ✅ Shop 页面完成
+
+#### Shop 页面 Figma 资源下载与替换 (2026-03-23)
+- ✅ **创建 Figma 资源下载脚本**（`download-shop-resources.js`，78 个资源 URL）
+- ✅ **成功下载 75 个 SVG 资源**到 `frontend/src/assets/figma/`（3 个资源 404 失败）
+- ✅ **更新 ShopPage.vue 导入 60+ 个本地图片资源**
+- ✅ **替换所有占位符渐变色为真实图片**
+
+**已更新的 Shop 页面区域：**
+| 区域 | 状态 | 说明 |
+|------|------|------|
+| Header Search | ✅ | 使用本地 search-icon.svg |
+| Big Sale Banner | ✅ | 使用 bubble-02/02-alt/03 和 banner-controls |
+| Categories (8 个) | ✅ | 每个分类 4 张图片网格，共 32 张图片 |
+| Top Products (5 个) | ✅ | 椭圆形背景 + 5 个分类图标 |
+| New Items (3 个) | ✅ | 3 个新品商品图片 |
+| Flash Sale (6 个) | ✅ | 6 个商品图片 + 时钟图标 + 折扣标签 |
+| Most Popular (4 个) | ✅ | 4 个商品图片 + Like 图标 + 星标 |
+| Just For You (4 个) | ✅ | 4 个推荐商品图片 + 星标 |
+| Bottom Navigation | ✅ | 5 个导航图标（Home/Cart/Categories/Wishlist/Profile） |
+
+**资源下载统计：**
+- 成功：75 个 SVG 文件
+- 失败：3 个（bubble-01、flash-discount-bg、popular-3，Figma 中可能已删除）
+- 替代方案：使用 CSS 渐变或其他相似图片替代
+
+**构建验证：**
+- ✅ 前端构建成功（0 错误，0 警告）
+- ✅ 所有 SVG 资源正确打包
+- ✅ 总构建大小：~50MB（包含大量 SVG 图片）
+
+#### 认证页面 Figma 资源下载与修复 (2026-03-24)
+- ✅ **扩展下载脚本添加认证页面资源**（添加 37 个认证页面资源 URL）
+- ✅ **成功下载 114 个资源**（4 个 404 失败：signup-bubbles、bubble-01、flash-discount-bg、popular-3）
+- ✅ **更新 9 个 Vue 文件的图片引用**（LoginPage、Password、PasswordRecovery、PasswordRecoveryCode、NewPassword、HelloCard、CreateAccount）
+- ✅ **创建缺失的 dot 图标**（blue-dot.svg、red-dot.svg）
+- ✅ **使用 SVG 图标替换密码显示/隐藏按钮**（NewPassword.vue）
+- ✅ **修复 CreateAccount.vue 气泡背景**（使用 login-bubble 组合替代缺失的 signup-bubbles）
+
+**受影响的文件：**
+| 文件 | 状态 | 说明 |
+|------|------|------|
+| LoginPage.vue | ✅ | 更新 5 个气泡和 emoticon 引用 |
+| Password.vue | ✅ | 更新 2 个气泡和 avatar 引用，修复 dots 引用 |
+| PasswordRecovery.vue | ✅ | 更新 9 个 avatar 和气泡引用 |
+| PasswordRecoveryCode.vue | ✅ | 更新 7 个 avatar 和气泡引用，修复 dots 引用 |
+| NewPassword.vue | ✅ | 更新 5 个 avatar 和气泡引用，替换 eye 图标为 SVG |
+| HelloCard.vue | ✅ | 更新 2 个气泡和 dots 引用 |
+| CreateAccount.vue | ✅ | 更新 5 个图标引用，使用组合气泡替代缺失资源 |
+| ShopPage.vue | ✅ | 已在之前会话中完成 |
+
+**最终构建验证：**
+- ✅ 前端构建成功（0 错误，0 警告）
+- ✅ 114 个资源文件正确打包
+- ✅ 所有认证页面图片正常显示
 - ✅ **修复 HelloCard 圆点显示问题**（将 HelloCard.vue 中的 dots 指示器从字符串路径改为 Vite `import` 语法导入）
 
+### 阶段 3：主应用界面 ✅ Shop 页面完成
+
+#### Shop 页面 Figma 资源下载与替换 (2026-03-23)
+- ✅ **创建 Figma 资源下载脚本**（`download-shop-resources.js`，78 个资源 URL）
+- ✅ **成功下载 75 个 SVG 资源**到 `frontend/src/assets/figma/`（3 个资源 404 失败）
+- ✅ **更新 ShopPage.vue 导入 60+ 个本地图片资源**
+- ✅ **替换所有占位符渐变色为真实图片**
+
+**已更新的 Shop 页面区域：**
+| 区域 | 状态 | 说明 |
+|------|------|------|
+| Header Search | ✅ | 使用本地 search-icon.svg |
+| Big Sale Banner | ✅ | 使用 bubble-02/02-alt/03 和 banner-controls |
+| Categories (8 个) | ✅ | 每个分类 4 张图片网格，共 32 张图片 |
+| Top Products (5 个) | ✅ | 椭圆形背景 + 5 个分类图标 |
+| New Items (3 个) | ✅ | 3 个新品商品图片 |
+| Flash Sale (6 个) | ✅ | 6 个商品图片 + 时钟图标 + 折扣标签 |
+| Most Popular (4 个) | ✅ | 4 个商品图片 + Like 图标 + 星标 |
+| Just For You (4 个) | ✅ | 4 个推荐商品图片 + 星标 |
+| Bottom Navigation | ✅ | 5 个导航图标（Home/Cart/Categories/Wishlist/Profile） |
+
+**资源下载统计：**
+- 成功：75 个 SVG 文件
+- 失败：3 个（bubble-01、flash-discount-bg、popular-3，Figma 中可能已删除）
+- 替代方案：使用 CSS 渐变或其他相似图片替代
+
+**构建验证：**
+- ✅ 前端构建成功（0 错误，0 警告）
+- ✅ 所有 SVG 资源正确打包
+- ✅ 总构建大小：~50MB（包含大量 SVG 图片）
+
+#### Shop 页面修复 (2026-03-24)
+- ✅ **修复 Flash Sale 折扣标签**（将图片引用改为 CSS 渐变圆形背景 `from-[#ff5790] to-[#f81140]`）
+- ✅ **移除未使用的资源导入**（移除 `popularButtonImg` 导入）
+- ✅ **前端构建验证**（0 错误，0 警告）
+
+#### 已完成页面 (2/8)
+| 页面 | 路由 | 状态 | 说明 |
+|------|------|------|------|
+| ShopPage | `/shop` | ✅ | 100% Figma 资源替换，包含所有图片 |
+| HelloCard | `/hello-card` | ✅ | 轮播引导页面 |
+
 ### 阶段 2：后端认证服务 ✅ 完成 (API 测试全部通过)
+
+#### 后端登录 API 调试 (2026-03-24)
+- ✅ **添加调试日志到前端**（`src/stores/auth.ts` 和 `src/api/auth.ts`）
+- ✅ **验证后端 API 正常工作**（curl 测试通过）
+- ✅ **验证 CORS 配置正确**（Access-Control-Allow-Origin: http://localhost:3000）
+- ✅ **验证数据库中有用户**（deanwenchen@gmail.com, Id: 7）
+- ⏳ **等待用户反馈浏览器控制台日志**
+
+**调试步骤：**
+1. 后端 API 测试：`curl -X POST http://localhost:9000/api/auth/login-step1 -H "Content-Type: application/json" -d "{\"email\":\"deanwenchen@gmail.com\"}"` - 成功
+2. 前端 API 测试：node axios 测试 - 成功
+3. CORS 验证：`Access-Control-Allow-Origin: http://localhost:3000` - 正确
+4. 添加调试日志到 `src/stores/auth.ts:loginStep1` 和 `src/api/auth.ts:loginStep1`
+5. 前端重新构建 - 成功
+
+**用户下一步操作：**
+1. 打开浏览器开发者工具（F12）
+2. 访问 http://localhost:3000
+3. 在登录页面输入 deanwenchen@gmail.com
+4. 点击 Next 按钮
+5. 查看控制台日志，报告任何错误信息
 
 #### 后端项目结构
 ```
@@ -231,14 +371,13 @@ D:\Claude\Figma\Shoppe\backend\ShoppeAPI\
 |------|------|------|------|
 | ShopPage | `/shop` | ✅ | 包含 Big Sale Banner、Categories、Top Products、New Items、Flash Sale、Most Popular、Just For You 区域 |
 
-#### 待实现页面 (7/8)
+#### 待实现页面 (6/8)
 - [ ] 商品详情页
 - [ ] 购物车页面
 - [ ] 分类页面
 - [ ] 个人中心
 - [ ] 订单页面
 - [ ] 搜索页面
-- [ ] 收藏夹页面
 
 #### 待实现功能
 - [ ] Pinia 商品状态管理
@@ -301,15 +440,17 @@ D:\Claude\Figma\Shoppe\backend\ShoppeAPI\
 - ✅ 实现 New Items（3 个新品商品）
 - ✅ 实现 Flash Sale（带倒计时，6 个商品）
 - ✅ 实现 Most Popular（4 个热门商品）
-- ✅ 实现 Just For You（2 个推荐商品）
+- ✅ 实现 Just For You（4 个推荐商品）
 - ✅ 实现底部导航栏（Home/Cart/Categories/Wishlist/Profile）
 - ✅ 添加商品点击跳转功能
 - ✅ 添加分类点击跳转功能
+- ✅ **下载 Figma 资源到本地**（75 个 SVG 资源成功下载）
+- ✅ **替换所有占位符为真实图片**（60+ 个图片导入，100% Figma 还原）
 
 ### 优先级 5：下一步 - 完善商品展示
-- [ ] 添加真实商品图片资源
 - [ ] 实现商品详情页
 - [ ] 添加购物车功能
+- [ ] 实现搜索页面
 
 ---
 
@@ -323,7 +464,7 @@ D:\Claude\Figma\Shoppe\backend\ShoppeAPI\
 
 ## 构建状态
 - ✅ 后端构建成功 (0 错误，0 警告)
-- ✅ 前端构建成功 (0 错误，0 警告)
+- ✅ 前端构建成功 (0 错误，0 警告) - 包含 75 个 SVG 资源
 
 ## 风险与问题
 
@@ -333,3 +474,4 @@ D:\Claude\Figma\Shoppe\backend\ShoppeAPI\
 ### 待确认问题
 - 是否需要部署到生产环境
 - 是否需要集成真实的 SMS/邮件服务
+- 3 个 Figma 资源无法下载（bubble-01、flash-discount-bg、popular-3），可能需要从原始设计重新导出

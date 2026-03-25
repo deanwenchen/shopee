@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
@@ -7,58 +7,61 @@ import HomeIndicator from '@/components/HomeIndicator.vue'
 const router = useRouter()
 const activeTab = ref('shop')
 
-// 分类数据
+// 使用 public 目录的资源，通过字符串路径直接引用，避免 Vite 预加载
+const ASSET_BASE = '/assets/figma/'
+
+// 分类数据 - 使用纯字符串路径
 const categories = ref([
-  { id: 1, name: 'Clothing', image: 'src/assets/figma/532C6Dcf29Ca4Fb0A2E404F0Ac1D802A.svg', count: 109 },
-  { id: 2, name: 'Bags', image: 'src/assets/figma/0F26E045Aa024Eb783Bb94Ded23C9E45.svg', count: 87 },
-  { id: 3, name: 'Shoes', image: 'src/assets/figma/A70864C81B1F401484A4450Cd75C9Cef.svg', count: 530 },
-  { id: 4, name: 'Lingerie', image: 'src/assets/figma/F8382341Af5B48F9B40187Fe74Febc69.svg', count: 218 },
-  { id: 5, name: 'Watch', image: 'src/assets/figma/F2E8E4C3E5F745Bc9Dfd34A479B8D2B7.svg', count: 218 },
-  { id: 6, name: 'Hoodies', image: 'src/assets/figma/F8382341Af5B48F9B40187Fe74Febc70.svg', count: 218 },
-  { id: 7, name: 'Dresses', image: 'src/assets/figma/83Ad853C1A81400B8Af38E08589Ab454.svg', count: 156 },
-  { id: 8, name: 'T-Shirts', image: 'src/assets/figma/F2E8E4C3E5F745Bc9Dfd34A479B8D2B8.svg', count: 243 },
+  { id: 1, name: 'Clothing', count: 109, images: ['cat-clothing-1.png', 'cat-clothing-2.png', 'cat-clothing-3.png', 'cat-clothing-main.png'] },
+  { id: 2, name: 'Bags', count: 87, images: ['cat-bags-1.png', 'cat-bags-2.png', 'cat-bags-3.png', 'cat-bags-main.png'] },
+  { id: 3, name: 'Shoes', count: 530, images: ['cat-shoes-1.svg', 'cat-shoes-2.svg', 'cat-shoes-3.svg', 'cat-shoes-main.svg'] },
+  { id: 4, name: 'Lingerie', count: 218, images: ['cat-lingerie-1.png', 'cat-lingerie-2.png', 'cat-lingerie-3.png', 'cat-lingerie-main.svg'] },
+  { id: 5, name: 'Watch', count: 218, images: ['cat-watch-1.png', 'cat-watch-2.png'] },
+  { id: 6, name: 'Hoodies', count: 218, images: ['cat-hoodies-1.png', 'cat-hoodies-2.png'] },
+  { id: 7, name: 'Dresses', count: 156, images: ['cat-dresses-1.png', 'cat-dresses-2.png'] },
+  { id: 8, name: 'T-Shirts', count: 243, images: ['top-tshirts.png'] },
 ])
 
-// Top Products 分类
+// Top Products 分类 - 使用纯字符串路径
 const topProducts = ref([
-  { id: 1, name: 'Dresses', image: 'src/assets/figma/657021186Be84555860C895D4D1Da870.svg' },
-  { id: 2, name: 'T-Shirts', image: 'src/assets/figma/657021186Be84555860C895D4D1Da870.svg' },
-  { id: 3, name: 'Skirts', image: 'src/assets/figma/657021186Be84555860C895D4D1Da870.svg' },
-  { id: 4, name: 'Shoes', image: 'src/assets/figma/657021186Be84555860C895D4D1Da870.svg' },
-  { id: 5, name: 'Bags', image: 'src/assets/figma/657021186Be84555860C895D4D1Da870.svg' },
+  { id: 1, name: 'Dresses', image: `${ASSET_BASE}top-dresses.svg` },
+  { id: 2, name: 'T-Shirts', image: `${ASSET_BASE}top-tshirts.png` },
+  { id: 3, name: 'Skirts', image: `${ASSET_BASE}top-skirts.png` },
+  { id: 4, name: 'Shoes', image: `${ASSET_BASE}top-shoes.png` },
+  { id: 5, name: 'Bags', image: `${ASSET_BASE}top-bags.png` },
 ])
 
-// 新品数据
+// 新品数据 - 使用纯字符串路径
 const newItems = ref([
-  { id: 1, name: 'Lorem ipsum dolor sit amet consectetur.', price: 17.00, image: 'src/assets/figma/6D305338A2A1480EAebb80A9382518E9.svg' },
-  { id: 2, name: 'Lorem ipsum dolor sit amet consectetur.', price: 32.00, image: 'src/assets/figma/A70864C81B1F401484A4450Cd75C9Cef.svg' },
-  { id: 3, name: 'Lorem ipsum dolor sit amet consectetur.', price: 21.00, image: 'src/assets/figma/Ddf8E2Ef1A434C29Bb9C4548488D9378.svg' },
+  { id: 1, name: 'Lorem ipsum dolor sit amet consectetur.', price: 17.00, image: `${ASSET_BASE}new-item-1.png` },
+  { id: 2, name: 'Lorem ipsum dolor sit amet consectetur.', price: 32.00, image: `${ASSET_BASE}new-item-2.png` },
+  { id: 3, name: 'Lorem ipsum dolor sit amet consectetur.', price: 21.00, image: `${ASSET_BASE}new-item-3.png` },
 ])
 
-// Flash Sale 数据
+// Flash Sale 数据 - 使用纯字符串路径
 const flashSaleItems = ref([
-  { id: 1, name: 'Product 1', price: 17.00, originalPrice: 21.25, image: 'src/assets/figma/2289C231211F4850B7Af5Ef0F942B4F7.svg', discount: '-20%' },
-  { id: 2, name: 'Product 2', price: 17.00, originalPrice: 21.25, image: 'src/assets/figma/098576F0C6F34E058E3F2D9Cd12D2574.svg', discount: '-20%' },
-  { id: 3, name: 'Product 3', price: 17.00, originalPrice: 21.25, image: 'src/assets/figma/922654839E7E4Fc3A35516Cca677C11C.svg', discount: '-20%' },
-  { id: 4, name: 'Product 4', price: 17.00, originalPrice: 21.25, image: 'src/assets/figma/45D808E05E004D2A9Bdc5Ed6F427010E.svg', discount: '-20%' },
-  { id: 5, name: 'Product 5', price: 17.00, originalPrice: 21.25, image: 'src/assets/figma/Cc0Db45D73F84F6BA6D6B9E811283C39.svg', discount: '-20%' },
-  { id: 6, name: 'Product 6', price: 17.00, originalPrice: 21.25, image: 'src/assets/figma/333Cbbca93904C5AA60A21E776Bf77D2.svg', discount: '-20%' },
+  { id: 1, name: 'Product 1', price: 17.00, originalPrice: 21.25, image: `${ASSET_BASE}flash-1.png`, discount: '-20%' },
+  { id: 2, name: 'Product 2', price: 17.00, originalPrice: 21.25, image: `${ASSET_BASE}flash-2.png`, discount: '-20%' },
+  { id: 3, name: 'Product 3', price: 17.00, originalPrice: 21.25, image: `${ASSET_BASE}flash-3.png`, discount: '-20%' },
+  { id: 4, name: 'Product 4', price: 17.00, originalPrice: 21.25, image: `${ASSET_BASE}flash-4.png`, discount: '-20%' },
+  { id: 5, name: 'Product 5', price: 17.00, originalPrice: 21.25, image: `${ASSET_BASE}flash-5.png`, discount: '-20%' },
+  { id: 6, name: 'Product 6', price: 17.00, originalPrice: 21.25, image: `${ASSET_BASE}flash-6.png`, discount: '-20%' },
 ])
 
-// Most Popular 数据
+// Most Popular 数据 - 使用纯字符串路径
 const mostPopularItems = ref([
-  { id: 1, name: 'New', price: 17.00, sales: 1780, image: 'src/assets/figma/098576F0C6F34E058E3F2D9Cd12D2574.svg', tag: 'New' },
-  { id: 2, name: 'Sale', price: 17.00, sales: 1780, image: 'src/assets/figma/2289C231211F4850B7Af5Ef0F942B4F7.svg', tag: 'Sale' },
-  { id: 3, name: 'Hot', price: 17.00, sales: 1780, image: 'src/assets/figma/878Cf2Fb31Fe4B3FBf9EF96Bb5F076Ce.svg', tag: 'Hot' },
-  { id: 4, name: 'Hot', price: 17.00, sales: 1780, image: 'src/assets/figma/Cc0Db45D73F84F6BA6D6B9E811283C39.svg', tag: 'Hot' },
+  { id: 1, name: 'New', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-1.svg`, tag: 'New' },
+  { id: 2, name: 'Sale', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-2.svg`, tag: 'Sale' },
+  { id: 3, name: 'Hot', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-4.png`, tag: 'Hot' },
+  { id: 4, name: 'Hot', price: 17.00, sales: 1780, image: `${ASSET_BASE}popular-1.svg`, tag: 'Hot' },
 ])
 
-// Just For You 数据
+// Just For You 数据 - 使用纯字符串路径
 const justForYouItems = ref([
-  { id: 1, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: 'src/assets/figma/Bd96C0A49A694373Ba737898758375Ef.svg' },
-  { id: 2, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: 'src/assets/figma/9C2B30Eb4D4C49318Faf06F95297D258.svg' },
-  { id: 3, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: 'src/assets/figma/333Cbbca93904C5AA60A21E776Bf77D2.svg' },
-  { id: 4, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: 'src/assets/figma/922654839E7E4Fc3A35516Cca677C11C.svg' },
+  { id: 1, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: `${ASSET_BASE}jfy-1.svg` },
+  { id: 2, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: `${ASSET_BASE}jfy-2.png` },
+  { id: 3, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: `${ASSET_BASE}jfy-3.png` },
+  { id: 4, name: 'Lorem ipsum dolor sit amet consectetur', price: 17.00, image: `${ASSET_BASE}jfy-4.png` },
 ])
 
 // 倒计时
@@ -90,6 +93,44 @@ const handleCategoryClick = (categoryId: number) => {
 const handleProductClick = (productId: number) => {
   router.push(`/product/${productId}`)
 }
+
+// 获取 Status Bar 和导航图标（这些是必需的，数量少）
+const statusBarIcon = `${ASSET_BASE}bars-status-bar.svg`
+const batteryBorder = `${ASSET_BASE}battery-border.svg`
+const batteryCap = `${ASSET_BASE}battery-cap.svg`
+const batteryCapacity = `${ASSET_BASE}battery-capacity.svg`
+const wifiIcon = `${ASSET_BASE}wifi.svg`
+const cellularIcon = `${ASSET_BASE}cellular.svg`
+const timeBackground = `${ASSET_BASE}time-background.svg`
+const searchIcon = `${ASSET_BASE}search-icon.svg`
+
+// Bottom Navigation 图标
+const navShoppingBag = `${ASSET_BASE}nav-shopping-bag.svg`
+const navPath335 = `${ASSET_BASE}nav-path-335.svg`
+const navPath336 = `${ASSET_BASE}nav-path-336.svg`
+const navMark01 = `${ASSET_BASE}nav-mark-01.svg`
+const navHeart = `${ASSET_BASE}nav-heart.svg`
+const navRectangle = `${ASSET_BASE}nav-rectangle.svg`
+const navMenu = `${ASSET_BASE}nav-menu.svg`
+const navHome = `${ASSET_BASE}nav-home.svg`
+const navPath328 = `${ASSET_BASE}nav-path-328.svg`
+const navMark2 = `${ASSET_BASE}nav-mark-2.svg`
+const navProfile = `${ASSET_BASE}nav-profile.svg`
+
+// Banner 图片（必要的）
+const bubble02 = `${ASSET_BASE}bubble-02.svg`
+const bubble02Alt = `${ASSET_BASE}bubble-02-alt.svg`
+const bubble03 = `${ASSET_BASE}bubble-03.svg`
+const bannerControls = `${ASSET_BASE}banner-controls.svg`
+const bannerMain = `${ASSET_BASE}banner-main.png`
+
+// 其他必要的 SVG
+const newItemImage1 = `${ASSET_BASE}new-item-mask.svg`
+const newItemImage2 = `${ASSET_BASE}new-item-mask-2.svg`
+const flashClock = `${ASSET_BASE}flash-clock.svg`
+const popularLike = `${ASSET_BASE}popular-like.svg`
+const popularStar = `${ASSET_BASE}popular-star.svg`
+const popularArrow = `${ASSET_BASE}popular-arrow.svg`
 </script>
 
 <template>
@@ -108,10 +149,7 @@ const handleProductClick = (productId: number) => {
           Search
         </p>
         <div class="absolute right-[18px] top-1/2 -translate-y-1/2 w-[18px] h-[18px]">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="text-gray-400">
-            <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <img :src="searchIcon" alt="Search" class="w-full h-full object-contain" />
         </div>
       </div>
     </div>
@@ -122,27 +160,20 @@ const handleProductClick = (productId: number) => {
       <!-- Big Sale Banner -->
       <div class="relative h-[150px] mx-[20px] mb-[31px]" data-name="Big Sale Banner" data-node-id="0:11382">
         <div class="absolute inset-0 rounded-[9px] overflow-hidden">
-          <!-- Banner Background with Gradient -->
-          <div class="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-300" />
-
-          <!-- Bubble Decorations -->
-          <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute top-[-50px] right-[-50px] w-[200px] h-[200px] bg-white/20 rounded-full" />
-            <div class="absolute bottom-[-30px] left-[100px] w-[150px] h-[150px] bg-white/15 rounded-full" />
-          </div>
+          <!-- Banner Background Image -->
+          <img :src="bannerMain" alt="Big Sale Banner" class="absolute inset-0 w-full h-full object-cover" />
 
           <!-- Banner Content -->
           <div class="absolute inset-0 p-4">
             <p class="font-raleway font-bold text-[29px] text-white tracking-[-0.29px]">Big Sale</p>
             <p class="font-nunito-sans font-bold text-[12px] text-white mt-1">Up to 50%</p>
-            <p class="font-raleway font-bold text-[11px] text-white mt-1 tracking-[-0.11px]">Happening Now</p>
+            <p class="font-raleway font-bold text-[11px] text-white mt-1 tracking-[-0.11px] whitespace-pre">Happening
+Now</p>
+          </div>
 
-            <!-- Carousel Dots -->
-            <div class="absolute bottom-[10px] left-1/2 -translate-x-1/2 flex gap-1">
-              <div class="w-[6px] h-[6px] rounded-full bg-white" />
-              <div class="w-[6px] h-[6px] rounded-full bg-white/40" />
-              <div class="w-[6px] h-[6px] rounded-full bg-white/40" />
-            </div>
+          <!-- Carousel Dots -->
+          <div class="absolute bottom-[10px] left-1/2 -translate-x-1/2 w-[120px] h-[10px]">
+            <img :src="bannerControls" alt="Carousel Controls" class="w-full h-full" />
           </div>
         </div>
       </div>
@@ -161,303 +192,156 @@ const handleProductClick = (productId: number) => {
           </div>
         </div>
 
-        <!-- Category Grid -->
+        <!-- Category Grid - First Row -->
         <div class="grid grid-cols-2 gap-4">
-          <!-- Clothing -->
-          <div
-            v-for="category in categories.slice(0, 4)"
-            :key="category.id"
-            class="bg-white rounded-[9px] shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] p-3 cursor-pointer"
-            @click="handleCategoryClick(category.id)"
-          >
-            <div class="grid grid-cols-2 gap-2 mb-2">
-              <div v-for="i in 4" :key="i" class="w-full aspect-square rounded-[5px] bg-gray-100 overflow-hidden">
-                <div class="w-full h-full bg-gradient-to-br from-pink-200 to-purple-200" />
+          <template v-for="category in categories" :key="category.id">
+            <div class="bg-white rounded-[9px] shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] p-3 cursor-pointer" @click="handleCategoryClick(category.id)">
+              <div class="grid grid-cols-2 gap-2 mb-2">
+                <div v-for="(img, idx) in category.images" :key="idx" class="w-full aspect-square rounded-[5px] overflow-hidden">
+                  <img :src="`${ASSET_BASE}${img}`" :alt="`${category.name} ${idx + 1}`" class="w-full h-full object-cover" />
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <h3 class="font-raleway font-bold text-[17px] text-brand-black">{{ category.name }}</h3>
+                <div class="bg-[#dfe9ff] px-2 py-0.5 rounded-[6px]">
+                  <span class="font-raleway font-bold text-[12px] text-brand-black">{{ category.count }}</span>
+                </div>
               </div>
             </div>
-            <div class="flex items-center justify-between">
-              <h3 class="font-raleway font-bold text-[17px] text-brand-black">{{ category.name }}</h3>
-              <div class="bg-[#dfe9ff] px-2 py-0.5 rounded-[6px]">
-                <span class="font-raleway font-bold text-[12px] text-brand-black">{{ category.count }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Second Row -->
-        <div class="grid grid-cols-2 gap-4 mt-4">
-          <div
-            v-for="category in categories.slice(4, 8)"
-            :key="category.id"
-            class="bg-white rounded-[9px] shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] p-3 cursor-pointer"
-            @click="handleCategoryClick(category.id)"
-          >
-            <div class="grid grid-cols-2 gap-2 mb-2">
-              <div v-for="i in 4" :key="i" class="w-full aspect-square rounded-[5px] bg-gray-100 overflow-hidden">
-                <div class="w-full h-full bg-gradient-to-br from-blue-200 to-green-200" />
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <h3 class="font-raleway font-bold text-[17px] text-brand-black">{{ category.name }}</h3>
-              <div class="bg-[#dfe9ff] px-2 py-0.5 rounded-[6px]">
-                <span class="font-raleway font-bold text-[12px] text-brand-black">{{ category.count }}</span>
-              </div>
-            </div>
-          </div>
+          </template>
         </div>
       </div>
 
       <!-- Top Products -->
-      <div class="px-[20px] mb-[31px]" data-name="Top Products" data-node-id="0:11214">
+      <div class="px-[20px] mb-[31px]" data-name="Top Products">
         <h2 class="font-raleway font-bold text-[21px] text-brand-black tracking-[-0.21px] mb-4">Top Products</h2>
-
-        <div class="flex gap-[20px] overflow-x-auto pb-2">
-          <div
-            v-for="(product, index) in topProducts"
-            :key="product.id"
-            class="flex flex-col items-center flex-shrink-0"
-          >
-            <div class="relative w-[60px] h-[60px] mb-1">
-              <!-- Ellipse Background -->
-              <div class="absolute inset-0">
-                <svg viewBox="0 0 60 60" class="w-full h-full">
-                  <ellipse cx="30" cy="35" rx="25" ry="20" fill="#FFE5E5" />
-                </svg>
-              </div>
-              <!-- Product Image Placeholder -->
-              <div class="absolute inset-[8px] rounded-full overflow-hidden bg-white">
-                <div class="w-full h-full bg-gradient-to-br from-pink-300 to-orange-200" />
-              </div>
+        <div class="flex gap-4 overflow-x-auto pb-2">
+          <div v-for="item in topProducts" :key="item.id" class="flex-shrink-0 w-[100px] text-center">
+            <div class="w-[100px] h-[100px] rounded-full bg-[#f8f8f8] flex items-center justify-center mb-2 overflow-hidden">
+              <img :src="item.image" :alt="item.name" class="w-[60px] h-[60px] object-contain" />
             </div>
-            <p class="font-raleway font-medium text-[13px] text-brand-black tracking-[-0.13px] text-center">{{ product.name }}</p>
+            <p class="font-raleway font-bold text-[13px] text-brand-black">{{ item.name }}</p>
           </div>
         </div>
       </div>
 
       <!-- New Items -->
-      <div class="px-[20px] mb-[31px]" data-name="New Items" data-node-id="2:7017">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="font-raleway font-bold text-[21px] text-brand-black tracking-[-0.21px]">New Items</h2>
-          <div class="flex items-center gap-1">
-            <span class="font-raleway font-bold text-[15px] text-brand-black">See All</span>
-            <div class="w-[27px] h-[27px] bg-brand-blue rounded-full flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M9 18L15 12L9 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-
+      <div class="px-[20px] mb-[31px]" data-name="New Items">
+        <h2 class="font-raleway font-bold text-[21px] text-brand-black tracking-[-0.21px] mb-4">New Items</h2>
         <div class="grid grid-cols-3 gap-3">
-          <div
-            v-for="item in newItems"
-            :key="item.id"
-            class="bg-white rounded-[9px] shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] p-3 cursor-pointer"
-            @click="handleProductClick(item.id)"
-          >
-            <div class="w-full aspect-square rounded-[5px] bg-gray-100 mb-2 overflow-hidden">
-              <div class="w-full h-full bg-gradient-to-br from-blue-300 to-cyan-200" />
+          <div v-for="item in newItems" :key="item.id" class="bg-white rounded-[9px] shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] p-3 cursor-pointer" @click="handleProductClick(item.id)">
+            <div class="relative mb-2">
+              <div class="aspect-square rounded-[5px] overflow-hidden bg-[#f8f8f8]">
+                <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
+              </div>
             </div>
-            <p class="font-nunito-sans text-[12px] text-black line-clamp-2 h-[32px] overflow-hidden">{{ item.name }}</p>
-            <p class="font-raleway font-bold text-[17px] text-brand-black mt-1">${{ item.price.toFixed(2) }}</p>
+            <p class="font-raleway font-medium text-[15px] text-brand-black truncate">{{ item.name }}</p>
+            <p class="font-raleway font-bold text-[16px] text-brand-black mt-1">${{ item.price.toFixed(2) }}</p>
           </div>
         </div>
       </div>
 
       <!-- Flash Sale -->
-      <div class="px-[20px] mb-[31px]" data-name="Flash Sale" data-node-id="9:5463">
+      <div class="px-[20px] mb-[31px]" data-name="Flash Sale">
         <div class="flex items-center justify-between mb-4">
           <div class="flex items-center gap-2">
             <h2 class="font-raleway font-bold text-[21px] text-brand-black tracking-[-0.21px]">Flash Sale</h2>
-            <div class="w-[27px] h-[27px]">
-              <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="10" stroke="#FF5790" stroke-width="2"/>
-                <path d="M12 6V12L16 14" stroke="#FF5790" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </div>
-          <!-- Timer -->
-          <div class="flex gap-1">
-            <div class="bg-[#f3f3f3] rounded-[7px] px-2 py-1">
-              <span class="font-raleway font-bold text-[17px] text-brand-black">{{ formatTime(timeLeft.minutes) }}</span>
-            </div>
-            <div class="bg-[#f3f3f3] rounded-[7px] px-2 py-1">
-              <span class="font-raleway font-bold text-[17px] text-brand-black">{{ formatTime(timeLeft.seconds) }}</span>
-            </div>
-            <div class="bg-[#f3f3f3] rounded-[7px] px-2 py-1">
-              <span class="font-raleway font-bold text-[17px] text-brand-black">{{ formatTime(timeLeft.milliseconds) }}</span>
+            <div class="w-[82px] h-[30px] relative">
+              <img :src="flashClock" alt="Clock" class="w-[24px] h-[24px] absolute top-[3px] left-[3px]" />
+              <div class="absolute top-[6px] left-[32px] font-nunito font-light text-[17px] text-brand-black">
+                {{ formatTime(timeLeft.minutes) }}:{{ formatTime(timeLeft.seconds) }}:{{ formatTime(timeLeft.milliseconds) }}
+              </div>
             </div>
           </div>
         </div>
-
         <div class="grid grid-cols-3 gap-3">
-          <div
-            v-for="item in flashSaleItems"
-            :key="item.id"
-            class="bg-white rounded-[9px] shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] p-3 cursor-pointer relative"
-            @click="handleProductClick(item.id)"
-          >
-            <!-- Discount Badge -->
-            <div class="absolute top-2 right-2 bg-gradient-to-l from-[#ff5790] to-[#f81140] px-1.5 py-0.5 rounded-tl-[5px] rounded-bl-[5px] rounded-tr-[5px]">
-              <span class="font-raleway font-bold text-[13px] text-white">{{ item.discount }}</span>
+          <div v-for="item in flashSaleItems" :key="item.id" class="bg-white rounded-[9px] shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] p-3 cursor-pointer" @click="handleProductClick(item.id)">
+            <div class="relative mb-2">
+              <div class="aspect-square rounded-[5px] overflow-hidden bg-[#f8f8f8]">
+                <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
+              </div>
+              <!-- Discount Badge -->
+              <div class="absolute top-2 right-2 w-[45px] h-[20px] bg-gradient-to-r from-[#ff5790] to-[#f81140] rounded-full flex items-center justify-center">
+                <span class="font-raleway font-bold text-[11px] text-white -translate-x-[1px]">{{ item.discount }}</span>
+              </div>
             </div>
-
-            <div class="w-full aspect-square rounded-[5px] bg-gray-100 mb-2 overflow-hidden">
-              <div class="w-full h-full bg-gradient-to-br from-pink-200 to-red-200" />
-            </div>
-            <p class="font-raleway font-bold text-[17px] text-brand-black">${{ item.price.toFixed(2) }}</p>
+            <p class="font-raleway font-medium text-[15px] text-brand-black truncate">${{ item.price.toFixed(2) }}</p>
+            <p class="font-nunito font-light text-[12px] text-[#a0a0a0] line-through">${{ item.originalPrice.toFixed(2) }}</p>
           </div>
         </div>
       </div>
 
       <!-- Most Popular -->
-      <div class="px-[20px] mb-[31px]" data-name="Most Popular" data-node-id="2:7020">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="font-raleway font-bold text-[21px] text-brand-black tracking-[-0.21px]">Most Popular</h2>
-          <div class="flex items-center gap-1">
-            <span class="font-raleway font-bold text-[15px] text-brand-black">See All</span>
-            <div class="w-[27px] h-[27px] bg-brand-blue rounded-full flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M9 18L15 12L9 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-4 gap-2">
-          <div
-            v-for="item in mostPopularItems"
-            :key="item.id"
-            class="bg-white rounded-[9px] shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] p-2 cursor-pointer"
-            @click="handleProductClick(item.id)"
-          >
-            <div class="relative">
-              <div class="w-full aspect-square rounded-[5px] bg-gray-100 mb-2 overflow-hidden">
-                <div class="w-full h-full bg-gradient-to-br from-pink-200 to-purple-200" />
+      <div class="px-[20px] mb-[31px]" data-name="Most Popular">
+        <h2 class="font-raleway font-bold text-[21px] text-brand-black tracking-[-0.21px] mb-4">Most Popular</h2>
+        <div class="grid grid-cols-2 gap-4">
+          <div v-for="item in mostPopularItems" :key="item.id" class="bg-white rounded-[9px] shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] p-3 cursor-pointer" @click="handleProductClick(item.id)">
+            <div class="relative mb-2">
+              <div class="aspect-square rounded-[5px] overflow-hidden bg-[#f8f8f8]">
+                <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
               </div>
-              <!-- Tag -->
-              <span class="absolute top-1 right-1 font-raleway font-medium text-[11px]" :class="item.tag === 'New' ? 'text-green-600' : item.tag === 'Sale' ? 'text-orange-600' : 'text-red-600'">
-                {{ item.tag }}
-              </span>
-              <!-- Like Icon -->
-              <div class="absolute top-1 left-1 w-[16px] h-[16px]">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                </svg>
+              <!-- Tag Badge -->
+              <div class="absolute top-2 left-2 px-2 py-0.5 rounded-[4px] bg-[#ff5790]">
+                <span class="font-raleway font-bold text-[10px] text-white">{{ item.tag }}</span>
               </div>
+              <!-- Like Button -->
+              <button class="absolute top-2 right-2 w-[28px] h-[28px] bg-white rounded-full flex items-center justify-center shadow-md">
+                <img :src="popularLike" alt="Like" class="w-[16px] h-[16px]" />
+              </button>
             </div>
-            <div class="flex items-center justify-between">
-              <span class="font-raleway font-bold text-[15px] text-black">{{ item.sales }}</span>
+            <p class="font-raleway font-medium text-[15px] text-brand-black truncate">${{ item.price.toFixed(2) }}</p>
+            <div class="flex items-center justify-between mt-1">
+              <div class="flex items-center gap-1">
+                <img :src="popularStar" alt="Star" class="w-[12px] h-[12px]" />
+                <span class="font-raleway font-bold text-[11px] text-brand-black">{{ item.sales }}</span>
+              </div>
+              <img :src="popularArrow" alt="Arrow" class="w-[16px] h-[16px]" />
             </div>
-            <p class="font-raleway font-bold text-[15px] text-brand-black mt-1">${{ item.price.toFixed(2) }}</p>
           </div>
         </div>
       </div>
 
       <!-- Just For You -->
-      <div class="px-[20px] mb-[20px]" data-name="Just for You" data-node-id="2:7021">
-        <div class="flex items-center gap-2 mb-4">
-          <h2 class="font-raleway font-bold text-[21px] text-brand-black tracking-[-0.21px]">Just For You</h2>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFD700">
-            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-          </svg>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div
-            v-for="item in justForYouItems.slice(0, 2)"
-            :key="item.id"
-            class="bg-white rounded-[9px] shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] p-3 cursor-pointer"
-            @click="handleProductClick(item.id)"
-          >
-            <div class="w-full h-[120px] rounded-[5px] bg-gray-100 mb-2 overflow-hidden">
-              <div class="w-full h-full bg-gradient-to-br from-purple-200 to-pink-200" />
+      <div class="px-[20px] mb-[31px]" data-name="Just For You">
+        <h2 class="font-raleway font-bold text-[21px] text-brand-black tracking-[-0.21px] mb-4">Just For You</h2>
+        <div class="grid grid-cols-2 gap-4">
+          <div v-for="item in justForYouItems" :key="item.id" class="bg-white rounded-[9px] shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] p-3 cursor-pointer" @click="handleProductClick(item.id)">
+            <div class="mb-2">
+              <div class="aspect-square rounded-[5px] overflow-hidden bg-[#f8f8f8]">
+                <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
+              </div>
             </div>
-            <p class="font-nunito-sans text-[12px] text-black line-clamp-2 h-[32px] overflow-hidden">{{ item.name }}</p>
-            <p class="font-raleway font-bold text-[17px] text-brand-black mt-1">${{ item.price.toFixed(2) }}</p>
+            <p class="font-raleway font-medium text-[15px] text-brand-black truncate">${{ item.price.toFixed(2) }}</p>
+            <div class="flex items-center justify-between mt-1">
+              <div class="flex items-center gap-1">
+                <img :src="popularStar" alt="Star" class="w-[12px] h-[12px]" />
+                <span class="font-raleway font-bold text-[11px] text-brand-black">4.5</span>
+              </div>
+              <img :src="popularArrow" alt="Arrow" class="w-[16px] h-[16px]" />
+            </div>
           </div>
         </div>
       </div>
+
     </div>
 
     <!-- Bottom Navigation -->
-    <div class="absolute bottom-0 left-0 right-0 h-[84px] bg-white shadow-[0px_-1px_1px_0px_rgba(0,0,0,0.16)]" data-name="Bottom Bar" data-node-id="2:5227">
-      <!-- Navigation Icons -->
-      <div class="absolute inset-[16px_0_20px_0] flex items-center justify-around">
-        <!-- Home/Shop - Active -->
-        <div class="flex flex-col items-center">
-          <div class="w-[24px] h-[24px] relative">
-            <svg viewBox="0 0 24 24" fill="none" class="w-full h-full">
-              <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#004CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M9 22V12H15V22" stroke="#004CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="w-[9px] h-[5px] mt-1">
-            <svg viewBox="0 0 9 5" fill="black">
-              <path d="M1 1L4.5 4L8 1" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Cart -->
-        <div class="flex flex-col items-center cursor-pointer" @click="router.push('/cart')">
-          <div class="w-[24px] h-[24px] relative">
-            <svg viewBox="0 0 24 24" fill="none" class="w-full h-full text-gray-400">
-              <path d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Categories -->
-        <div class="flex flex-col items-center cursor-pointer" @click="router.push('/categories')">
-          <div class="w-[24px] h-[24px] relative">
-            <svg viewBox="0 0 24 24" fill="none" class="w-full h-full text-gray-400">
-              <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-              <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-              <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-              <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Wishlist -->
-        <div class="flex flex-col items-center cursor-pointer" @click="router.push('/wishlist')">
-          <div class="w-[24px] h-[24px] relative">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full text-gray-400">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Profile -->
-        <div class="flex flex-col items-center cursor-pointer" @click="router.push('/profile')">
-          <div class="w-[24px] h-[24px] relative">
-            <svg viewBox="0 0 24 24" fill="none" class="w-full h-full text-gray-400">
-              <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- Home Indicator -->
-      <HomeIndicator />
+    <div class="absolute bottom-0 left-0 right-0 h-[84px] bg-white shadow-[0px_-4px_10px_0px_rgba(0,0,0,0.05)] flex items-end pb-5 px-6" data-name="Bottom Navigation">
+      <button
+        v-for="tab in [{id: 'shop', icon: navHome, label: 'Home'}, {id: 'cart', icon: navShoppingBag, label: 'Cart'}, {id: 'categories', icon: navMenu, label: 'Categories'}, {id: 'wishlist', icon: navHeart, label: 'Wishlist'}, {id: 'profile', icon: navProfile, label: 'Profile'}]"
+        :key="tab.id"
+        @click="activeTab = tab.id"
+        class="flex-1 flex flex-col items-center gap-1 cursor-pointer"
+      >
+        <img :src="tab.icon" :alt="tab.label" class="w-[24px] h-[24px]" />
+        <span class="font-nunito font-light text-[11px] text-brand-black">{{ tab.label }}</span>
+      </button>
     </div>
+
+    <!-- Home Indicator -->
+    <HomeIndicator />
   </div>
 </template>
 
 <style scoped>
-/* Custom scrollbar styles */
-.overflow-y-auto::-webkit-scrollbar {
-  width: 0px;
-}
-
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 </style>

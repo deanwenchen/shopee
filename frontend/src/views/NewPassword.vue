@@ -16,13 +16,13 @@ const errorMessage = ref('')
 const isLoading = ref(false)
 
 // Figma asset URLs
-const bubble01 = '../assets/figma/f04821bb-dcc4-46ca-b2a1-5b59f443bf5f.svg'
-const bubble02 = '../assets/figma/90d3c347-98d9-4f72-aec6-2deB6070603F.svg'
-const ellipse = '../assets/figma/58006e4b-da06-4d80-a4a0-b32cbb465954.svg'
-const avatarEF6B = '../assets/figma/77e59ace-f77e-4a18-b27f-b1ae8617b340.svg'
-const avatar8C7A = '../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'
-const avatarMask = '../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'
-const avatarArtist2 = '../assets/figma/159d3385-63e5-47de-b7ec-10f295efffbe.jpg'
+const bubble01 = '../assets/figma/newpass-bubble-01-f04821bb-dcc4-46ca-b2a1-5b59f443bf5f.svg'
+const bubble02 = '../assets/figma/newpass-ellipse-58006e4b-da06-4d80-a4a0-b32cbb465954.svg'
+const ellipse = '../assets/figma/newpass-ellipse-58006e4b-da06-4d80-a4a0-b32cbb465954.svg'
+const avatarEF6B = '../assets/figma/newpass-avatar-deco-77e59ace-f77e-4a18-b27f-b1ae8617b340.svg'
+const avatar8C7A = '../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'
+const avatarMask = '../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'
+const avatarArtist2 = '../assets/figma/newpass-avatar-main-159d3385-63e5-47de-b7ec-10f295efffbe.jpg'
 
 const handleSave = async () => {
   showError.value = false
@@ -135,7 +135,7 @@ const togglePassword2 = () => {
         />
       </div>
       <!-- 8C7A435A-3E32-4D89-BCEB-E976B0F70AF3 - masked avatar -->
-      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             :src="avatar8C7A"
@@ -145,7 +145,7 @@ const togglePassword2 = () => {
         </div>
       </div>
       <!-- artist-2 1 -->
-      <div class="absolute inset-0" style="mask-image: url('../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-0" style="mask-image: url('../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
         <img
           :src="avatarArtist2"
           alt="Avatar main"
@@ -174,18 +174,13 @@ const togglePassword2 = () => {
         class="w-full h-full bg-transparent font-raleway font-medium text-[17px] text-[#333333] border-none outline-none placeholder-[#dcdcdc]"
       />
       <button @click="togglePassword1" class="ml-2">
-        <img
-          v-if="showPassword1"
-          src="../assets/figma/313428fc-ea69-4094-b8ea-56a00278eb22.svg"
-          alt="Show password"
-          class="w-[16px] h-[16px]"
-        />
-        <img
-          v-else
-          src="../assets/figma/313428fc-ea69-4094-b8ea-56a00278eb22.svg"
-          alt="Hide password"
-          class="w-[16px] h-[16px]"
-        />
+        <svg v-if="showPassword1" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-[16px] h-[16px]">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" fill="#666"/>
+        </svg>
+        <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-[16px] h-[16px]">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" fill="#666"/>
+          <path d="M4.27 3L3 4.27l18 18 1.27-1.27L4.27 3z" fill="#666"/>
+        </svg>
       </button>
     </div>
 
@@ -199,18 +194,13 @@ const togglePassword2 = () => {
         class="w-full h-full bg-transparent font-raleway font-medium text-[17px] text-[#333333] border-none outline-none placeholder-[#dcdcdc]"
       />
       <button @click="togglePassword2" class="ml-2">
-        <img
-          v-if="showPassword2"
-          src="../assets/figma/313428fc-ea69-4094-b8ea-56a00278eb22.svg"
-          alt="Show password"
-          class="w-[16px] h-[16px]"
-        />
-        <img
-          v-else
-          src="../assets/figma/313428fc-ea69-4094-b8ea-56a00278eb22.svg"
-          alt="Hide password"
-          class="w-[16px] h-[16px]"
-        />
+        <svg v-if="showPassword2" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-[16px] h-[16px]">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" fill="#666"/>
+        </svg>
+        <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-[16px] h-[16px]">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" fill="#666"/>
+          <path d="M4.27 3L3 4.27l18 18 1.27-1.27L4.27 3z" fill="#666"/>
+        </svg>
       </button>
     </div>
 
@@ -241,11 +231,11 @@ const togglePassword2 = () => {
 
 <style scoped>
 .mask-avatar {
-  mask-image: url('../assets/figma/63769f61-3a5a-4dd7-99c7-15f122fb5217.svg');
+  mask-image: url('../assets/figma/code-avatar-mask-48bed544-77b8-49a0-a821-837efbcff322.svg');
   mask-size: 91px 91px;
   mask-position: 0px 55.146px;
   mask-repeat: no-repeat;
-  -webkit-mask-image: url('../assets/figma/63769f61-3a5a-4dd7-99c7-15f122fb5217.svg');
+  -webkit-mask-image: url('../assets/figma/code-avatar-mask-48bed544-77b8-49a0-a821-837efbcff322.svg');
   -webkit-mask-size: 91px 91px;
   -webkit-mask-position: 0px 55.146px;
   -webkit-mask-repeat: no-repeat;

@@ -22,11 +22,15 @@ export const useAuthStore = defineStore('auth', () => {
   async function loginStep1(email: string): Promise<{ success: boolean; message?: string }> {
     try {
       error.value = null;
+      console.log('[Auth Store] Calling loginStep1 with email:', email);
       const response = await authApi.loginStep1(email);
+      console.log('[Auth Store] loginStep1 response:', response);
       return { success: response.success };
     } catch (e: unknown) {
-      const err = e as { response?: { data?: { message?: string } } };
-      error.value = err.response?.data?.message || 'Failed to verify email';
+      console.error('[Auth Store] loginStep1 error:', e);
+      const err = e as { response?: { data?: { message?: string } }; message?: string };
+      error.value = err.response?.data?.message || err.message || 'Failed to verify email';
+      console.error('[Auth Store] error.value:', error.value);
       return { success: false, message: error.value };
     }
   }

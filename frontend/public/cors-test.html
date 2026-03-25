@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CORS Test - Login API</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .success { color: green; }
+    .error { color: red; }
+    .info { color: blue; }
+    pre {
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>CORS Test - Login API</h1>
+  <p>Testing connection from <code>http://localhost:3000</code> to <code>http://localhost:9000</code></p>
+
+  <button onclick="testWithFetch()">Test with Fetch</button>
+  <button onclick="testWithXHR()">Test with XMLHttpRequest</button>
+  <button onclick="clearLogs()">Clear Logs</button>
+
+  <h2>Console Logs:</h2>
+  <pre id="logs"></pre>
+
+  <script>
+    const API_BASE_URL = 'http://localhost:9000/api/auth';
+    const logsEl = document.getElementById('logs');
+
+    function log(message, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString();
+      const colorClass = type === 'success' ? 'success' : type === 'error' ? 'error' : 'info';
+      logsEl.innerHTML += `<span class="${colorClass}">[${timestamp}] ${message}</span>\n`;
+      console.log(message);
+    }
+
+    function clearLogs() {
+      logsEl.innerHTML = '';
+    }
+
+    async function testWithFetch() {
+      log('=== Testing with Fetch API ===', 'info');
+
+      try {
+        log('Sending POST request to /login-step1...', 'info');
+
+        const response = await fetch(`${API_BASE_URL}/login-step1`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({ email: 'deanwenchen@gmail.com' })
+        });
+
+        log(`Response status: ${response.status} ${response.ok ? '✓' : '✗'}`, response.ok ? 'success' : 'error');
+        log(`Response headers:`, 'info');
+
+        for (const [key, value] of response.headers.entries()) {
+          log(`  ${key}: ${value}`, 'info');
+        }
+
+        const data = await response.json();
+        log(`Response body: ${JSON.stringify(data, null, 2)}`, response.ok ? 'success' : 'error');
+
+        if (response.ok) {
+          log('✅ SUCCESS! CORS is working correctly.', 'success');
+        } else {
+          log('❌ FAILED! Check response body for details.', 'error');
+        }
+      } catch (error) {
+        log(`❌ Error: ${error.message}`, 'error');
+        log('This might be a CORS or network error.', 'error');
+      }
+    }
+
+    function testWithXHR() {
+      log('=== Testing with XMLHttpRequest ===', 'info');
+
+      const xhr = new XMLHttpRequest();
+
+      xhr.addEventListener('load', function() {
+        log(`Response status: ${xhr.status} ${xhr.status === 200 ? '✓' : '✗'}`, xhr.status === 200 ? 'success' : 'error');
+        log(`Response body: ${xhr.responseText}`, xhr.status === 200 ? 'success' : 'error');
+
+        if (xhr.status === 200) {
+          log('✅ SUCCESS! CORS is working correctly.', 'success');
+        } else {
+          log('❌ FAILED! Check response body for details.', 'error');
+        }
+      });
+
+      xhr.addEventListener('error', function() {
+        log('❌ Network error - CORS may be blocked', 'error');
+      });
+
+      xhr.open('POST', `${API_BASE_URL}/login-step1`);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.withCredentials = true;
+      xhr.send(JSON.stringify({ email: 'deanwenchen@gmail.com' }));
+
+      log('Request sent...', 'info');
+    }
+
+    // Auto-run test on page load
+    window.addEventListener('load', () => {
+      log('Page loaded. Click a button to test.', 'info');
+    });
+  </script>
+</body>
+</html>

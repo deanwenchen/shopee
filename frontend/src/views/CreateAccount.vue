@@ -86,12 +86,23 @@ const handleCancel = () => {
     <StatusBar />
 
     <!-- Background Bubbles -->
-    <div class="absolute top-[-206px] left-[-132px] w-[659px] h-[513px]" data-name="Bubbles">
-      <img
-        src="../assets/figma/70ae7a39-be04-4867-96d7-bf710ace7dcb.svg"
-        alt="Bubbles background"
-        class="w-full h-full object-contain"
-      />
+    <div class="absolute top-[-206px] left-[-132px] w-[659px] h-[513px] overflow-hidden pointer-events-none" data-name="Bubbles">
+      <!-- Bubble 01 - 深蓝色大气泡 -->
+      <div class="absolute top-[0px] left-[0px] w-[403px] h-[443px]">
+        <img
+          src="../assets/figma/login-bubble-01-a007d904-91e7-4dab-92c2-975266a4496a.svg"
+          alt="Bubble 01"
+          class="w-full h-full object-contain"
+        />
+      </div>
+      <!-- Bubble 02 - 浅蓝色大气泡 -->
+      <div class="absolute top-[50px] left-[200px] w-[400px] h-[400px] rotate-[45deg]">
+        <img
+          src="../assets/figma/login-bubble-02-56fc5330-5d3d-4979-a050-37d85c359820.svg"
+          alt="Bubble 02"
+          class="w-full h-full object-contain opacity-50"
+        />
+      </div>
     </div>
 
     <!-- Page Title -->
@@ -105,13 +116,13 @@ const handleCancel = () => {
     <div class="absolute left-[30px] top-[284px] w-[90px] h-[90px]" data-name="Upload Photo">
       <div class="relative w-full h-full">
         <img
-          src="../assets/figma/5cf44006-dae9-4be9-ac93-3937d16a9be3.png"
+          src="../assets/figma/signup-upload-frame-5cf44006-dae9-4be9-ac93-3937d16a9be3.png"
           alt="Upload placeholder"
           class="w-full h-full object-cover rounded-full border-2 border-dashed border-brand-blue"
         />
         <div class="absolute right-[28px] top-[31px] w-[34px] h-[28px]" data-name="camera icon">
           <img
-            src="../assets/figma/df477442-f952-447f-9e34-26b0260de677.svg"
+            src="../assets/figma/signup-camera-icon-df477442-f952-447f-9e34-26b0260de677.svg"
             alt="Camera"
             class="w-full h-full"
           />
@@ -140,13 +151,13 @@ const handleCancel = () => {
         <div class="flex items-center gap-[8px]">
           <div class="w-[24px] h-[18px] rounded-[4px] overflow-hidden relative">
             <img
-              src="../assets/figma/d85b2ef1-423c-43fb-9a18-791e4f7189a5.png"
+              src="../assets/figma/signup-flag-d85b2ef1-423c-43fb-9a18-791e4f7189a5.png"
               alt="England flag"
               class="w-full h-full object-cover"
             />
           </div>
           <img
-            src="../assets/figma/ecb20b03-74c8-439a-a583-1c3142b33d8e.svg"
+            src="../assets/figma/signup-dropdown-ecb20b03-74c8-439a-a583-1c3142b33d8e.svg"
             alt="Country dropdown"
             class="w-[16px] h-[16px]"
           />

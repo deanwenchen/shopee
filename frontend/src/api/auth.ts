@@ -136,8 +136,15 @@ export async function register(data: RegisterRequest): Promise<{ success: boolea
 }
 
 export async function loginStep1(email: string): Promise<LoginStep1Response> {
-  const response = await authApi.post('/login-step1', { email });
-  return response.data;
+  console.log('[API] Calling login-step1 with email:', email);
+  try {
+    const response = await authApi.post('/login-step1', { email });
+    console.log('[API] login-step1 response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('[API] login-step1 error:', error);
+    throw error;
+  }
 }
 
 export async function login(data: LoginRequest): Promise<LoginResponse> {

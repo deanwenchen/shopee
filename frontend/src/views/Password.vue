@@ -6,7 +6,7 @@ import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
 
 // 导入本地图片
-import emptyDotImg from '@/assets/figma/25bd7827-642a-4eb0-8971-e28624a121b9.svg'
+import emptyDotImg from '@/assets/figma/hello-dot-empty-594e48ee-e099-46ec-a7a9-1faacfc838ab.svg'
 import blueDotImg from '@/assets/figma/blue-dot.svg'
 import redDotImg from '@/assets/figma/red-dot.svg'
 
@@ -65,7 +65,16 @@ watch(password, async (newValue, oldValue) => {
         } else {
           // 密码错误，显示错误状态
           inputMode.value = 'error'
-          hasBackspaced.value = false
+          // 延迟 300ms 后清空密码并自动转入 8 位输入模式（显示 8 个空心点）
+          setTimeout(() => {
+            password.value = ''
+            inputMode.value = '8-digit'
+            hasBackspaced.value = false
+            // 确保输入框聚焦，用户可以直接输入
+            nextTick(() => {
+              inputRef.value?.focus()
+            })
+          }, 300)
         }
       }
     }
@@ -89,8 +98,16 @@ watch(password, async (newValue, oldValue) => {
       if (result.success) {
         router.push('/hello-card')
       } else {
-        // 密码错误，重置 hasBackspaced，保持错误状态
-        hasBackspaced.value = false
+        // 密码错误，再次显示错误状态后清空密码
+        inputMode.value = 'error'
+        setTimeout(() => {
+          password.value = ''
+          inputMode.value = '8-digit'
+          hasBackspaced.value = false
+          nextTick(() => {
+            inputRef.value?.focus()
+          })
+        }, 300)
       }
     }
   }
@@ -173,7 +190,7 @@ const handleForgotPassword = () => {
       <!-- Bubble 02 - 浅蓝色大气泡（旋转 158 度） -->
       <div class="absolute top-[0px] left-[22px] w-[512px] h-[550px] rotate-[158deg]">
         <img
-          src="../assets/figma/090d6144-e1da-4b62-8d46-af67a8b62405.svg"
+          src="../assets/figma/password-bubble-02-090d6144-e1da-4b62-8d46-af67a8b62405.svg"
           alt="Bubble 02"
           class="w-full h-full object-contain"
         />
@@ -182,7 +199,7 @@ const handleForgotPassword = () => {
       <!-- Bubble 01 - 深蓝色大气泡 -->
       <div class="absolute top-[0px] left-[0px] w-[403px] h-[443px]">
         <img
-          src="../assets/figma/9acc6ed4-83e1-4c99-b930-5279f1abf2b7.svg"
+          src="../assets/figma/password-bubble-01-9acc6ed4-83e1-4c99-b930-5279f1abf2b7.svg"
           alt="Bubble 01"
           class="w-full h-full object-contain"
         />
@@ -201,7 +218,7 @@ const handleForgotPassword = () => {
       <!-- Avatar Image -->
       <div class="absolute inset-[19.21%_37.87%_69.58%_37.87%] rounded-full overflow-hidden">
         <img
-          src="../assets/figma/55897da1-4abd-446d-9448-8ea2bb86b45d.svg"
+          src="../assets/figma/password-avatar-frame-55897da1-4abd-446d-9448-8ea2bb86b45d.svg"
           alt="Avatar"
           class="w-full h-full object-cover"
         />

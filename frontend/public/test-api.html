@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login API Test</title>
+</head>
+<body>
+  <h1>Login API Test</h1>
+  <button onclick="testLogin()">Test login-step1</button>
+  <pre id="output"></pre>
+
+  <script>
+    const API_BASE_URL = 'http://localhost:9000/api/auth';
+
+    async function testLogin() {
+      const output = document.getElementById('output');
+      output.textContent = 'Testing...\n';
+
+      try {
+        console.log('[Test] Calling login-step1...');
+
+        const response = await fetch(`${API_BASE_URL}/login-step1`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({ email: 'deanwenchen@gmail.com' })
+        });
+
+        console.log('[Test] Response status:', response.status);
+        console.log('[Test] Response headers:', [...response.headers.entries()]);
+
+        const data = await response.json();
+        output.textContent = `Status: ${response.status}\nHeaders:\n`;
+        for (const [key, value] of response.headers.entries()) {
+          output.textContent += `  ${key}: ${value}\n`;
+        }
+        output.textContent += `\nData: ${JSON.stringify(data, null, 2)}`;
+
+        if (response.ok) {
+          output.textContent += '\n✅ SUCCESS!';
+        } else {
+          output.textContent += '\n❌ FAILED!';
+        }
+      } catch (error) {
+        console.error('[Test] Error:', error);
+        output.textContent = `Error: ${error.message}\nCheck console for details`;
+      }
+    }
+  </script>
+</body>
+</html>
