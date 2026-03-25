@@ -491,6 +491,39 @@ D:\Claude\Figma\Shoppe\backend\ShoppeAPI\
   - 添加 6 个权限策略（role:list/detail/create/update/delete/assign）
 - ✅ 构建验证成功（0 错误，0 警告）
 
+### 优先级 3: ✅ 已完成 - 权限管理模块 CRUD (2026-03-25)
+- ✅ 创建 `Features/Permissions/DTOs/PermissionDtos.cs`
+  - CreatePermissionRequest（名称、代码、类型、父级 ID、路径、图标、API 路径、排序）
+  - UpdatePermissionRequest（可选的更新字段）
+  - PermissionDto（权限信息传输对象，包含 Children 嵌套列表）
+  - PermissionTreeResponse（权限树响应）
+  - PermissionListResponse（分页列表响应）
+- ✅ 创建 `Features/Permissions/Services/IPermissionService.cs`
+  - GetTreeAsync（获取权限树）
+  - GetListAsync（分页查询）
+  - GetByIdAsync（按 ID 查询）
+  - CreateAsync（创建权限）
+  - UpdateAsync（更新权限）
+  - DeleteAsync（删除权限）
+- ✅ 创建 `Features/Permissions/Services/PermissionService.cs`
+  - 使用递归 BuildTree 方法构建权限树结构
+  - 权限树按 Sort 和 CreatedAt 排序
+  - 删除权限前检查是否有子项或被角色使用
+  - 支持权限类型：1=目录，2=菜单，3=按钮，4=API
+  - 完整的 CRUD 操作实现
+- ✅ 创建 `Features/Permissions/PermissionController.cs`
+  - GET /api/permission/tree（权限树，permission:list 权限）
+  - GET /api/permission（列表，permission:list 权限）
+  - GET /api/permission/{id}（详情，permission:detail 权限）
+  - POST /api/permission（创建，permission:create 权限）
+  - PUT /api/permission/{id}（更新，permission:update 权限）
+  - DELETE /api/permission/{id}（删除，permission:delete 权限）
+- ✅ 更新 `Program.cs`
+  - 注册 IPermissionService → PermissionService
+  - 添加 6 个权限策略（permission:list/detail/create/update/delete）
+- ✅ 构建验证成功（0 错误，0 警告）
+- ✅ Git commit 成功：`feat: implement permission management module`
+
 ### 优先级 1：✅ 已完成 - Vue 3 + TypeScript 前端项目创建 (2026-03-25)
 - ✅ 使用 Vite 创建 Vue 3 + TypeScript 项目 `admin/`
 - ✅ 安装基础依赖（49 个包）
@@ -643,3 +676,142 @@ admin/
   - 添加鼠标悬停暂停功能
   - 添加淡入淡出过渡动画（0.5s）
   - 前端构建验证成功（0 错误，0 警告）
+- ✅ **修复 Most Popular 模块图片资源**（2026-03-25）
+  - 从 Figma 获取正确的 4 个商品图片资源 URL
+  - 创建 `download-most-popular-resources.js` 脚本
+  - 成功下载 4 张商品图片到 `public/assets/figma/`：
+    - popular-new-dc4c2652-f335-4dba-9d73-1c94cae3e9a0.png
+    - popular-sale-2f8072f3-7f8f-4b5e-afae-25da5a0cf65f.png
+    - popular-hot-1-eb10ffe8-a4a3-4f69-9f65-5c5b09782d51.png
+    - popular-hot-2-7c13f8a6-3a29-4bec-9721-b766cbbd5c34.png
+  - 创建 `download-most-popular-like-icon.js` 脚本
+  - 成功下载 like 图标到 `public/assets/figma/`：popular-like.svg
+  - 更新 `ShopPage.vue` 中 `mostPopularItems` 数组使用正确的图片文件名
+  - 验证：所有 Most Popular 商品图片显示正确
+- ✅ **修复 New Items 模块图片资源**（2026-03-25）
+  - 从 Figma 获取正确的 3 个商品图片资源 URL
+  - 创建 `download-new-items-resources.js` 脚本
+  - 成功下载 3 张商品图片到 `public/assets/figma/`：
+    - new-item-1-fc0a3ba8-947e-4769-b79f-092a1bc56e7a.png（蓝色鞋子）
+    - new-item-2-491502f9-3b65-4cd4-8d91-e3009169a02a.png（白色运动鞋 - 橙色背景）
+    - new-item-3-c1757bd8-2924-463b-a055-0a3ebd5760fa.png（白色鞋子 - 蓝色背景）
+  - 成功下载 See All 按钮和箭头图标
+  - 更新 `ShopPage.vue` 中 `newItems` 数组使用正确的图片文件名
+  - 添加 "See All" 按钮到 New Items 区域顶部
+  - 更新价格显示格式为欧元格式（使用逗号作为小数点）
+  - 更新字体样式与 Figma 对齐（Nunito Sans 12px 用于商品名，Raleway 17px 用于价格）
+  - 前端构建验证成功（0 错误，0 警告）
+- ✅ **修复 Top Products 模块图片资源**（2026-03-25）
+  - 从 Figma 获取正确的 5 个商品图片资源 URL (node-id: 0-11214)
+  - 创建 `download-top-products-fix.js` 脚本
+  - 成功下载 5 张商品图片和 1 个椭圆背景到 `public/assets/figma/`：
+    - top-bags-0e7aafb7-a733-4535-bb36-128c26b7d6a5.png（粉色手提包）
+    - top-dresses-2c1fe636-9fa5-4e8f-a8e4-69eadc990e92.svg（手表）
+    - top-tshirts-134e95f7-7b2c-4882-aec3-244294f19003.png（绿色连帽衫）
+    - top-shoes-773fb9c5-586e-4d3a-9643-5154d1512cab.png（运动鞋 - 橙色背景）
+    - top-skirts-241090d3-36c2-421c-9aca-6f85a050b3da.png（裙子/内衣）
+    - top-ellipse-f0891865-3222-4e91-918d-f69a4a748d12.svg（椭圆背景）
+  - 更新 `ShopPage.vue` 中 `topProducts` 数组使用正确的图片文件名
+  - 前端构建验证成功（0 错误，0 警告）
+
+### Task 9: ✅ 已完成 - 前端登录页面 (2026-03-25)
+- ✅ 创建 `src/views/Login.vue` - 完整的登录页面
+  - 居中登录卡片布局
+  - 用户名和密码输入框（带图标）
+  - Element Plus 表单验证（必填字段、长度验证）
+  - 登录按钮带加载状态
+  - 错误消息显示（el-alert）
+  - 登录成功后跳转到仪表盘
+- ✅ 使用 Composition API + `<script setup>`
+- ✅ 集成现有 auth store（useAuthStore）
+- ✅ 使用 Element Plus 组件（el-form, el-form-item, el-input, el-button, el-alert）
+- ✅ 专业简洁的 UI 设计：
+  - 全屏居中布局
+  - 渐变背景色
+  - 动态旋转背景效果
+  - 卡片阴影和悬浮效果
+  - 响应式交互
+- ✅ TypeScript 严格模式
+- ✅ 无 inline 样式，全部使用 scoped CSS
+- ✅ 支持回车键提交表单
+- ✅ 构建验证成功（0 错误，0 警告）
+
+**登录页面功能：**
+| 功能 | 说明 |
+|------|------|
+| 表单验证 | 用户名必填（2-50 字符），密码必填（最少 6 字符） |
+| 加载状态 | 登录期间按钮显示 loading 状态和文本 |
+| 错误处理 | 捕获 API 错误并显示友好的错误消息 |
+| 成功跳转 | 登录成功后自动跳转到仪表盘（/） |
+| 用户体验 | 支持回车键登录、密码显示/隐藏切换、输入框清空 |
+
+**项目结构更新：**
+```
+admin/src/views/
+├── Login.vue          ✅ 登录页面（完整实现）
+├── Dashboard.vue      ✅ 仪表盘占位符
+├── error/403.vue      ✅ 403 无权限页面
+├── system/AdminList.vue   ✅ 管理员管理占位符
+├── role/RoleList.vue      ✅ 角色管理占位符
+├── permission/PermissionTree.vue ✅ 权限管理占位符
+└── user/UserList.vue      ✅ 用户管理占位符
+```
+
+### Task 8: ✅ 已完成 - 前端路由和布局系统 (2026-03-25)
+- ✅ 创建 `src/utils/request.ts` - Axios 封装（请求/响应拦截器、错误处理、Token 注入）
+- ✅ 创建 `src/stores/auth.ts` - Pinia 认证状态管理（login/logout/getCurrentAdmin/hasPermission）
+- ✅ 创建 `src/api/auth.ts` - 认证 API 服务（loginApi/logoutApi/getCurrentAdminApi）
+- ✅ 更新 `src/router/index.ts` - 路由配置和导航守卫（认证检查、权限检查）
+- ✅ 更新 `src/components/AdminLayout.vue` - 管理布局组件（侧边栏 + 头部 + 主内容）
+- ✅ 创建 `src/components/Sidebar.vue` - 侧边栏导航组件（深色主题、菜单路由）
+- ✅ 创建 `src/components/Header.vue` - 头部组件（折叠按钮、用户下拉菜单、退出登录）
+- ✅ 创建视图占位符文件：
+  - `src/views/system/AdminList.vue` - 管理员管理页面
+  - `src/views/role/RoleList.vue` - 角色管理页面
+  - `src/views/permission/PermissionTree.vue` - 权限管理页面
+  - `src/views/user/UserList.vue` - 用户管理页面
+  - `src/views/error/403.vue` - 403 无权限页面
+- ✅ 更新 `src/main.ts` - 集成 Element Plus 图标
+- ✅ 前端构建验证成功（0 错误，0 警告）
+
+**路由配置：**
+| 路由 | 组件 | 权限 | 说明 |
+|------|------|------|------|
+| /login | Login.vue | 无 | 登录页面 |
+| / | AdminLayout.vue | 需认证 | 管理布局 |
+| /dashboard | Dashboard.vue | 无 | 仪表盘 |
+| /system/admins | AdminList.vue | admin:list | 管理员管理 |
+| /system/roles | RoleList.vue | role:list | 角色管理 |
+| /system/permissions | PermissionTree.vue | permission:list | 权限管理 |
+| /users | UserList.vue | user:list | 用户管理 |
+| /403 | 403.vue | 无 | 无权限页面 |
+
+**技术实现：**
+- Axios 拦截器：自动注入 Bearer Token、处理 401/403/500 错误
+- Pinia Store：Token 持久化（localStorage）、权限检查方法
+- Vue Router 守卫：认证检查、权限验证、已登录自动跳转
+
+**项目结构：**
+```
+admin/src/
+├── api/
+│   └── auth.ts
+├── components/
+│   ├── AdminLayout.vue
+│   ├── Sidebar.vue
+│   └── Header.vue
+├── router/
+│   └── index.ts
+├── stores/
+│   └── auth.ts
+├── utils/
+│   └── request.ts
+└── views/
+    ├── Login.vue
+    ├── Dashboard.vue
+    ├── error/403.vue
+    ├── system/AdminList.vue
+    ├── role/RoleList.vue
+    ├── permission/PermissionTree.vue
+    └── user/UserList.vue
+```
