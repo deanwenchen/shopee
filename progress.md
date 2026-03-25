@@ -412,6 +412,124 @@ D:\Claude\Figma\Shoppe\backend\ShoppeAPI\
 
 ## 下一步行动
 
+### 优先级 0：✅ 已完成 - AdminAPI 项目骨架 (2026-03-25)
+- ✅ 创建 .NET 8 WebAPI 项目 `backend/AdminAPI`
+- ✅ 安装 NuGet 包：
+  - Microsoft.EntityFrameworkCore (10.0.5)
+  - Pomelo.EntityFrameworkCore.MySql (9.0.0)
+  - Microsoft.AspNetCore.Authentication.JwtBearer (10.0.5)
+  - System.IdentityModel.Tokens.Jwt (8.17.0)
+  - BCrypt.Net-Next (4.1.0)
+  - Swashbuckle.AspNetCore (10.1.6)
+- ✅ 配置 Program.cs（MySQL + JWT + CORS）
+- ✅ 配置 appsettings.json（连接字符串、JWT 设置、CORS 设置）
+- ✅ 创建 Data/AdminDbContext.cs 占位符
+- ✅ 构建验证成功（0 错误，0 警告）
+- ✅ Git commit 成功：`feat: create AdminAPI project skeleton`
+
+### 优先级 1：✅ 已完成 - 管理员管理模块 CRUD (2026-03-25)
+- ✅ 创建 `Features/Admins/DTOs/AdminDtos.cs`
+  - CreateAdminRequest（用户名、密码、邮箱、手机、角色 IDs）
+  - UpdateAdminRequest（邮箱、手机、角色 IDs）
+  - AdminDto（管理员信息传输对象）
+  - AdminListResponse（分页列表响应）
+  - UpdateStatusRequest（状态更新请求）
+  - ResetPasswordRequest（重置密码请求）
+- ✅ 创建 `Features/Admins/Services/IAdminService.cs`
+  - GetListAsync（分页查询）
+  - GetByIdAsync（按 ID 查询）
+  - CreateAsync（创建管理员）
+  - UpdateAsync（更新管理员）
+  - DeleteAsync（删除管理员）
+  - UpdateStatusAsync（更新状态）
+  - ResetPasswordAsync（重置密码）
+- ✅ 创建 `Features/Admins/Services/AdminService.cs`
+  - 使用 EF Core Include 加载关联数据（AdminRoles）
+  - 使用 BCrypt 加密密码
+  - 支持分页查询（Skip/Take）
+  - 完整的 CRUD 操作实现
+- ✅ 创建 `Features/Admins/AdminController.cs`
+  - GET /api/admin（列表，admin:list 权限）
+  - GET /api/admin/{id}（详情，admin:detail 权限）
+  - POST /api/admin（创建，admin:create 权限）
+  - PUT /api/admin/{id}（更新，admin:update 权限）
+  - DELETE /api/admin/{id}（删除，admin:delete 权限）
+  - PUT /api/admin/{id}/status（状态更新，admin:status 权限）
+  - POST /api/admin/{targetAdminId}/reset-password（重置密码，admin:reset-pwd 权限）
+- ✅ 更新 `Program.cs`
+  - 注册 IAdminService → AdminService
+  - 添加 7 个权限策略（admin:list/detail/create/update/delete/status/reset-pwd）
+- ✅ 构建验证成功（0 错误，0 警告）
+
+### 优先级 1：✅ 已完成 - Vue 3 + TypeScript 前端项目创建 (2026-03-25)
+- ✅ 使用 Vite 创建 Vue 3 + TypeScript 项目 `admin/`
+- ✅ 安装基础依赖（49 个包）
+- ✅ 安装 Element Plus 和图标（21 个包）
+- ✅ 安装 Pinia、Vue Router、Axios（70 个包）
+- ✅ 安装 TypeScript 类型定义 @types/node
+- ✅ 更新 vite.config.ts：
+  - 配置路径别名 `@`
+  - 配置开发服务器端口 3001
+  - 配置 API 代理到 http://localhost:9001
+- ✅ 更新 tsconfig.json：
+  - 配置 TypeScript 严格模式
+  - 配置路径映射 `@/*` -> `./src/*`
+- ✅ 更新 src/main.ts：
+  - 集成 Pinia
+  - 集成 Element Plus
+  - 注册 Element Plus 图标
+  - 集成 Vue Router
+- ✅ 创建 src/router/index.ts：
+  - 配置登录路由 `/login`
+  - 配置管理布局路由 `/`
+  - 配置仪表盘路由 `/dashboard`
+- ✅ 更新 src/App.vue：
+  - 使用 router-view
+  - 配置全局样式
+- ✅ 创建基础视图文件：
+  - src/views/Login.vue - 登录页面占位符
+  - src/views/Dashboard.vue - 仪表盘页面占位符
+  - src/components/AdminLayout.vue - 管理布局（侧边栏 + 头部 + 主内容区）
+- ✅ 删除不需要的模板文件（HelloWorld.vue, style.css）
+- ✅ 开发服务器启动成功：http://localhost:3001
+- ✅ Git commit 成功：`feat: create Vue 3 + TypeScript frontend project`
+
+**项目结构：**
+```
+admin/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   └── AdminLayout.vue
+│   ├── router/
+│   │   └── index.ts
+│   ├── views/
+│   │   ├── Login.vue
+│   │   └── Dashboard.vue
+│   ├── App.vue
+│   └── main.ts
+├── public/
+├── package.json
+├── tsconfig.json
+├── tsconfig.app.json
+├── tsconfig.node.json
+└── vite.config.ts
+```
+
+**技术栈：**
+- Vue 3 + Composition API + `<script setup>`
+- TypeScript 严格模式
+- Element Plus UI 组件库
+- Pinia 状态管理
+- Vue Router 路由管理
+- Axios HTTP 客户端
+- Vite 构建工具
+
+**开发服务器配置：**
+- 端口：3001
+- API 代理：`/api` -> `http://localhost:9001`
+- 路径别名：`@` -> `./src`
+
 ### 优先级 1：✅ 已完成 - 后端启动和测试
 - ✅ 数据库 `shoppe_dev` 已创建
 - ✅ 后端服务启动成功：http://localhost:9000
@@ -475,3 +593,23 @@ D:\Claude\Figma\Shoppe\backend\ShoppeAPI\
 - 是否需要部署到生产环境
 - 是否需要集成真实的 SMS/邮件服务
 - 3 个 Figma 资源无法下载（bubble-01、flash-discount-bg、popular-3），可能需要从原始设计重新导出
+- ✅ **修复 Categories 模块图片显示问题**（2026-03-25）
+  - 问题原因：旧的 `cat-watch-*.png` 和 `cat-hoodies-*.png` 图片资源 URL 映射错误
+  - 解决方案：
+    - 从 Figma 重新获取所有 6 个分类的正确图片资源 URL（24 个资源）
+    - 创建 `download-categories-resources.js` 脚本
+    - 成功下载 24 张正确的分类图片到 `public/assets/figma/`
+    - 更新 `ShopPage.vue` 中 `categories` 数组使用正确的图片文件名
+  - 删除旧的错误图片文件（cat-watch-1.png, cat-watch-2.png, cat-hoodies-1.png, cat-hoodies-2.png）
+  - 验证：所有分类图片现在显示正确的商品图片（Watch 显示手表，Hoodies 显示连帽衫）
+- ✅ **实现 Big Sale Banner 轮播效果**（2026-03-25）
+  - 创建 4 组不同的 Banner 数据：
+    1. Big Sale - Up to 50%（红色渐变 #ff6b6b → #ee5a5a）
+    2. New Arrival - Spring Collection（青色渐变 #4ecdc4 → #44a08d）
+    3. Flash Deal - Limited Time（粉色渐变 #ff9a9e → #fecfef）
+    4. Hot Deals - Best Sellers（紫色渐变 #a18cd1 → #fbc2eb）
+  - 实现自动轮播功能（每 3 秒切换一次）
+  - 添加可点击的轮播指示器（Dots）
+  - 添加鼠标悬停暂停功能
+  - 添加淡入淡出过渡动画（0.5s）
+  - 前端构建验证成功（0 错误，0 警告）

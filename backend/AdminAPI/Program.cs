@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AdminAPI.Data;
 using AdminAPI.Features.Auth.Services;
+using AdminAPI.Features.Admins.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 // Configure MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -52,6 +54,16 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
+
+// Add authorization policies
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("admin:list", policy => policy.RequireClaim("permission", "admin:list"))
+    .AddPolicy("admin:detail", policy => policy.RequireClaim("permission", "admin:detail"))
+    .AddPolicy("admin:create", policy => policy.RequireClaim("permission", "admin:create"))
+    .AddPolicy("admin:update", policy => policy.RequireClaim("permission", "admin:update"))
+    .AddPolicy("admin:delete", policy => policy.RequireClaim("permission", "admin:delete"))
+    .AddPolicy("admin:status", policy => policy.RequireClaim("permission", "admin:status"))
+    .AddPolicy("admin:reset-pwd", policy => policy.RequireClaim("permission", "admin:reset-pwd"));
 
 var app = builder.Build();
 
