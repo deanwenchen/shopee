@@ -461,6 +461,36 @@ D:\Claude\Figma\Shoppe\backend\ShoppeAPI\
   - 添加 7 个权限策略（admin:list/detail/create/update/delete/status/reset-pwd）
 - ✅ 构建验证成功（0 错误，0 警告）
 
+### 优先级 2：✅ 已完成 - 角色管理模块 CRUD (2026-03-25)
+- ✅ 创建 `Features/Roles/DTOs/RoleDtos.cs`
+  - CreateRoleRequest（角色名称、描述、权限 IDs）
+  - UpdateRoleRequest（可选的角色名称、描述、权限 IDs）
+  - RoleDto（角色信息传输对象）
+  - RoleListResponse（分页列表响应）
+- ✅ 创建 `Features/Roles/Services/IRoleService.cs`
+  - GetListAsync（分页查询）
+  - GetByIdAsync（按 ID 查询）
+  - CreateAsync（创建角色）
+  - UpdateAsync（更新角色）
+  - DeleteAsync（删除角色）
+  - AssignPermissionsAsync（分配权限）
+- ✅ 创建 `Features/Roles/Services/RoleService.cs`
+  - 使用 EF Core Include 加载关联数据（RolePermissions）
+  - 支持分页查询（Skip/Take）
+  - 删除角色前检查是否被管理员使用
+  - 完整的 CRUD 和权限分配操作实现
+- ✅ 创建 `Features/Roles/RoleController.cs`
+  - GET /api/role（列表，role:list 权限）
+  - GET /api/role/{id}（详情，role:detail 权限）
+  - POST /api/role（创建，role:create 权限）
+  - PUT /api/role/{id}（更新，role:update 权限）
+  - DELETE /api/role/{id}（删除，role:delete 权限）
+  - PUT /api/role/{id}/permissions（分配权限，role:assign 权限）
+- ✅ 更新 `Program.cs`
+  - 注册 IRoleService → RoleService
+  - 添加 6 个权限策略（role:list/detail/create/update/delete/assign）
+- ✅ 构建验证成功（0 错误，0 警告）
+
 ### 优先级 1：✅ 已完成 - Vue 3 + TypeScript 前端项目创建 (2026-03-25)
 - ✅ 使用 Vite 创建 Vue 3 + TypeScript 项目 `admin/`
 - ✅ 安装基础依赖（49 个包）
