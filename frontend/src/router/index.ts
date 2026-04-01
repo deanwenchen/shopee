@@ -8,6 +8,7 @@ import PasswordRecoveryCode from '@/views/PasswordRecoveryCode.vue'
 import NewPassword from '@/views/NewPassword.vue'
 import HelloCard from '@/views/HelloCard.vue'
 import ShopPage from '@/views/ShopPage.vue'
+import ProductDetail from '@/views/ProductDetail.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const routes = [
@@ -63,6 +64,12 @@ const routes = [
     path: '/shop',
     name: 'shop',
     component: ShopPage,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/product/:id',
+    name: 'product-detail',
+    component: ProductDetail,
     meta: { requiresAuth: true }
   }
 ]
