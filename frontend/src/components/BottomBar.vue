@@ -47,26 +47,37 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits, watch } from 'vue';
 
 interface Props {
   productId?: number | string;
   isLiked?: boolean;
+  selectedColor?: string;
+  selectedSize?: string;
+  quantity?: number;
 }
 
 interface Emits {
   (e: 'like', isLiked: boolean): void;
-  (e: 'add-to-cart'): void;
-  (e: 'buy-now'): void;
+  (e: 'add-to-cart', data: { color: string; size: string; quantity: number }): void;
+  (e: 'buy-now', data: { color: string; size: string; quantity: number }): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   isLiked: false,
+  selectedColor: 'Pink',
+  selectedSize: 'M',
+  quantity: 1,
 });
 
 const emit = defineEmits<Emits>();
 
 const localIsLiked = ref(props.isLiked);
+
+// Watch for prop changes and update local state
+watch(() => props.isLiked, (newVal) => {
+  localIsLiked.value = newVal;
+});
 
 const handleLike = () => {
   localIsLiked.value = !localIsLiked.value;
@@ -74,11 +85,19 @@ const handleLike = () => {
 };
 
 const handleAddToCart = () => {
-  emit('add-to-cart');
+  emit('add-to-cart', {
+    color: props.selectedColor,
+    size: props.selectedSize,
+    quantity: props.quantity,
+  });
 };
 
 const handleBuyNow = () => {
-  emit('buy-now');
+  emit('buy-now', {
+    color: props.selectedColor,
+    size: props.selectedSize,
+    quantity: props.quantity,
+  });
 };
 </script>
 

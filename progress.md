@@ -2,16 +2,85 @@
 
 ## 最近变更 (2026-04-01)
 
-### 商品详情页布局修复 (2026-04-01)
-- ✅ 修复 BottomBar 定位问题
-  - 问题：在 iPhone 14 Pro Max 等大屏幕模式下，底部按钮随内容下移，超出可视区域
-  - 原因：scroll-container 高度未正确计算，导致内容区域延伸到底部
+### 商品详情页 SKU 选择器流程优化 (2026-04-01 14:00)
+- ✅ 修复 BottomBar 固定在视口底部位置
+  - 问题：在大屏幕（如 iPhone 14 Pro Max）下，BottomBar 随内容下移，超出可视区域
+  - 原因：`#app` 容器使用 `display: flex` 影响了 `position: fixed` 元素的视口定位
   - 解决方案：
-    - `.product-detail-page` 使用 `height: 100vh` 明确视口高度
-    - `.scroll-container` 使用 `height: calc(100vh - 84px)` 明确减去 BottomBar 高度
-    - `.product-info-section` 添加底部 padding (100px) 防止内容被遮挡
-    - `.bottom-bar-wrapper` 添加明确高度 `height: 84px`
-  - 效果：BottomBar 现在固定于视口底部，不随屏幕大小变化
+    - 移除 `#app` 的 `display: flex` 和 `justify-content: center`
+    - `.product-detail-page` 使用 `margin: 0 auto` 自行居中
+    - `.product-detail-page` 使用 `display: flex; flex-direction: column` 管理内部布局
+    - `.scroll-container` 使用 `flex: 1` 占据剩余空间
+    - BottomBar 保持 `position: fixed; bottom: 0` 相对于视口定位
+    - `.scroll-container` 添加 `padding-bottom: 100px` 确保内容可以滚动到不被按钮遮挡的位置
+  - 效果：BottomBar 现在始终固定在视口底部，无论屏幕大小或内容高度；内容可以完全滚动展示
+- ✅ 修复 Select Options 弹窗滚动区域
+  - 问题：弹窗内容底部被 BottomBar 遮挡
+  - 解决方案：
+    - `.bottom-sheet-content` 使用 `max-height: calc(100vh - 84px)` 限制高度
+    - `.bottom-sheet-content` 使用 `padding: 24px 20px calc(24px + 84px)` 底部留白
+  - 效果：弹窗内容可以完全滚动，不会被 BottomBar 遮挡
+- ✅ 修复详情页布局 - BottomBar 固定在最上层
+  - 问题：底部按钮应该始终固定在视口底部最上层，所有内容（包括弹窗）都在其下方滚动
+  - 解决方案：
+    - `.product-detail-page` 使用 `min-height: 100vh` 允许内容自然延伸
+    - `.scroll-container` 使用 `overflow-y: auto` 实现内容滚动
+    - BottomBar 保持 `position: fixed; z-index: 100` 固定在视口底部最上层
+    - Bottom Sheet 使用 `z-index: 99` 确保低于 BottomBar
+    - Bottom Sheet 内容使用 `max-height: 90vh` 适应屏幕高度
+  - 效果：BottomBar 始终可见在最上层，详情页内容和弹窗都在其下方滚动
+- ✅ 修复详情页内容滚动区域
+  - 问题：底部按钮遮挡详情页内容
+  - 解决方案：
+    - `.product-detail-page` 使用 `height: calc(100vh - 84px)` 限制容器高度
+    - `.scroll-container` 使用 `height: 100%` 和 `overflow-y: auto` 实现内部滚动
+    - 内容在顶部和 BottomBar 之间独立滚动
+  - 效果：详情页内容在 BottomBar 上方滚动，不会被遮挡
+- ✅ 移除 Select Options Bottom Sheet 的 Apply 按钮
+  - 原因：用户流程应为：选择参数 → 关闭弹窗 → 点击底部栏的 Add to Cart / Buy Now
+  - 效果：简化用户操作，选择即生效
+- ✅ 更新 BottomBar 组件接收选中的规格参数
+  - 新增 props: `selectedColor`, `selectedSize`, `quantity`
+  - 更新 emits: `add-to-cart` 和 `buy-now` 现在携带规格数据
+  - 使用 watch 监听 props 变化确保状态同步
+- ✅ 更新 ProductDetail.vue 的事件处理
+  - `handleAddToCart` 和 `handleBuyNow` 接收包含规格参数的数据对象
+  - 点击底部按钮时自动关闭 Bottom Sheet 并使用当前选中的规格
+- ✅ 修复 Vue 文件语法错误
+  - 修复重复的 `</style>` 标签
+  - 移除未使用的 `computed` 导入
+  - 移除未使用的 `applyVariations` 函数
+  - 合并重复的 `.variation-item` 样式定义
+- ✅ 同步 Figma 设计 (node-id: 0-8314)
+  - 原因：用户流程应为：选择参数 → 关闭弹窗 → 点击底部栏的 Add to Cart / Buy Now
+  - 效果：简化用户操作，选择即生效
+- ✅ 更新 BottomBar 组件接收选中的规格参数
+  - 新增 props: `selectedColor`, `selectedSize`, `quantity`
+  - 更新 emits: `add-to-cart` 和 `buy-now` 现在携带规格数据
+  - 使用 watch 监听 props 变化确保状态同步
+- ✅ 更新 ProductDetail.vue 的事件处理
+  - `handleAddToCart` 和 `handleBuyNow` 接收包含规格参数的数据对象
+  - 点击底部按钮时自动关闭 Bottom Sheet 并使用当前选中的规格
+- ✅ 修复 Vue 文件语法错误
+  - 修复重复的 `</style>` 标签
+  - 移除未使用的 `computed` 导入
+  - 移除未使用的 `applyVariations` 函数
+- ✅ 同步 Figma 设计 (node-id: 0-8314)
+  - Bottom Sheet 头部显示商品图片、价格和已选规格
+  - 颜色选项网格布局（4 个选项）
+  - 尺寸选择按钮（S/M/L/XL/XXL/XXXL，其中 XXL/XXXL 可设为禁用状态）
+  - 数量选择器（圆形 +/- 按钮）
+
+### 商品详情页布局修复 (2026-04-01)
+- ✅ 修复 BottomBar 定位问题（最终修复）
+  - 问题：在 iPhone 14 Pro Max 等大屏幕模式下，底部按钮随内容下移，超出可视区域
+  - 原因：使用了固定高度容器和绝对定位，导致在不同屏幕尺寸下布局错乱
+  - 解决方案：
+    - `.product-detail-page` 使用 `width: 375px; min-height: 817px; padding-bottom: 84px;`
+    - `.scroll-container` 使用 `overflow-y: auto` 允许内容滚动
+    - `.bottom-bar-wrapper` 使用 `position: fixed; bottom: 0;` 固定在视口底部
+    - Bottom Sheet 使用 `position: fixed` 和 `max-height: calc(100vh - 84px)`
+  - 效果：BottomBar 现在始终固定在视口底部，无论屏幕大小或滚动位置
 - ✅ 修复轮播图图片显示
   - 使用 `object-fit: cover` 确保图片填充容器不变形
 - ✅ 实现 3 秒自动轮播功能

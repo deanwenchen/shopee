@@ -49,6 +49,9 @@
     <BottomBar
       :product-id="product.id"
       :is-liked="isLiked"
+      :selected-color="selectedColor"
+      :selected-size="selectedSize"
+      :quantity="quantity"
       @like="handleLike"
       @add-to-cart="handleAddToCart"
       @buy-now="handleBuyNow"
@@ -117,10 +120,6 @@
               </div>
             </div>
 
-            <!-- Apply Button -->
-            <button class="apply-btn" @click="applyVariations">
-              Apply ({{ formatSelection }})
-            </button>
           </div>
         </div>
       </transition>
@@ -129,7 +128,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import ProductGallery from '@/components/ProductGallery.vue';
 import BottomBar from '@/components/BottomBar.vue';
@@ -198,10 +197,6 @@ const showVariationsSheet = ref(false);
 
 const availableSizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 
-const formatSelection = computed(() => {
-  return `${selectedColor.value}, ${selectedSize.value}`;
-});
-
 // Handlers
 const handleLike = (liked: boolean) => {
   isLiked.value = liked;
@@ -234,26 +229,15 @@ const increaseQuantity = () => {
   quantity.value++;
 };
 
-const applyVariations = () => {
+const handleAddToCart = (data: { color: string; size: string; quantity: number }) => {
   showVariationsSheet.value = false;
-  console.log('Selected:', selectedColor.value, selectedSize.value, quantity.value);
-};
-
-const handleAddToCart = () => {
-  console.log('Add to cart:', {
-    productId: product.value.id,
-    variation: formatSelection.value,
-    quantity: quantity.value,
-  });
+  console.log('Add to cart:', data);
   // Implement add to cart logic
 };
 
-const handleBuyNow = () => {
-  console.log('Buy now:', {
-    productId: product.value.id,
-    variation: formatSelection.value,
-    quantity: quantity.value,
-  });
+const handleBuyNow = (data: { color: string; size: string; quantity: number }) => {
+  showVariationsSheet.value = false;
+  console.log('Buy now:', data);
   // Implement buy now logic
   router.push('/checkout');
 };
@@ -268,16 +252,19 @@ onMounted(() => {
 .product-detail-page {
   position: relative;
   width: 375px;
-  min-height: 817px;
+  min-height: 100vh;
   margin: 0 auto;
   background: #fff;
-  padding-bottom: 84px; /* BottomBar 高度 */
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .scroll-container {
+  flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  padding-bottom: 100px; /* 确保内容可以滚动到不被 BottomBar 遮挡的位置 */
 }
 
 .gallery-wrapper {
@@ -418,28 +405,6 @@ onMounted(() => {
   -webkit-overflow-scrolling: touch;
 }
 
-.variation-item {
-  flex-shrink: 0;
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: border-color 0.2s ease;
-}
-
-.variation-item.selected {
-  border-color: #004bff;
-}
-
-.variation-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .checkmark {
   position: absolute;
   top: 4px;
@@ -466,7 +431,7 @@ onMounted(() => {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 99; /* 低于 BottomBar (z-index: 100) */
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -477,9 +442,9 @@ onMounted(() => {
   border-radius: 20px 20px 0 0;
   width: 100%;
   max-width: 375px;
-  max-height: calc(100vh - 84px); /* 减去 BottomBar 高度 */
+  max-height: calc(100vh - 84px); /* 视口高度减去 BottomBar 高度 */
   overflow-y: auto;
-  padding: 24px 20px 40px;
+  padding: 24px 20px calc(24px + 84px); /* 底部 padding 增加 84px 避免被 BottomBar 遮挡 */
   animation: slideUp 0.3s ease;
 }
 
@@ -642,25 +607,6 @@ onMounted(() => {
   font-size: 18px;
   min-width: 30px;
   text-align: center;
-}
-
-.apply-btn {
-  width: 100%;
-  height: 50px;
-  border-radius: 12px;
-  background: #004bff;
-  border: none;
-  font-family: 'Nunito Sans', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  color: #fff;
-  cursor: pointer;
-  transition: transform 0.15s ease;
-  margin-top: 8px;
-}
-
-.apply-btn:active {
-  transform: scale(0.98);
 }
 
 /* Bottom Sheet Transition */
