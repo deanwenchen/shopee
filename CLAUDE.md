@@ -41,13 +41,16 @@ Claude 必须遵循以下规则：
 - ❌ 三个文件同时无差别重写
 - ❌ 不更新 progress.md
 - ❌ 把 progress 写进 findings
+
 ## 📥 强制加载规则
 
 AGENT_RULES.md
 FIGMA_RULES.md
 DESIGN_SYSTEM_RULES.md
 CODING_RULES.md
+
 ---
+
 # 🔌 外部工具接入规范（新增）
 
 ## OpenSpec 集成规则
@@ -68,7 +71,32 @@ OpenSpec 仅作为需求输入工具使用：
 
 OpenSpec → Brainstorm → 用户确认 → 才能进入执行阶段
 
+---
 
+# 📁 Task Planning 触发规则（新增）
+
+在以下情况必须生成或更新 task_plan.md：
+
+- PRD 新增功能
+- PRD 发生结构性变更
+
+执行流程：
+
+PRD 更新完成后 →
+
+👉 必须进行任务拆解（Task Planning）
+
+输出：
+
+- task_plan.md（完整任务列表）
+
+## ⚠️ Task Planning 强制约束
+
+- ❌ 未生成 task_plan.md 时，禁止进入执行阶段
+- ❌ 不允许跳过 Task Planning 直接写代码
+- ✅ PRD 更新后必须触发 Task Planning
+
+---
 
 # 🧠 2. 系统能力定义（System Core）
 
@@ -109,17 +137,48 @@ Plan → Findings → Code → Progress
 
 ---
 
-# 🔄 3. 标准执行流程（强制顺序）
+---
+# 🗂️ 任务执行总流程（新增可视化说明）
+
+用户需求
+   ↓
+OpenSpec（可选）
+   ↓
+Brainstorm
+   ↓
+PRD.md ✅
+   ↓
+task_plan.md ✅
+   ↓
+execute-plan
+   ↓
+progress.md ✅
+
+说明：
+- ✅ 表示该步骤会落盘生成对应 md 文件
+- OpenSpec 可选，但必须经过 Brainstorm → 用户确认
+- Task Planning 必须在 PRD 更新后触发
+- execute-plan 生成的执行结果必须同步更新 progress.md
+
+---
+
+
+# 🔄 3. 标准执行流程（强制顺序，已修改）
 
 所有任务必须严格按以下顺序执行：
 
 1. Brainstorming（方案设计）
 2. 用户确认方案
-3. 调用 Figma MCP（如涉及 UI）
-4. 代码生成 + 资源下载
-5. Artifact 落地（文件写入）
-6. 验证（运行 / UI 校验）
-7. 更新 progress.md
+
+3. 👉 更新 PRD（如有需求变更）
+
+4. 👉 Task Planning（任务拆解，生成/更新 task_plan.md）
+
+5. 调用 Figma MCP（如涉及 UI）
+6. 代码生成 + 资源下载
+7. Artifact 落地（文件写入）
+8. 验证（运行 / UI 校验）
+9. 更新 progress.md
 
 ❗禁止跳步骤执行
 
@@ -276,6 +335,10 @@ prd.md
 更新：
 
 prd.md
+
+PRD 更新完成后：
+
+👉 必须触发 Task Planning，生成或更新 task_plan.md
 
 ---
 
