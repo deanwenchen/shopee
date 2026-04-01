@@ -272,28 +272,28 @@ onMounted(() => {
   right: 0;
   bottom: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: #fff;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .scroll-container {
   flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 84px; /* Space for bottom bar */
+  height: calc(100vh - 84px); /* 明确减去 BottomBar 高度 */
 }
 
 .gallery-wrapper {
   width: 100%;
-  height: 439px;
-  min-height: 439px; /* Ensure fixed height for scrolling */
+  background: #f5f5f5;
 }
 
 .product-info-section {
-  padding: 15px 20px;
+  padding: 15px 20px 100px; /* 底部增加 padding 防止内容被 BottomBar 遮挡 */
+  width: 100%;
+  background: #fff;
 }
 
 /* Price Row */

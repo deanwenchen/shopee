@@ -89,7 +89,7 @@ const handleBuyNow = () => {
   left: 0;
   right: 0;
   z-index: 1000;
-  width: 100%;
+  height: 84px; /* 明确高度 */
 }
 
 .bottom-bar {

@@ -154,7 +154,7 @@ onUnmounted(() => {
 .product-gallery {
   position: relative;
   width: 100%;
-  overflow: visible; /* Allow page scrolling */
+  overflow: visible;
 }
 
 .carousel-container {
@@ -179,7 +179,7 @@ onUnmounted(() => {
 .carousel-item img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Fill container without shrinking */
 }
 
 .carousel-dots {

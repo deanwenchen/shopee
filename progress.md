@@ -1,5 +1,142 @@
 # Shoppe 项目进度报告
 
+## 最近变更 (2026-04-01)
+
+### 商品详情页布局修复 (2026-04-01)
+- ✅ 修复 BottomBar 定位问题
+  - 问题：在 iPhone 14 Pro Max 等大屏幕模式下，底部按钮随内容下移，超出可视区域
+  - 原因：scroll-container 高度未正确计算，导致内容区域延伸到底部
+  - 解决方案：
+    - `.product-detail-page` 使用 `height: 100vh` 明确视口高度
+    - `.scroll-container` 使用 `height: calc(100vh - 84px)` 明确减去 BottomBar 高度
+    - `.product-info-section` 添加底部 padding (100px) 防止内容被遮挡
+    - `.bottom-bar-wrapper` 添加明确高度 `height: 84px`
+  - 效果：BottomBar 现在固定于视口底部，不随屏幕大小变化
+- ✅ 修复轮播图图片显示
+  - 使用 `object-fit: cover` 确保图片填充容器不变形
+- ✅ 实现 3 秒自动轮播功能
+  - 使用 setInterval 定时切换下一张图片
+  - 支持手势滑动打断后重新计时
+- ✅ 实现 SKU 选择器 Bottom Sheet
+  - 颜色选择（带图片预览）
+  - 尺寸选择（S/M/L/XL/XXL/XXXL）
+  - 数量选择
+  - 已选规格汇总显示
+
+### 商品详情页资源下载完成 (2026-04-01 10:26)
+- ✅ 执行 `download-product-extras.js` 下载 13 个额外资源
+  - **You Might Like 产品图片** (4 个): yl-1.png, yl-2.png, yl-3.png, yl-4.png
+  - **Most Popular 产品图片** (3 个): mp-1.png, mp-3.png, mp-4.png (mp-2.png 404 失败)
+  - **评论头像** (2 个): review-avatar-1.png, review-avatar-2.png
+  - **星标图标** (3 个): star-filled.svg, star-half.svg, star-empty.svg
+- ✅ 跳转功能已实现：ShopPage 的 `handleProductClick` 函数已存在 (line 158-159)
+  - 点击商品 → `router.push(\`/product/${productId}\`)`
+
+### 商品详情页 Phase 1 (P0) 组件完成 (2026-04-01)
+- ✅ 创建 `ProductDetail.vue` - 主组件
+  - 集成 ProductGallery, ProductInfo, BottomBar 子组件
+  - 支持 SKU 选择器 Bottom Sheet 弹窗
+  - 支持收藏/分享/加入购物车/立即购买功能
+  - 支持数量选择器
+- ✅ 创建 `ProductGallery.vue` - 商品图片轮播组件
+  - 支持多张图片滑动切换
+  - 圆点指示器（当前选中为蓝色长条）
+  - 浮动收藏按钮
+  - 分享按钮
+- ✅ 创建 `ProductInfo.vue` - 商品信息组件
+  - 价格显示（支持原价 + 促销价）
+  - 折扣徽章（-20%）
+  - 促销倒计时器
+  - 商品名称和描述
+  - 评分和评论数显示
+  - 规格选择预览
+- ✅ 创建 `BottomBar.vue` - 底部操作栏组件
+  - 收藏按钮（心形图标）
+  - 加入购物车按钮（深色背景）
+  - 立即购买按钮（蓝色背景）
+  - Home Indicator
+- ✅ 下载 32 个 Figma 资源文件到 `public/assets/figma/`
+  - Phase 1 资源 (19 个): product-main.png, product-variation-1/2/3.png, product-share-bg.svg, product-share-icon.svg, carousel-dot-empty.svg, like-icon.svg, arrow-button-blue.svg, arrow-icon-white.svg, clock-icon.svg, carousel-mask 等
+  - Phase 2 资源：时钟图标等
+  - Phase 3 额外资源 (13 个): yl-1~4.png, mp-1/3/4.png, review-avatar-1/2.png, star-filled/half/empty.svg
+- ✅ 更新路由配置添加 `/product/:id` 路径
+- ✅ 前端构建验证成功（0 错误，0 警告）
+
+**资源下载统计：**
+- 成功：32 个资源文件
+- 失败：1 个 (mp-2.png 404)
+
+**创建的文件：**
+| 文件 | 说明 |
+|------|------|
+| `frontend/src/views/ProductDetail.vue` | 商品详情页主组件 |
+| `frontend/src/components/ProductGallery.vue` | 商品图片轮播组件 |
+| `frontend/src/components/ProductInfo.vue` | 商品信息组件 |
+| `frontend/src/components/BottomBar.vue` | 底部操作栏组件 |
+| `frontend/src/components/FlashSaleBanner.vue` | 促销 Banner 组件 |
+| `frontend/src/components/SKUSelector.vue` | SKU 选择器组件 |
+| `frontend/src/components/ReviewsSection.vue` | 评价模块组件 |
+| `frontend/src/components/ProductDetails.vue` | 商品详情组件 |
+| `download-product-resources.js` | Figma 资源下载脚本 |
+| `download-clock-icon.js` | 时钟图标下载脚本 |
+| `download-product-extras.js` | 额外资源下载脚本 (Page 37) |
+
+**技术实现：**
+- Vue 3 + Composition API + `<script setup>`
+- TypeScript 类型定义
+- Tailwind CSS 样式（scoped）
+- 支持手势滑动切换图片
+- 支持 Bottom Sheet 弹窗选择规格
+
+### 商品详情页 Phase 2 (P1) 组件完成 (2026-04-01)
+- ✅ 创建 `FlashSaleBanner.vue` - 促销 Banner 组件
+  - 倒计时器（时：分：秒）
+  - 折扣徽章（-20%）
+  - 已售进度条
+  - 定时刷新（每秒更新）
+- ✅ 创建 `SKUSelector.vue` - SKU 选择器组件
+  - 颜色选择（带图片预览）
+  - 尺寸选择（S/M/L/XL/XXL/XXXL）
+  - 库存状态显示
+  - 数量选择器（+/-）
+  - 缺货禁用功能
+  - 已选规格汇总
+
+**创建的文件：**
+| 文件 | 说明 |
+|------|------|
+| `frontend/src/components/FlashSaleBanner.vue` | 促销 Banner 组件 |
+| `frontend/src/components/SKUSelector.vue` | SKU 选择器组件 |
+
+### 商品详情页 Phase 3 (P2) 组件完成 (2026-04-01)
+- ✅ 创建 `ReviewsSection.vue` - 评价模块组件
+  - 评分汇总（平均分 + 分布条）
+  - 评价筛选（全部/有图/追评）
+  - 评价列表（头像 + 评分 + 内容 + 晒图）
+  - 追评展示
+  - 有用性投票
+  - 写评价按钮
+- ✅ 创建 `ProductDetails.vue` - 商品详情组件
+  - Tabs 切换（Description / Specs / Reviews）
+  - 富文本描述
+  - 规格参数表
+  - 物流信息（Standard/Express）
+  - 售后服务（30 天退换/1 年保修/24/7 客服）
+  - 评价预览（前 3 条）
+
+**创建的文件：**
+| 文件 | 说明 |
+|------|------|
+| `frontend/src/components/ReviewsSection.vue` | 评价模块组件 |
+| `frontend/src/components/ProductDetails.vue` | 商品详情组件 |
+
+**构建状态：**
+- ✅ 前端构建成功（0 错误，0 警告）
+- ✅ CSS 大小：37.51 kB (gzip: 8.14 kB)
+- ✅ JS 大小：244.56 kB (gzip: 84.64 kB)
+
+---
+
 ## 🎉 管理后台系统开发完成 (2026-03-25)
 
 **所有 14 个任务已完成，100% 交付！**

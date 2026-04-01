@@ -48,3 +48,4 @@ D:\Claude\Figma\Shoppe\backend\ShoppeAPI\obj\Debug\net8.0\refint\ShoppeAPI.dll
 D:\Claude\Figma\Shoppe\backend\ShoppeAPI\obj\Debug\net8.0\ShoppeAPI.pdb
 D:\Claude\Figma\Shoppe\backend\ShoppeAPI\obj\Debug\net8.0\ShoppeAPI.genruntimeconfig.cache
 D:\Claude\Figma\Shoppe\backend\ShoppeAPI\obj\Debug\net8.0\ref\ShoppeAPI.dll
+D:\Claude\Figma\Shoppe\backend\ShoppeAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
