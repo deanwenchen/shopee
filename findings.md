@@ -117,6 +117,28 @@ frontend/
 - 使用 `route.query.password` 传递密码值
 - 实现跨页面状态保持（密码点填充状态）
 
+### 4. 商品详情页布局策略（2026-04-01）
+- **问题**: 大屏幕下 BottomBar 随内容下移，超出可视区域
+- **根本原因**: `position: fixed` 元素在内容超过视口时会相对于文档底部定位
+- **解决方案**:
+  - `html, body` 使用 `overflow: hidden` 阻止 body 滚动
+  - `#app` 使用 `height: 100%` 固定为视口高度
+  - `.product-detail-page` 使用 `height: 100vh` 固定高度
+  - `.scroll-container` 使用 `flex: 1` 和 `overflow-y: auto` 实现内部滚动
+  - BottomBar 改为 `position: absolute; bottom: 0` 固定在容器底部
+  - Bottom Sheet 改为 `position: absolute` 相对于容器定位
+  - `.scroll-container` 添加 `padding-bottom: 100px` 确保内容可以滚动到不被按钮遮挡的位置
+  - `.bottom-sheet-content` 添加 `padding-bottom: calc(24px + 84px)` 避免被 BottomBar 遮挡
+- **层级关系**:
+  - BottomBar: `z-index: 100`（最上层）
+  - Bottom Sheet Overlay: `z-index: 99`（低于 BottomBar）
+
+### 5. SKU 选择器交互流程
+- 用户点击 Variations 展开按钮 → Bottom Sheet 弹出
+- 实时选择颜色/尺寸/数量（无需 Apply 按钮）
+- 点击遮罩或关闭按钮关闭弹窗
+- 关闭弹窗后点击 BottomBar 的 Add to Cart / Buy Now 提交订单
+
 ## 待确认事项
 
 ### 1. Figma 设计稿待实现节点
