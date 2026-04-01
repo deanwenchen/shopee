@@ -266,23 +266,18 @@ onMounted(() => {
 
 <style scoped>
 .product-detail-page {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100vh;
+  position: relative;
+  width: 375px;
+  min-height: 817px;
+  margin: 0 auto;
   background: #fff;
-  display: flex;
-  flex-direction: column;
+  padding-bottom: 84px; /* BottomBar 高度 */
+  box-sizing: border-box;
 }
 
 .scroll-container {
-  flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  height: calc(100vh - 84px); /* 明确减去 BottomBar 高度 */
 }
 
 .gallery-wrapper {
@@ -291,7 +286,7 @@ onMounted(() => {
 }
 
 .product-info-section {
-  padding: 15px 20px 100px; /* 底部增加 padding 防止内容被 BottomBar 遮挡 */
+  padding: 15px 20px 20px;
   width: 100%;
   background: #fff;
 }
@@ -471,16 +466,18 @@ onMounted(() => {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 200;
+  z-index: 1000;
   display: flex;
   align-items: flex-end;
+  justify-content: center;
 }
 
 .bottom-sheet-content {
   background: #fff;
   border-radius: 20px 20px 0 0;
   width: 100%;
-  max-height: 80vh;
+  max-width: 375px;
+  max-height: calc(100vh - 84px); /* 减去 BottomBar 高度 */
   overflow-y: auto;
   padding: 24px 20px 40px;
   animation: slideUp 0.3s ease;
@@ -528,6 +525,10 @@ onMounted(() => {
 }
 
 .selection-section {
+  margin-bottom: 24px;
+}
+
+.selection-section:last-of-type {
   margin-bottom: 24px;
 }
 
@@ -655,6 +656,7 @@ onMounted(() => {
   color: #fff;
   cursor: pointer;
   transition: transform 0.15s ease;
+  margin-top: 8px;
 }
 
 .apply-btn:active {

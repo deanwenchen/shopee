@@ -88,11 +88,15 @@ const handleBuyNow = () => {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
-  height: 84px; /* 明确高度 */
+  z-index: 100;
+  height: 84px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
 }
 
 .bottom-bar {
+  width: 375px;
   height: 84px;
   background: #fff;
   box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.16);
