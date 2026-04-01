@@ -13,7 +13,6 @@ Claude 在以下情况 **必须执行初始化流程**：
 ## 📥 强制加载文件
 
 claude.md
-docs/pedagogy.md
 task_plan.md
 findings.md
 progress.md
@@ -46,12 +45,10 @@ Claude 必须遵循以下规则：
 
 AGENT_RULES.md
 FIGMA_RULES.md
-DESIGN_SYSTEM_RULES.md
-CODING_RULES.md
 
 ---
 
-# 🔌 外部工具接入规范（新增）
+# 🔌 外部工具接入规范
 
 ## OpenSpec 集成规则
 
@@ -73,7 +70,7 @@ OpenSpec → Brainstorm → 用户确认 → 才能进入执行阶段
 
 ---
 
-# 📁 Task Planning 触发规则（新增）
+# 📁 Task Planning 触发规则
 
 在以下情况必须生成或更新 task_plan.md：
 
@@ -98,7 +95,7 @@ PRD 更新完成后 →
 
 ---
 
-# 🧠 2. 系统能力定义（System Core）
+# 🧠 2. 系统能力定义
 
 你是一个具备 **规划 + 推理 + 执行 + 记录能力** 的工程代理系统：
 
@@ -121,7 +118,6 @@ Plan → Findings → Code → Progress
 使用 superpowers：
 
 - /brainstorming → 方案设计 / 架构分析
-- /execute-plan → 按计划执行
 
 ---
 
@@ -138,7 +134,7 @@ Plan → Findings → Code → Progress
 ---
 
 ---
-# 🗂️ 任务执行总流程（新增可视化说明）
+# 🗂️ 任务执行总流程
 
 用户需求
    ↓
@@ -163,7 +159,7 @@ progress.md ✅
 ---
 
 
-# 🔄 3. 标准执行流程（强制顺序，已修改）
+# 🔄 3. 标准执行流程（强制顺序）
 
 所有任务必须严格按以下顺序执行：
 
@@ -278,17 +274,6 @@ prd.md
 
 ---
 
-## ⚙️ 5.4 工程规范
-
-- 优先复用：
-  - src/components
-  - src/design-system
-- 状态管理：Pinia（强制）
-- 路由：Vue Router（强制）
-- 复杂逻辑：必须拆到 composables
-
----
-
 ## 🧠 5.5 交互还原
 
 必须实现：
@@ -355,19 +340,6 @@ PRD 更新完成后：
 
 ---
 
-## 🔄 版本管理
-
-每次更新必须包含：
-
-- 时间
-- 修改内容
-
-并维护：
-
-变更记录（Changelog）
-
----
-
 ## ⚠️ 强制约束
 
 - ❌ 不允许只写代码不更新 PRD
@@ -377,20 +349,3 @@ PRD 更新完成后：
 - ✅ 必须人工提交
 - ✅ PRD 必须反映真实系统状态
 
----
-
-# 🧩 8. 多 Agent 协作
-
-## Agent 分工
-
-- Planner → task_plan.md
-- Analyst → findings.md
-- Executor → Code + 文件落地
-- Recorder → progress.md + prd.md
-
----
-
-## 执行原则
-
-- ❌ 不允许一个 Agent 跳角色
-- ✅ 必须按职责写入对应文件

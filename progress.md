@@ -2,6 +2,45 @@
 
 ## 最近变更 (2026-04-01)
 
+### 密码找回流程页面资源路径修复 (2026-04-01)
+- ✅ 修复 PasswordRecoveryCode.vue 和 NewPassword.vue 中的图片资源路径
+  - public/assets/figma 中的文件是简化名称（不带 UUID）
+  - src/assets/figma 中的文件带有 UUID 后缀（通过 import 导入）
+  - 所有页面使用 public 目录路径（如 `/assets/figma/recovery-bubble-01.svg`）
+- ✅ 修复 PasswordRecovery.vue 中的资源路径
+  - 更新所有气泡、头像、图标路径为简化名称
+  - 修复 mask-image 路径
+- ✅ 修复 PasswordRecoveryCode.vue API 集成
+  - 添加 useAuthStore 导入
+  - 添加 codeId ref 用于存储 recoveryCodeId
+  - 将模拟验证 validateCode 改为真实 API 调用 authStore.verifyCode
+  - 验证成功后保存 resetToken 到 sessionStorage
+  - 修复 watch 为异步调用
+- ✅ 前端构建验证成功（0 错误，0 警告）
+
+### PasswordRecovery 页面修复 (2026-04-01)
+- ✅ 修复 Bubble 02（浅灰色半圆）位置
+  - 更新 bubble 02 的 left 从 `0` 改为 `20.28px`
+  - 更新 bubble 01 的 top 从 `0` 改为 `[-273.16px]`，left 从 `[99.45px]` 改为 `[119.73px]`
+  - 与 Figma 设计一致（node-id: 0:12450）
+- ✅ 修复 Next 按钮点击无反应
+  - 从 `sessionStorage.getItem('loginEmail')` 读取邮箱（与 LoginPage 保持一致）
+  - 添加 `z-index: 100` 确保按钮在最上层
+  - 添加 `type="button"` 防止表单提交默认行为
+  - 添加 `pointer-events-none` 到按钮文字防止事件冒泡
+  - 添加调试日志便于追踪问题
+- ✅ 修复头像显示
+  - 更新 mask 路径为 `/assets/figma/recovery-avatar-mask.svg`
+  - 修复 avatar 相关所有图片路径
+- ✅ 修复层级问题
+  - Bubbles 容器 `z-index: 0`
+  - SMS/Email 选择按钮 `z-index: 50`
+  - Ellipse `z-index: 2`
+  - Avatar Group `z-index: 3`
+  - Next/Cancel 按钮 `z-index: 100`
+  - 确保头像显示在气泡上方，按钮可点击
+- ✅ 前端构建验证成功（0 错误，0 警告）
+
 ### 商品详情页轮播图滑动功能修复 (2026-04-01)
 - ✅ 为 ProductDetail.vue 图片轮播添加滑动支持
   - 触摸滑动（touchstart/touchmove/touchend）

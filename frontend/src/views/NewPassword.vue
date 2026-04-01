@@ -16,13 +16,13 @@ const errorMessage = ref('')
 const isLoading = ref(false)
 
 // Figma asset URLs
-const bubble01 = '../assets/figma/newpass-bubble-01-f04821bb-dcc4-46ca-b2a1-5b59f443bf5f.svg'
-const bubble02 = '../assets/figma/newpass-ellipse-58006e4b-da06-4d80-a4a0-b32cbb465954.svg'
-const ellipse = '../assets/figma/newpass-ellipse-58006e4b-da06-4d80-a4a0-b32cbb465954.svg'
-const avatarEF6B = '../assets/figma/newpass-avatar-deco-77e59ace-f77e-4a18-b27f-b1ae8617b340.svg'
-const avatar8C7A = '../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'
-const avatarMask = '../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'
-const avatarArtist2 = '../assets/figma/newpass-avatar-main-159d3385-63e5-47de-b7ec-10f295efffbe.jpg'
+const bubble01 = '/assets/figma/newpass-bubble-01.svg'
+const bubble02 = '/assets/figma/newpass-ellipse.svg'
+const ellipse = '/assets/figma/newpass-ellipse.svg'
+const avatarEF6B = '/assets/figma/newpass-avatar-deco.svg'
+const avatar8C7A = '/assets/figma/newpass-avatar-photo.svg'
+const avatarMask = '/assets/figma/newpass-avatar-photo.svg'
+const avatarArtist2 = '/assets/figma/newpass-avatar-main.jpg'
 
 const handleSave = async () => {
   showError.value = false
@@ -135,7 +135,7 @@ const togglePassword2 = () => {
         />
       </div>
       <!-- 8C7A435A-3E32-4D89-BCEB-E976B0F70AF3 - masked avatar -->
-      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('/assets/figma/newpass-avatar-photo.svg'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('/assets/figma/newpass-avatar-photo.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             :src="avatar8C7A"
@@ -145,7 +145,7 @@ const togglePassword2 = () => {
         </div>
       </div>
       <!-- artist-2 1 -->
-      <div class="absolute inset-0" style="mask-image: url('../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/newpass-avatar-photo-a86862a8-6a33-4c94-9b81-952d3960ae81.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-0" style="mask-image: url('/assets/figma/newpass-avatar-photo.svg'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('/assets/figma/newpass-avatar-photo.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
         <img
           :src="avatarArtist2"
           alt="Avatar main"

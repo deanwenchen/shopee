@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, nextTick, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import StatusBar from '@/components/StatusBar.vue'
 import HomeIndicator from '@/components/HomeIndicator.vue'
 
@@ -11,8 +12,10 @@ import blueDotImg from '@/assets/figma/blue-dot.svg'
 import redDotImg from '@/assets/figma/red-dot.svg'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const code = ref('')
 const inputRef = ref<HTMLInputElement | null>(null)
+const codeId = ref('')
 
 // 最大尝试次数和当前计数
 const maxAttempts = 3
@@ -21,13 +24,13 @@ const showMaxAttemptsPopup = ref(false)
 const isErrorState = ref(false) // 错误状态标记
 
 // Figma asset URLs
-const bubble01 = '../assets/figma/code-bubble-01-4f3439f4-62ab-4010-a149-fa9a7d441c99.svg'
-const bubble02 = '../assets/figma/code-bubble-02-0a65a368-1b3f-46f0-ac21-a12833a0e3e7.svg'
-const ellipse = '../assets/figma/code-ellipse-b6068eeb-70af-498c-9980-3dffc3091251.svg'
-const avatarBD2B = '../assets/figma/code-avatar-deco-b4b25371-b629-4555-975e-26e544aaa638.svg'
-const avatar6959 = '../assets/figma/code-avatar-photo-332d8b03-bf20-4595-9f49-76a62e79acf3.png'
-const avatarMask = '../assets/figma/code-avatar-mask-48bed544-77b8-49a0-a821-837efbcff322.svg'
-const avatarArtist2 = '../assets/figma/code-avatar-main-c0f59a89-b825-4bcc-8849-8df1cc7f7e9d.jpg'
+const bubble01 = '/assets/figma/code-bubble-01.svg'
+const bubble02 = '/assets/figma/code-bubble-02.svg'
+const ellipse = '/assets/figma/code-ellipse.svg'
+const avatarBD2B = '/assets/figma/code-avatar-deco.svg'
+const avatar6959 = '/assets/figma/code-avatar-photo.png'
+const avatarMask = '/assets/figma/code-avatar-mask.svg'
+const avatarArtist2 = '/assets/figma/code-avatar-main.jpg'
 const emptyDot = emptyDotImg
 const warningIcon = warningIconImg
 const blueDotFilled = blueDotImg
@@ -59,11 +62,58 @@ const dotImages = computed(() => {
   return images
 })
 
-// 模拟验证码验证（实际应该调用 API）
-const validateCode = (inputCode: string): boolean => {
-  // TODO: 替换为真实 API 验证
-  const correctCode = '1234'
-  return inputCode === correctCode
+// 从 sessionStorage 获取 codeId
+const getCodeId = (): string => {
+  return sessionStorage.getItem('recoveryCodeId') || ''
+}
+
+// 验证码验证（调用真实 API）
+const validateCode = async (inputCode: string) => {
+  const codeIdValue = getCodeId()
+  if (!codeIdValue) {
+    console.error('[PasswordRecoveryCode] No codeId found in sessionStorage')
+    showErrorAndReset()
+    return
+  }
+
+  try {
+    const result = await authStore.verifyCode(codeIdValue, inputCode)
+    if (result.success && result.resetToken) {
+      // 保存 resetToken 到 sessionStorage
+      sessionStorage.setItem('resetToken', result.resetToken)
+      console.log('[PasswordRecoveryCode] Code verified, resetToken saved')
+      // 跳转到新密码页面
+      setTimeout(() => {
+        router.push('/new-password')
+      }, 500)
+    } else {
+      handleInvalidCode()
+    }
+  } catch (error) {
+    console.error('[PasswordRecoveryCode] Verification error:', error)
+    handleInvalidCode()
+  }
+}
+
+const handleInvalidCode = () => {
+  attemptCount.value++
+  code.value = '' // 清空输入
+  isErrorState.value = true // 设置错误状态
+
+  if (attemptCount.value >= maxAttempts) {
+    // 达到最大尝试次数，显示弹窗
+    showMaxAttemptsPopup.value = true
+  } else {
+    // 重置错误状态，允许重新输入
+    setTimeout(() => {
+      isErrorState.value = false
+    }, 500)
+  }
+}
+
+const showErrorAndReset = () => {
+  attemptCount.value = maxAttempts
+  showMaxAttemptsPopup.value = true
 }
 
 onMounted(() => {
@@ -75,29 +125,10 @@ onMounted(() => {
   })
 })
 
-watch(code, (newValue) => {
+watch(code, async (newValue) => {
   if (newValue.length === 4) {
     // 验证验证码
-    if (!validateCode(newValue)) {
-      attemptCount.value++
-      code.value = '' // 清空输入
-      isErrorState.value = true // 设置错误状态
-
-      if (attemptCount.value >= maxAttempts) {
-        // 达到最大尝试次数，显示弹窗
-        showMaxAttemptsPopup.value = true
-      } else {
-        // 重置错误状态，允许重新输入
-        setTimeout(() => {
-          isErrorState.value = false
-        }, 500)
-      }
-    } else {
-      // 验证码正确，跳转到新密码页面
-      setTimeout(() => {
-        router.push('/new-password')
-      }, 500)
-    }
+    await validateCode(newValue)
   }
 })
 
@@ -181,7 +212,7 @@ const handleOkay = () => {
         />
       </div>
       <!-- 69598E49-7F05-4DDB-9911-66FFA208CAFD - masked avatar -->
-      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('../assets/figma/48bed544-77b8-49a0-a821-837efbcff322.svg'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/48bed544-77b8-49a0-a821-837efbcff322.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-[12.42%_37.87%_62.79%_37.87%]" style="mask-image: url('/assets/figma/code-avatar-mask.svg'); mask-size: 91px 91px; mask-position: 0px 55.146px; mask-repeat: no-repeat; -webkit-mask-image: url('/assets/figma/code-avatar-mask.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 0px 55.146px; -webkit-mask-repeat: no-repeat;">
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             :src="avatar6959"
@@ -191,7 +222,7 @@ const handleOkay = () => {
         </div>
       </div>
       <!-- artist-2 1 -->
-      <div class="absolute inset-0" style="mask-image: url('../assets/figma/48bed544-77b8-49a0-a821-837efbcff322.svg'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('../assets/figma/48bed544-77b8-49a0-a821-837efbcff322.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
+      <div class="absolute inset-0" style="mask-image: url('/assets/figma/code-avatar-mask.svg'); mask-size: 91px 91px; mask-position: 7px 8px; mask-repeat: no-repeat; -webkit-mask-image: url('/assets/figma/code-avatar-mask.svg'); -webkit-mask-size: 91px 91px; -webkit-mask-position: 7px 8px; -webkit-mask-repeat: no-repeat;">
         <img
           :src="avatarArtist2"
           alt="Avatar main"

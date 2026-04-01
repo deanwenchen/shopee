@@ -26,10 +26,19 @@ authApi.interceptors.request.use(
 authApi.interceptors.response.use(
   (response) => response,
   async (error) => {
+    // Safety check: if error.config is undefined, just reject
+    if (!error.config) {
+      return Promise.reject(error);
+    }
+
     const originalRequest = error.config;
 
-    // Don't retry login requests - they don't have tokens
-    if (originalRequest.url.includes('/login') || originalRequest.url.includes('/register')) {
+    // Don't retry login/register/password-recovery requests - they don't have tokens
+    if (originalRequest.url?.includes('/login') ||
+        originalRequest.url?.includes('/register') ||
+        originalRequest.url?.includes('/password-recovery') ||
+        originalRequest.url?.includes('/verify-code') ||
+        originalRequest.url?.includes('/reset-password')) {
       return Promise.reject(error);
     }
 
@@ -166,8 +175,16 @@ export async function refresh(): Promise<{ success: boolean; accessToken: string
 }
 
 export async function passwordRecovery(data: PasswordRecoveryRequest): Promise<PasswordRecoveryResponse> {
-  const response = await authApi.post('/password-recovery', data);
-  return response.data;
+  console.log('[API] Calling password-recovery with:', data);
+  try {
+    const response = await authApi.post('/password-recovery', data);
+    console.log('[API] password-recovery response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('[API] password-recovery error:', error);
+    console.error('[API] error response:', (error as any)?.response?.data);
+    throw error;
+  }
 }
 
 export async function verifyCode(data: VerifyCodeRequest): Promise<VerifyCodeResponse> {
