@@ -47,8 +47,28 @@ AGENT_RULES.md
 FIGMA_RULES.md
 DESIGN_SYSTEM_RULES.md
 CODING_RULES.md
-
 ---
+# 🔌 外部工具接入规范（新增）
+
+## OpenSpec 集成规则
+
+OpenSpec 仅作为需求输入工具使用：
+
+- 只允许生成：
+  - 用户故事
+  - 验收标准
+  - 功能描述
+
+- 禁止：
+  - 写入 task_plan.md
+  - 写入 progress.md
+  - 直接生成代码
+
+所有 OpenSpec 输出必须经过：
+
+OpenSpec → Brainstorm → 用户确认 → 才能进入执行阶段
+
+
 
 # 🧠 2. 系统能力定义（System Core）
 
