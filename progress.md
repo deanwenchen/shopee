@@ -3,31 +3,24 @@
 ## 最近变更 (2026-04-01)
 
 ### 商品详情页 SKU 选择器流程优化 (2026-04-01 14:00)
-- ✅ 修复 BottomBar 固定在视口底部位置
+- ✅ 修复大屏幕 BottomBar 消失问题
   - 问题：在大屏幕（如 iPhone 14 Pro Max）下，BottomBar 随内容下移，超出可视区域
-  - 原因：`#app` 容器使用 `display: flex` 影响了 `position: fixed` 元素的视口定位
+  - 根本原因：`#app` 和 `.product-detail-page` 使用 `min-height`，当内容超过视口时，`position: fixed` 的元素会相对于文档底部定位
   - 解决方案：
-    - 移除 `#app` 的 `display: flex` 和 `justify-content: center`
-    - `.product-detail-page` 使用 `margin: 0 auto` 自行居中
-    - `.product-detail-page` 使用 `display: flex; flex-direction: column` 管理内部布局
-    - `.scroll-container` 使用 `flex: 1` 占据剩余空间
-    - BottomBar 保持 `position: fixed; bottom: 0` 相对于视口定位
-    - `.scroll-container` 添加 `padding-bottom: 100px` 确保内容可以滚动到不被按钮遮挡的位置
-  - 效果：BottomBar 现在始终固定在视口底部，无论屏幕大小或内容高度；内容可以完全滚动展示
+    - `html, body` 使用 `overflow: hidden` 阻止 body 滚动
+    - `#app` 使用 `height: 100%` 固定为视口高度
+    - `.product-detail-page` 使用 `height: 100vh` 固定高度
+    - `.scroll-container` 使用 `flex: 1` 和 `overflow-y: auto` 实现内部滚动
+    - BottomBar 改为 `position: absolute; bottom: 0` 固定在容器底部
+    - Bottom Sheet 改为 `position: absolute` 相对于容器定位
+  - 效果：BottomBar 现在始终固定在容器底部，无论屏幕大小或内容高度；只有内容区域滚动
+- ✅ 修复详情页内容滚动区域
+  - `.scroll-container` 添加 `padding-bottom: 100px` 确保内容可以滚动到不被 BottomBar 遮挡的位置
 - ✅ 修复 Select Options 弹窗滚动区域
-  - 问题：弹窗内容底部被 BottomBar 遮挡
-  - 解决方案：
-    - `.bottom-sheet-content` 使用 `max-height: calc(100vh - 84px)` 限制高度
-    - `.bottom-sheet-content` 使用 `padding: 24px 20px calc(24px + 84px)` 底部留白
+  - `.bottom-sheet-content` 使用 `max-height: calc(100vh - 84px)` 限制高度
+  - `.bottom-sheet-content` 使用 `padding: 24px 20px calc(24px + 84px)` 底部留白
   - 效果：弹窗内容可以完全滚动，不会被 BottomBar 遮挡
-- ✅ 修复详情页布局 - BottomBar 固定在最上层
-  - 问题：底部按钮应该始终固定在视口底部最上层，所有内容（包括弹窗）都在其下方滚动
-  - 解决方案：
-    - `.product-detail-page` 使用 `min-height: 100vh` 允许内容自然延伸
-    - `.scroll-container` 使用 `overflow-y: auto` 实现内容滚动
-    - BottomBar 保持 `position: fixed; z-index: 100` 固定在视口底部最上层
-    - Bottom Sheet 使用 `z-index: 99` 确保低于 BottomBar
-    - Bottom Sheet 内容使用 `max-height: 90vh` 适应屏幕高度
+- ✅ 移除 Select Options Bottom Sheet 的 Apply 按钮
   - 效果：BottomBar 始终可见在最上层，详情页内容和弹窗都在其下方滚动
 - ✅ 修复详情页内容滚动区域
   - 问题：底部按钮遮挡详情页内容

@@ -252,12 +252,13 @@ onMounted(() => {
 .product-detail-page {
   position: relative;
   width: 375px;
-  min-height: 100vh;
+  height: 100vh; /* 固定为视口高度 */
   margin: 0 auto;
   background: #fff;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* 阻止外层滚动 */
 }
 
 .scroll-container {
@@ -425,7 +426,7 @@ onMounted(() => {
 
 /* Bottom Sheet Styles */
 .bottom-sheet-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;

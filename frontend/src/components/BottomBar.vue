@@ -103,7 +103,7 @@ const handleBuyNow = () => {
 
 <style scoped>
 .bottom-bar-wrapper {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
