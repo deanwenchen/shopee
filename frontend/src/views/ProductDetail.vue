@@ -1,45 +1,177 @@
 <template>
   <div class="product-detail-page">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <img src="/assets/figma/status-bar-light.svg" alt="Status Bar" />
+    </div>
+
     <!-- Scrollable Content -->
     <div class="scroll-container">
       <!-- Product Gallery -->
-      <div class="gallery-wrapper">
-        <ProductGallery
-          :images="product.images"
-          @like="handleLike"
-          @slide-change="handleSlideChange"
-        />
-      </div>
-
-      <!-- Product Info -->
-      <div class="product-info-section">
-        <!-- Price and Share -->
-        <div class="price-row">
-          <span class="current-price">$17,00</span>
+      <div
+        class="gallery-section"
+        @touchstart="handleTouchStart"
+        @touchmove="handleTouchMove"
+        @touchend="handleTouchEnd"
+        @mousedown="handleMouseDown"
+        @mousemove="handleMouseMove"
+        @mouseup="handleMouseUp"
+        @mouseleave="handleMouseLeave"
+      >
+        <div class="main-image-container">
+          <img :src="product.images[currentImageIndex]" :alt="product.name" class="main-image" />
           <button class="share-btn" @click="handleShare">
             <img src="/assets/figma/product-share-icon.svg" alt="Share" />
           </button>
         </div>
+        <!-- Gallery Dots -->
+        <div class="gallery-dots">
+          <div
+            v-for="(image, index) in product.images"
+            :key="index"
+            class="dot"
+            :class="{ active: index === currentImageIndex }"
+            @click="goToSlide(index)"
+          />
+        </div>
+      </div>
 
-        <!-- Description -->
+      <!-- Price and Description -->
+      <div class="price-section">
+        <h1 class="product-price">$17,00</h1>
         <p class="product-description">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam arcu mauris, scelerisque eu mauris id, pretium pulvinar sapien.
         </p>
+      </div>
 
-        <!-- Variations -->
-        <div class="variations-section">
-          <h3 class="variations-title">Variations</h3>
-          <div class="selected-variations">
-            <div class="variation-chip">Pink</div>
-            <div class="variation-chip">M</div>
-            <button class="expand-btn" @click="openVariationsSheet">
-              <img src="/assets/figma/arrow-icon-white.svg" alt="Expand" />
-            </button>
+      <!-- Variations -->
+      <div class="variations-section">
+        <h2 class="section-title">Variations</h2>
+        <div class="selected-variations">
+          <div class="variation-chip">{{ selectedColor }}</div>
+          <div class="variation-chip">{{ selectedSize }}</div>
+          <button class="expand-btn" @click="openVariationsSheet">
+            <img src="/assets/figma/arrow-icon-white.svg" alt="Expand" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Specifications -->
+      <div class="specifications-section">
+        <h2 class="section-title">Specifications</h2>
+        <div class="spec-row">
+          <span class="spec-label">Material</span>
+          <div class="spec-tags">
+            <span class="spec-tag pink">Cotton 95%</span>
+            <span class="spec-tag pink">Nylon 5%</span>
           </div>
-          <div class="variations-grid">
-            <div class="variation-item" v-for="i in 3" :key="i">
-              <img :src="product.images[i]" :alt="`Variation ${i}`" />
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Origin</span>
+          <span class="spec-tag blue">EU</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Size guide</span>
+          <button class="size-guide-btn" @click="openVariationsSheet">
+            <img src="/assets/figma/arrow-icon-white.svg" alt="Arrow" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Delivery -->
+      <div class="delivery-section">
+        <h2 class="section-title">Delivery</h2>
+        <div class="delivery-option">
+          <div class="delivery-option-border">
+            <span class="delivery-name">Standart</span>
+            <span class="delivery-price">$3,00</span>
+            <span class="delivery-days">5-7 days</span>
+          </div>
+        </div>
+        <div class="delivery-option">
+          <div class="delivery-option-border">
+            <span class="delivery-name">Express</span>
+            <span class="delivery-price">$12,00</span>
+            <span class="delivery-days">1-2 days</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rating & Reviews -->
+      <div class="reviews-section">
+        <h2 class="section-title">Rating & Reviews</h2>
+        <div class="rating-summary">
+          <div class="stars-large">
+            <img src="/assets/figma/star-filled.svg" alt="Star" />
+            <img src="/assets/figma/star-filled.svg" alt="Star" />
+            <img src="/assets/figma/star-filled.svg" alt="Star" />
+            <img src="/assets/figma/star-filled.svg" alt="Star" />
+            <img src="/assets/figma/star-half.svg" alt="Star" />
+          </div>
+          <span class="rating-value">4/5</span>
+        </div>
+        <div class="review-item">
+          <img src="/assets/figma/review-avatar-1.png" alt="Veronika" class="review-avatar" />
+          <div class="review-content">
+            <div class="review-header">
+              <span class="reviewer-name">Veronika</span>
+              <div class="stars-small">
+                <img src="/assets/figma/star-filled.svg" alt="Star" />
+                <img src="/assets/figma/star-filled.svg" alt="Star" />
+                <img src="/assets/figma/star-filled.svg" alt="Star" />
+                <img src="/assets/figma/star-filled.svg" alt="Star" />
+                <img src="/assets/figma/star-half.svg" alt="Star" />
+              </div>
             </div>
+            <p class="review-text">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed ...
+            </p>
+          </div>
+        </div>
+        <button class="view-all-reviews-btn">View All Reviews</button>
+      </div>
+
+      <!-- Most Popular -->
+      <div class="most-popular-section">
+        <div class="section-header">
+          <h2 class="section-title">Most Popular</h2>
+          <button class="see-all-btn">
+            <span>See All</span>
+            <img src="/assets/figma/arrow-icon-white.svg" alt="Arrow" />
+          </button>
+        </div>
+        <div class="popular-products">
+          <div
+            v-for="(item, index) in mostPopularItems"
+            :key="index"
+            class="popular-item"
+          >
+            <div class="popular-image-container">
+              <img :src="item.image" :alt="item.name" class="popular-image" />
+            </div>
+            <div class="popular-info">
+              <span class="popular-price">$17,00</span>
+              <img src="/assets/figma/like-icon.svg" alt="Like" class="popular-like-icon" />
+              <span class="popular-badge" :class="item.badgeType">{{ item.badge }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- You Might Like -->
+      <div class="you-might-like-section">
+        <h2 class="section-title">You Might Like</h2>
+        <div class="like-grid">
+          <div
+            v-for="(item, index) in youMightLikeItems"
+            :key="index"
+            class="like-item"
+          >
+            <div class="like-image-container">
+              <img :src="item.image" :alt="item.name" class="like-image" />
+            </div>
+            <p class="like-name">{{ item.name }}</p>
+            <span class="like-price">{{ item.price }}</span>
           </div>
         </div>
       </div>
@@ -128,9 +260,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import ProductGallery from '@/components/ProductGallery.vue';
 import BottomBar from '@/components/BottomBar.vue';
 
 interface ProductVariation {
@@ -156,10 +287,24 @@ interface Product {
   variations: ProductVariation[];
 }
 
+interface PopularItem {
+  image: string;
+  name: string;
+  price: string;
+  badge: string;
+  badgeType: 'new' | 'sale' | 'hot';
+}
+
+interface LikeItem {
+  image: string;
+  name: string;
+  price: string;
+}
+
 const router = useRouter();
 const route = useRoute();
 
-// Mock product data - will be replaced with API call
+// Mock product data
 const product = ref<Product>({
   id: route.params.id as string,
   name: 'Summer Collection Top',
@@ -188,14 +333,135 @@ const product = ref<Product>({
   ],
 });
 
+// Most Popular items
+const mostPopularItems = ref<PopularItem[]>([
+  { image: '/assets/figma/mp-1.png', name: 'New Arrival', price: '$17,00', badge: 'New', badgeType: 'new' },
+  { image: '/assets/figma/mp-3.png', name: 'On Sale', price: '$17,00', badge: 'Sale', badgeType: 'sale' },
+  { image: '/assets/figma/mp-4.png', name: 'Hot Item', price: '$17,00', badge: 'Hot', badgeType: 'hot' },
+  { image: '/assets/figma/mp-2.png', name: 'Hot Item 2', price: '$17,00', badge: 'Hot', badgeType: 'hot' },
+]);
+
+// You Might Like items
+const youMightLikeItems = ref<LikeItem[]>([
+  { image: '/assets/figma/yl-1.png', name: 'Lorem ipsum dolor sit amet consectetur', price: '$21,00' },
+  { image: '/assets/figma/yl-2.png', name: 'Lorem ipsum dolor sit amet consectetur', price: '$17,00' },
+  { image: '/assets/figma/yl-3.png', name: 'Lorem ipsum dolor sit amet consectetur', price: '$21,00' },
+  { image: '/assets/figma/yl-4.png', name: 'Lorem ipsum dolor sit amet consectetur', price: '$17,00' },
+]);
+
 // State
 const isLiked = ref(false);
 const selectedColor = ref<string>('Pink');
 const selectedSize = ref<string>('M');
 const quantity = ref(1);
 const showVariationsSheet = ref(false);
+const currentImageIndex = ref(0);
+const autoPlayTimer = ref<number | null>(null);
+
+// Touch/Mouse drag state
+let touchStartX = 0;
+let touchEndX = 0;
+let isDragging = false;
+const swipeThreshold = 50;
 
 const availableSizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+
+// Auto-play gallery
+const startAutoPlay = () => {
+  if (autoPlayTimer.value) clearInterval(autoPlayTimer.value);
+  autoPlayTimer.value = window.setInterval(() => {
+    currentImageIndex.value = (currentImageIndex.value + 1) % product.value.images.length;
+  }, 3000);
+};
+
+const stopAutoPlay = () => {
+  if (autoPlayTimer.value) {
+    clearInterval(autoPlayTimer.value);
+    autoPlayTimer.value = null;
+  }
+};
+
+// Touch/Mouse drag handlers
+const handleTouchStart = (e: TouchEvent) => {
+  touchStartX = e.touches[0].clientX;
+  isDragging = true;
+  stopAutoPlay();
+};
+
+const handleTouchMove = (e: TouchEvent) => {
+  if (!isDragging) return;
+  touchEndX = e.touches[0].clientX;
+};
+
+const handleTouchEnd = () => {
+  if (!isDragging) return;
+  isDragging = false;
+  handleSwipe();
+};
+
+const handleMouseDown = (e: MouseEvent) => {
+  touchStartX = e.clientX;
+  isDragging = true;
+  stopAutoPlay();
+};
+
+const handleMouseMove = (e: MouseEvent) => {
+  if (!isDragging) return;
+  touchEndX = e.clientX;
+};
+
+const handleMouseUp = () => {
+  if (!isDragging) return;
+  isDragging = false;
+  handleSwipe();
+  startAutoPlay();
+};
+
+const handleMouseLeave = () => {
+  if (isDragging) {
+    isDragging = false;
+    handleSwipe();
+    startAutoPlay();
+  }
+};
+
+const handleSwipe = () => {
+  const diff = touchStartX - touchEndX;
+
+  if (Math.abs(diff) > swipeThreshold) {
+    if (diff > 0) {
+      // Swipe left - next
+      nextSlide();
+    } else {
+      // Swipe right - prev
+      prevSlide();
+    }
+    // Restart autoplay after swipe
+    startAutoPlay();
+  }
+};
+
+const nextSlide = () => {
+  if (currentImageIndex.value < product.value.images.length - 1) {
+    currentImageIndex.value++;
+  } else {
+    currentImageIndex.value = 0; // Loop back to first image
+  }
+};
+
+const prevSlide = () => {
+  if (currentImageIndex.value > 0) {
+    currentImageIndex.value--;
+  } else {
+    currentImageIndex.value = product.value.images.length - 1; // Loop to last image
+  }
+};
+
+const goToSlide = (index: number) => {
+  currentImageIndex.value = index;
+  stopAutoPlay();
+  startAutoPlay();
+};
 
 // Handlers
 const handleLike = (liked: boolean) => {
@@ -203,16 +469,23 @@ const handleLike = (liked: boolean) => {
   console.log('Product liked:', liked);
 };
 
+const handleShare = () => {
+  console.log('Share product');
+  // Implement share logic
+};
+
 const handleSlideChange = (index: number) => {
-  console.log('Slide changed to:', index);
+  currentImageIndex.value = index;
 };
 
 const openVariationsSheet = () => {
+  stopAutoPlay();
   showVariationsSheet.value = true;
 };
 
 const closeVariationsSheet = () => {
   showVariationsSheet.value = false;
+  startAutoPlay();
 };
 
 const selectColor = (variation: ProductVariation) => {
@@ -243,8 +516,11 @@ const handleBuyNow = (data: { color: string; size: string; quantity: number }) =
 };
 
 onMounted(() => {
-  // TODO: Fetch product data from API
-  // For now, using mock data
+  startAutoPlay();
+});
+
+onUnmounted(() => {
+  stopAutoPlay();
 });
 </script>
 
@@ -252,50 +528,57 @@ onMounted(() => {
 .product-detail-page {
   position: relative;
   width: 375px;
-  height: 100vh; /* 固定为视口高度 */
+  height: 100vh;
   margin: 0 auto;
   background: #fff;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* 阻止外层滚动 */
+  overflow: hidden;
+}
+
+.status-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.status-bar img {
+  width: 100%;
+  height: 44px;
 }
 
 .scroll-container {
   flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 100px; /* 确保内容可以滚动到不被 BottomBar 遮挡的位置 */
+  padding-bottom: 100px;
 }
 
-.gallery-wrapper {
+/* Gallery Section */
+.gallery-section {
   width: 100%;
   background: #f5f5f5;
 }
 
-.product-info-section {
-  padding: 15px 20px 20px;
+.main-image-container {
+  position: relative;
   width: 100%;
-  background: #fff;
+  height: 439px;
 }
 
-/* Price Row */
-.price-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.current-price {
-  font-family: 'Raleway', sans-serif;
-  font-weight: 800;
-  font-size: 26px;
-  color: #000;
-  letter-spacing: -0.26px;
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .share-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
   width: 30px;
   height: 30px;
   background: rgba(255, 240, 240, 0.95);
@@ -312,22 +595,58 @@ onMounted(() => {
   height: 16px;
 }
 
-/* Description */
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 0;
+  background: #fff;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  width: 40px;
+  border-radius: 5px;
+  background: #004cff;
+}
+
+/* Price Section */
+.price-section {
+  padding: 15px 20px;
+}
+
+.product-price {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  color: #000;
+  letter-spacing: -0.26px;
+  margin: 0 0 8px 0;
+}
+
 .product-description {
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 400;
   font-size: 15px;
   line-height: 20px;
   color: #000;
-  margin: 0 0 24px 0;
+  margin: 0;
 }
 
 /* Variations Section */
 .variations-section {
-  margin-top: 16px;
+  padding: 0 20px 16px;
 }
 
-.variations-title {
+.section-title {
   font-family: 'Raleway', sans-serif;
   font-weight: 800;
   font-size: 20px;
@@ -372,56 +691,396 @@ onMounted(() => {
   height: 20px;
 }
 
-.variations-grid {
+.variations-thumbnails {
   display: flex;
   gap: 12px;
 }
 
-.variation-item {
-  flex-shrink: 0;
+.thumbnail {
   width: 80px;
   height: 80px;
   border-radius: 8px;
   overflow: hidden;
 }
 
-.variation-item img {
+.thumbnail img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.section-title {
+/* Specifications Section */
+.specifications-section {
+  padding: 0 20px 24px;
+}
+
+.spec-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.spec-label {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: #202020;
+  min-width: 70px;
+}
+
+.spec-tags {
+  display: flex;
+  gap: 8px;
+}
+
+.spec-tag {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.spec-tag.pink {
+  background: #ffebeb;
+  color: #000;
+}
+
+.spec-tag.blue {
+  background: #e5ebfc;
+  color: #000;
+}
+
+.size-guide-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #004bff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.size-guide-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Delivery Section */
+.delivery-section {
+  padding: 0 20px 24px;
+}
+
+.delivery-option {
+  margin-bottom: 12px;
+}
+
+.delivery-option-border {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #004cff;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.delivery-name {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #000;
+}
+
+.delivery-price {
   font-family: 'Raleway', sans-serif;
   font-weight: 700;
   font-size: 16px;
   color: #000;
-  margin: 0 0 16px 0;
+  margin-left: auto;
+  margin-right: 12px;
 }
 
-.variation-thumbnails {
+.delivery-days {
+  background: #f5f8ff;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: #004cff;
+}
+
+/* Reviews Section */
+.reviews-section {
+  padding: 0 20px 24px;
+}
+
+.rating-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stars-large {
+  display: flex;
+  gap: 4px;
+}
+
+.stars-large img {
+  width: 20px;
+  height: 20px;
+}
+
+.rating-value {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #202020;
+  background: #dfe9ff;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.review-item {
   display: flex;
   gap: 12px;
+  margin-bottom: 20px;
+}
+
+.review-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.review-content {
+  flex: 1;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.reviewer-name {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000;
+}
+
+.stars-small {
+  display: flex;
+  gap: 2px;
+}
+
+.stars-small img {
+  width: 15px;
+  height: 15px;
+}
+
+.review-text {
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #000;
+  margin: 0;
+}
+
+.view-all-reviews-btn {
+  width: 100%;
+  background: #004cff;
+  border: none;
+  border-radius: 11px;
+  padding: 12px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: #f3f3f3;
+  cursor: pointer;
+}
+
+/* Most Popular Section */
+.most-popular-section {
+  padding: 0 20px 24px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.see-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.see-all-btn span {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #202020;
+}
+
+.see-all-btn img {
+  width: 14px;
+  height: 14px;
+}
+
+.popular-products {
+  display: flex;
+  gap: 10px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-.checkmark {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 20px;
-  height: 20px;
-  background: #004bff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.popular-item {
+  flex-shrink: 0;
+  width: 104px;
 }
 
-.checkmark svg {
-  width: 12px;
-  height: 12px;
+.popular-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  position: relative;
+  height: 20px;
+}
+
+.popular-image-container {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  border-radius: 9px;
+  overflow: hidden;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+.popular-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.like-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.like-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+.popular-price {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #202020;
+  white-space: nowrap;
+}
+
+.popular-like-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.popular-badge {
+  background: #ff5790;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.popular-badge.new {
+  background: linear-gradient(135deg, #ff9a9e, #fecfef);
+}
+
+.popular-badge.sale {
+  background: linear-gradient(135deg, #ff5790, #f81140);
+}
+
+.popular-badge.hot {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+}
+
+/* You Might Like Section */
+.you-might-like-section {
+  padding: 0 20px 24px;
+}
+
+.like-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.like-item {
+  background: #fff;
+  border-radius: 9px;
+  overflow: hidden;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.like-image-container {
+  width: 100%;
+  height: 171px;
+  overflow: hidden;
+}
+
+.like-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.like-name {
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000;
+  padding: 8px 10px;
+  margin: 0;
+  height: 36px;
+  overflow: hidden;
+}
+
+.like-price {
+  display: block;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: #202020;
+  padding: 0 10px 10px;
+  letter-spacing: -0.17px;
 }
 
 /* Bottom Sheet Styles */
@@ -432,7 +1091,7 @@ onMounted(() => {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 99; /* 低于 BottomBar (z-index: 100) */
+  z-index: 99;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -443,9 +1102,9 @@ onMounted(() => {
   border-radius: 20px 20px 0 0;
   width: 100%;
   max-width: 375px;
-  max-height: calc(100vh - 84px); /* 视口高度减去 BottomBar 高度 */
+  max-height: calc(100vh - 84px);
   overflow-y: auto;
-  padding: 24px 20px calc(24px + 84px); /* 底部 padding 增加 84px 避免被 BottomBar 遮挡 */
+  padding: 24px 20px calc(24px + 84px);
   animation: slideUp 0.3s ease;
 }
 

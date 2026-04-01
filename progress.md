@@ -2,6 +2,90 @@
 
 ## 最近变更 (2026-04-01)
 
+### 商品详情页轮播图滑动功能修复 (2026-04-01)
+- ✅ 为 ProductDetail.vue 图片轮播添加滑动支持
+  - 触摸滑动（touchstart/touchmove/touchend）
+  - 鼠标拖拽（mousedown/mouseup/mousemove/mouseleave）
+  - 滑动阈值：50px
+  - 左滑切换下一张，右滑切换上一张
+  - 滑动后自动重启轮播
+  - 点击 dots 指示器切换图片
+- ✅ 前端构建验证成功（0 错误，0 警告）
+
+### 商品详情页图片资源修复 (2026-04-01 15:10)
+- ✅ 下载缺失的 Most Popular 商品图片 (4 张)
+  - mp-1.png (13KB), mp-2.png (2MB), mp-3.png (3.8MB), mp-4.png (5.6MB)
+  - 从 Figma 节点 9:6110 获取正确的资源 URL
+- ✅ 下载缺失的 You Might Like 商品图片 (4 张)
+  - yl-1.png (2.6MB), yl-2.png (2MB), yl-3.png (3.8MB), yl-4.png (2MB)
+  - 从 Figma 节点 0:8438 获取正确的资源 URL
+- ✅ 下载蓝色爱心 Like 图标
+  - like-icon.svg (674 字节，蓝色 #0042E0 填充)
+- ✅ 替换之前损坏的占位符文件（之前文件只有 300 字节的 SVG 占位符）
+- ✅ 前端构建验证成功（0 错误，0 警告）
+
+[状态对齐报告]
+- 当前任务：修复商品详情页图片资源
+- 已完成进度：
+  - Most Popular 部分：4 张商品图片 + 爱心图标全部下载完成
+  - You Might Like 部分：4 张商品图片全部下载完成
+  - 所有图片文件大小正常（2-5MB），不再是占位符
+- 下一步行动：验证页面显示效果
+
+### Most Popular 部分对齐修复 (2026-04-01 16:00)
+- ✅ 修复 Most Popular 商品卡片布局
+  - 问题：爱图标和 badge 位置不对，与 Figma 设计不一致
+  - Figma 设计：价格 + 爱图标 + 标签在同一行显示
+  - 解决方案：
+    - 添加 `.popular-info` 容器（display: flex, align-items: center, gap: 6px）
+    - 移除 `.popular-price` 的 `display: block` 和 `margin-top`
+    - 移除 `.popular-badge` 的 absolute 定位
+    - 设置 `.popular-like-icon` 为固定尺寸（16x16px）和 `flex-shrink: 0`
+    - 所有元素使用 `white-space: nowrap` 防止换行
+  - 效果：价格、爱图标、标签现在在同一行正确对齐，与 Figma 设计一致
+- ✅ 前端构建验证成功（0 错误，0 警告）
+  - CSS 大小：40.15 kB (gzip: 8.52 kB)
+  - JS 大小：244.50 kB (gzip: 84.24 kB)
+
+### 商品详情页完整 Figma 设计实现 (2026-04-01 15:30)
+- ✅ 实现完整的商品详情页设计 (Figma node-id: 0:8438)
+  - **Status Bar**: 顶部状态栏（时间 9:41、电池、WiFi、信号图标）
+  - **Product Gallery**: 商品图片轮播（5 张图片 + 圆点指示器 + 分享按钮）
+  - **Price Section**: 价格显示（$17,00，Raleway Bold 26px）+ 商品描述
+  - **Variations Section**: 规格选择（已选颜色/尺寸芯片 + 3 个缩略图预览 + 展开按钮）
+  - **Specifications Section**: 商品规格（Material 标签 Cotton 95% / Nylon 5%，Origin 标签 EU，Size guide 按钮）
+  - **Delivery Section**: 配送选项（Standart $3,00 5-7 days / Express $12,00 1-2 days，带蓝色边框）
+  - **Rating & Reviews Section**: 评分与评价（4/5 星评分 + Veronika 评价 + View All Reviews 按钮）
+  - **Most Popular Section**: 热门商品轮播（4 个商品卡片，带 New/Sale/Hot 标签 + Like 按钮）
+  - **You Might Like Section**: 推荐商品网格（2 列布局，4+ 个商品卡片）
+  - **Bottom Bar**: 底部操作栏（收藏 / 加入购物车 / 立即购买）+ Home Indicator
+  - **SKU Selector Bottom Sheet**: 规格选择弹窗（颜色/尺寸/数量选择，max-height: calc(100vh - 84px)）
+- ✅ 保持现有滚动和 BottomBar 定位修复
+  - 容器高度 100vh，内部滚动
+  - BottomBar 固定在容器底部（z-index: 100）
+  - Bottom Sheet 使用 `position: absolute` 相对于容器定位（z-index: 99）
+  - 内容区域 `padding-bottom: 100px` 避免遮挡
+- ✅ 使用本地 Figma 资源（product-main.png, product-variation-*.png, yl-*.png, mp-*.png, review-avatar-*.png, star 图标等）
+- ✅ 前端构建验证成功（0 错误，0 警告）
+  - CSS 大小：40.05 kB (gzip: 8.51 kB)
+  - JS 大小：244.60 kB (gzip: 84.24 kB)
+- ✅ 创建 assets 索引文件 `product-detail-assets.ts`
+
+**新增/更新的文件：**
+| 文件 | 说明 |
+|------|------|
+| `frontend/src/views/ProductDetail.vue` | 完整的商品详情页（所有 Figma section） |
+| `frontend/src/assets/figma/product-detail-assets.ts` | 资源索引文件 |
+
+**技术实现：**
+- Vue 3 + Composition API + `<script setup>`
+- TypeScript 类型定义
+- Scoped CSS 样式（严格遵循 Figma Design Token）
+- 自动轮播（3 秒切换，支持手势打断）
+- 响应式交互（hover/active 状态）
+
+---
+
 ### 商品详情页 SKU 选择器流程优化 (2026-04-01 14:00)
 - ✅ 修复大屏幕 BottomBar 消失问题
   - 问题：在大屏幕（如 iPhone 14 Pro Max）下，BottomBar 随内容下移，超出可视区域
